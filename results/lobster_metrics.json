@@ -1,0 +1,1093 @@
+{
+  "date": "2012-06-21",
+  "source": "Official LOBSTER five-level samples",
+  "sample_stride": 10,
+  "total_usable_observations": 173576,
+  "execution_engine_validation": {
+    "snapshots": 173576,
+    "orders": 1041456,
+    "parity_checks": 1041456,
+    "max_abs_shortfall_error_bps": 0.0,
+    "cpp_wall_seconds": 8.942245999816805,
+    "python_sweep_seconds": 1.6447889001574367,
+    "timing_note": "Python timed as in-process sweep calls; C++ timed as one CLI round trip including process startup and serialization."
+  },
+  "tickers": {
+    "AMZN": {
+      "source_rows": 155935,
+      "observations": 15523,
+      "mean_spread_cents": 13.392256651420473,
+      "median_spread_cents": 13.0,
+      "median_two_sided_top5_depth_shares": 1221,
+      "mean_trailing_1m_realized_volatility_bps": 6.2154471021251325,
+      "overall_execution": [
+        {
+          "ticker": "AMZN",
+          "side": "buy",
+          "order_shares": 100,
+          "mean_slippage_bps": 3.345307562067998,
+          "mean_fill_rate": 0.996014945564646
+        },
+        {
+          "ticker": "AMZN",
+          "side": "sell",
+          "order_shares": 100,
+          "mean_slippage_bps": 3.2657643635501516,
+          "mean_fill_rate": 0.9986271983508342
+        },
+        {
+          "ticker": "AMZN",
+          "side": "buy",
+          "order_shares": 500,
+          "mean_slippage_bps": 4.541683379012476,
+          "mean_fill_rate": 0.8479376409199253
+        },
+        {
+          "ticker": "AMZN",
+          "side": "sell",
+          "order_shares": 500,
+          "mean_slippage_bps": 4.568129970818841,
+          "mean_fill_rate": 0.9109467242156799
+        },
+        {
+          "ticker": "AMZN",
+          "side": "buy",
+          "order_shares": 1000,
+          "mean_slippage_bps": 4.814898891512579,
+          "mean_fill_rate": 0.5582601301294853
+        },
+        {
+          "ticker": "AMZN",
+          "side": "sell",
+          "order_shares": 1000,
+          "mean_slippage_bps": 4.929938520909558,
+          "mean_fill_rate": 0.659884300715068
+        }
+      ],
+      "ask_depth_bucket_cutoffs_shares": [
+        78563.66666666666,
+        91091.0
+      ],
+      "bid_depth_bucket_cutoffs_shares": [
+        81312.66666666666,
+        93356.0
+      ],
+      "volatility_bucket_cutoffs_bps": [
+        4.833881395288948,
+        6.770009886056186
+      ]
+    },
+    "AAPL": {
+      "source_rows": 301587,
+      "observations": 30040,
+      "mean_spread_cents": 15.61231691078562,
+      "median_spread_cents": 15.0,
+      "median_two_sided_top5_depth_shares": 1303.0,
+      "mean_trailing_1m_realized_volatility_bps": 4.489422100584469,
+      "overall_execution": [
+        {
+          "ticker": "AAPL",
+          "side": "buy",
+          "order_shares": 100,
+          "mean_slippage_bps": 1.490048580988656,
+          "mean_fill_rate": 0.9965153129161118
+        },
+        {
+          "ticker": "AAPL",
+          "side": "sell",
+          "order_shares": 100,
+          "mean_slippage_bps": 1.4617639777288023,
+          "mean_fill_rate": 0.9987113848202397
+        },
+        {
+          "ticker": "AAPL",
+          "side": "buy",
+          "order_shares": 500,
+          "mean_slippage_bps": 2.1212438462337966,
+          "mean_fill_rate": 0.8667535952063915
+        },
+        {
+          "ticker": "AAPL",
+          "side": "sell",
+          "order_shares": 500,
+          "mean_slippage_bps": 2.1654926776610823,
+          "mean_fill_rate": 0.9202629161118508
+        },
+        {
+          "ticker": "AAPL",
+          "side": "buy",
+          "order_shares": 1000,
+          "mean_slippage_bps": 2.2600599868243303,
+          "mean_fill_rate": 0.586653828229028
+        },
+        {
+          "ticker": "AAPL",
+          "side": "sell",
+          "order_shares": 1000,
+          "mean_slippage_bps": 2.3607836498821424,
+          "mean_fill_rate": 0.6647257989347537
+        }
+      ],
+      "ask_depth_bucket_cutoffs_shares": [
+        78563.66666666666,
+        91091.0
+      ],
+      "bid_depth_bucket_cutoffs_shares": [
+        81312.66666666666,
+        93356.0
+      ],
+      "volatility_bucket_cutoffs_bps": [
+        3.48200672141482,
+        4.7196086836393265
+      ]
+    },
+    "GOOG": {
+      "source_rows": 112673,
+      "observations": 11169,
+      "mean_spread_cents": 29.556271823798014,
+      "median_spread_cents": 28.0,
+      "median_two_sided_top5_depth_shares": 866,
+      "mean_trailing_1m_realized_volatility_bps": 4.893273591192072,
+      "overall_execution": [
+        {
+          "ticker": "GOOG",
+          "side": "buy",
+          "order_shares": 100,
+          "mean_slippage_bps": 2.8595890782225464,
+          "mean_fill_rate": 0.9903106813501656
+        },
+        {
+          "ticker": "GOOG",
+          "side": "sell",
+          "order_shares": 100,
+          "mean_slippage_bps": 2.9032033662083476,
+          "mean_fill_rate": 0.9947273704002149
+        },
+        {
+          "ticker": "GOOG",
+          "side": "buy",
+          "order_shares": 500,
+          "mean_slippage_bps": 4.086362518153037,
+          "mean_fill_rate": 0.7215824156146476
+        },
+        {
+          "ticker": "GOOG",
+          "side": "sell",
+          "order_shares": 500,
+          "mean_slippage_bps": 3.9438202177419988,
+          "mean_fill_rate": 0.8038300653594771
+        },
+        {
+          "ticker": "GOOG",
+          "side": "buy",
+          "order_shares": 1000,
+          "mean_slippage_bps": 4.225542056123806,
+          "mean_fill_rate": 0.4088666845733727
+        },
+        {
+          "ticker": "GOOG",
+          "side": "sell",
+          "order_shares": 1000,
+          "mean_slippage_bps": 4.07317422112237,
+          "mean_fill_rate": 0.5199323126510879
+        }
+      ],
+      "ask_depth_bucket_cutoffs_shares": [
+        78563.66666666666,
+        91091.0
+      ],
+      "bid_depth_bucket_cutoffs_shares": [
+        81312.66666666666,
+        93356.0
+      ],
+      "volatility_bucket_cutoffs_bps": [
+        3.5548760231529077,
+        5.144843642001816
+      ]
+    },
+    "INTC": {
+      "source_rows": 581030,
+      "observations": 57462,
+      "mean_spread_cents": 1.2396888378406599,
+      "median_spread_cents": 1.0,
+      "median_two_sided_top5_depth_shares": 169298.5,
+      "mean_trailing_1m_realized_volatility_bps": 5.8796884570238666,
+      "overall_execution": [
+        {
+          "ticker": "INTC",
+          "side": "buy",
+          "order_shares": 100,
+          "mean_slippage_bps": 2.2934176367749584,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "INTC",
+          "side": "sell",
+          "order_shares": 100,
+          "mean_slippage_bps": 2.2934293791351212,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "INTC",
+          "side": "buy",
+          "order_shares": 500,
+          "mean_slippage_bps": 2.317825246740421,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "INTC",
+          "side": "sell",
+          "order_shares": 500,
+          "mean_slippage_bps": 2.3147627005630618,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "INTC",
+          "side": "buy",
+          "order_shares": 1000,
+          "mean_slippage_bps": 2.347989259054777,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "INTC",
+          "side": "sell",
+          "order_shares": 1000,
+          "mean_slippage_bps": 2.337594698780294,
+          "mean_fill_rate": 1.0
+        }
+      ],
+      "ask_depth_bucket_cutoffs_shares": [
+        78563.66666666666,
+        91091.0
+      ],
+      "bid_depth_bucket_cutoffs_shares": [
+        81312.66666666666,
+        93356.0
+      ],
+      "volatility_bucket_cutoffs_bps": [
+        4.104157346419459,
+        6.356928160939383
+      ]
+    },
+    "MSFT": {
+      "source_rows": 595800,
+      "observations": 59382,
+      "mean_spread_cents": 1.2518271530093295,
+      "median_spread_cents": 1.0,
+      "median_two_sided_top5_depth_shares": 173538.0,
+      "mean_trailing_1m_realized_volatility_bps": 5.700015181312339,
+      "overall_execution": [
+        {
+          "ticker": "MSFT",
+          "side": "buy",
+          "order_shares": 100,
+          "mean_slippage_bps": 2.0508879081695497,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "MSFT",
+          "side": "sell",
+          "order_shares": 100,
+          "mean_slippage_bps": 2.049963007679151,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "MSFT",
+          "side": "buy",
+          "order_shares": 500,
+          "mean_slippage_bps": 2.072879002477857,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "MSFT",
+          "side": "sell",
+          "order_shares": 500,
+          "mean_slippage_bps": 2.0677353585838523,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "MSFT",
+          "side": "buy",
+          "order_shares": 1000,
+          "mean_slippage_bps": 2.0922082194218543,
+          "mean_fill_rate": 1.0
+        },
+        {
+          "ticker": "MSFT",
+          "side": "sell",
+          "order_shares": 1000,
+          "mean_slippage_bps": 2.0859774188222375,
+          "mean_fill_rate": 1.0
+        }
+      ],
+      "ask_depth_bucket_cutoffs_shares": [
+        78563.66666666666,
+        91091.0
+      ],
+      "bid_depth_bucket_cutoffs_shares": [
+        81312.66666666666,
+        93356.0
+      ],
+      "volatility_bucket_cutoffs_bps": [
+        4.581561897840539,
+        6.519703599652291
+      ]
+    }
+  },
+  "overall_execution_by_ticker": [
+    {
+      "ticker": "AMZN",
+      "side": "buy",
+      "order_shares": 100,
+      "mean_slippage_bps": 3.345307562067998,
+      "mean_fill_rate": 0.996014945564646
+    },
+    {
+      "ticker": "AMZN",
+      "side": "sell",
+      "order_shares": 100,
+      "mean_slippage_bps": 3.2657643635501516,
+      "mean_fill_rate": 0.9986271983508342
+    },
+    {
+      "ticker": "AMZN",
+      "side": "buy",
+      "order_shares": 500,
+      "mean_slippage_bps": 4.541683379012476,
+      "mean_fill_rate": 0.8479376409199253
+    },
+    {
+      "ticker": "AMZN",
+      "side": "sell",
+      "order_shares": 500,
+      "mean_slippage_bps": 4.568129970818841,
+      "mean_fill_rate": 0.9109467242156799
+    },
+    {
+      "ticker": "AMZN",
+      "side": "buy",
+      "order_shares": 1000,
+      "mean_slippage_bps": 4.814898891512579,
+      "mean_fill_rate": 0.5582601301294853
+    },
+    {
+      "ticker": "AMZN",
+      "side": "sell",
+      "order_shares": 1000,
+      "mean_slippage_bps": 4.929938520909558,
+      "mean_fill_rate": 0.659884300715068
+    },
+    {
+      "ticker": "AAPL",
+      "side": "buy",
+      "order_shares": 100,
+      "mean_slippage_bps": 1.490048580988656,
+      "mean_fill_rate": 0.9965153129161118
+    },
+    {
+      "ticker": "AAPL",
+      "side": "sell",
+      "order_shares": 100,
+      "mean_slippage_bps": 1.4617639777288023,
+      "mean_fill_rate": 0.9987113848202397
+    },
+    {
+      "ticker": "AAPL",
+      "side": "buy",
+      "order_shares": 500,
+      "mean_slippage_bps": 2.1212438462337966,
+      "mean_fill_rate": 0.8667535952063915
+    },
+    {
+      "ticker": "AAPL",
+      "side": "sell",
+      "order_shares": 500,
+      "mean_slippage_bps": 2.1654926776610823,
+      "mean_fill_rate": 0.9202629161118508
+    },
+    {
+      "ticker": "AAPL",
+      "side": "buy",
+      "order_shares": 1000,
+      "mean_slippage_bps": 2.2600599868243303,
+      "mean_fill_rate": 0.586653828229028
+    },
+    {
+      "ticker": "AAPL",
+      "side": "sell",
+      "order_shares": 1000,
+      "mean_slippage_bps": 2.3607836498821424,
+      "mean_fill_rate": 0.6647257989347537
+    },
+    {
+      "ticker": "GOOG",
+      "side": "buy",
+      "order_shares": 100,
+      "mean_slippage_bps": 2.8595890782225464,
+      "mean_fill_rate": 0.9903106813501656
+    },
+    {
+      "ticker": "GOOG",
+      "side": "sell",
+      "order_shares": 100,
+      "mean_slippage_bps": 2.9032033662083476,
+      "mean_fill_rate": 0.9947273704002149
+    },
+    {
+      "ticker": "GOOG",
+      "side": "buy",
+      "order_shares": 500,
+      "mean_slippage_bps": 4.086362518153037,
+      "mean_fill_rate": 0.7215824156146476
+    },
+    {
+      "ticker": "GOOG",
+      "side": "sell",
+      "order_shares": 500,
+      "mean_slippage_bps": 3.9438202177419988,
+      "mean_fill_rate": 0.8038300653594771
+    },
+    {
+      "ticker": "GOOG",
+      "side": "buy",
+      "order_shares": 1000,
+      "mean_slippage_bps": 4.225542056123806,
+      "mean_fill_rate": 0.4088666845733727
+    },
+    {
+      "ticker": "GOOG",
+      "side": "sell",
+      "order_shares": 1000,
+      "mean_slippage_bps": 4.07317422112237,
+      "mean_fill_rate": 0.5199323126510879
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "order_shares": 100,
+      "mean_slippage_bps": 2.2934176367749584,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "sell",
+      "order_shares": 100,
+      "mean_slippage_bps": 2.2934293791351212,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "order_shares": 500,
+      "mean_slippage_bps": 2.317825246740421,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "sell",
+      "order_shares": 500,
+      "mean_slippage_bps": 2.3147627005630618,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "order_shares": 1000,
+      "mean_slippage_bps": 2.347989259054777,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "sell",
+      "order_shares": 1000,
+      "mean_slippage_bps": 2.337594698780294,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "order_shares": 100,
+      "mean_slippage_bps": 2.0508879081695497,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "sell",
+      "order_shares": 100,
+      "mean_slippage_bps": 2.049963007679151,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "order_shares": 500,
+      "mean_slippage_bps": 2.072879002477857,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "sell",
+      "order_shares": 500,
+      "mean_slippage_bps": 2.0677353585838523,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "order_shares": 1000,
+      "mean_slippage_bps": 2.0922082194218543,
+      "mean_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "sell",
+      "order_shares": 1000,
+      "mean_slippage_bps": 2.0859774188222375,
+      "mean_fill_rate": 1.0
+    }
+  ],
+  "liquidity_buckets_500_shares": [
+    {
+      "ticker": "AMZN",
+      "side": "buy",
+      "bucket": "thin",
+      "observations": 5188,
+      "mean_spread_cents": 12.93484965304549,
+      "median_executable_side_depth_shares": 298.0,
+      "slippage_bps": 4.458042230183258,
+      "fill_rate": 0.5748531225905936
+    },
+    {
+      "ticker": "AMZN",
+      "side": "buy",
+      "bucket": "middle",
+      "observations": 5193,
+      "mean_spread_cents": 13.857693048334296,
+      "median_executable_side_depth_shares": 534,
+      "slippage_bps": 4.945759672726805,
+      "fill_rate": 0.9701902561139996
+    },
+    {
+      "ticker": "AMZN",
+      "side": "buy",
+      "bucket": "deep",
+      "observations": 5142,
+      "mean_spread_cents": 13.383702839362115,
+      "median_executable_side_depth_shares": 854.0,
+      "slippage_bps": 4.217988724572079,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "AMZN",
+      "side": "sell",
+      "bucket": "thin",
+      "observations": 5181,
+      "mean_spread_cents": 14.21656050955414,
+      "median_executable_side_depth_shares": 377,
+      "slippage_bps": 5.155239944222776,
+      "fill_rate": 0.7331839413240687
+    },
+    {
+      "ticker": "AMZN",
+      "side": "sell",
+      "bucket": "middle",
+      "observations": 5175,
+      "mean_spread_cents": 13.514975845410628,
+      "median_executable_side_depth_shares": 646,
+      "slippage_bps": 4.752558905384737,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "AMZN",
+      "side": "sell",
+      "bucket": "deep",
+      "observations": 5167,
+      "mean_spread_cents": 12.442810141281207,
+      "median_executable_side_depth_shares": 1128,
+      "slippage_bps": 3.7947147378820705,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "AAPL",
+      "side": "buy",
+      "bucket": "thin",
+      "observations": 10021,
+      "mean_spread_cents": 16.175730964973557,
+      "median_executable_side_depth_shares": 334,
+      "slippage_bps": 2.231550719448397,
+      "fill_rate": 0.6187438379403253
+    },
+    {
+      "ticker": "AAPL",
+      "side": "buy",
+      "bucket": "middle",
+      "observations": 10016,
+      "mean_spread_cents": 15.819788338658148,
+      "median_executable_side_depth_shares": 543.0,
+      "slippage_bps": 2.26458496253316,
+      "fill_rate": 0.9818136980830671
+    },
+    {
+      "ticker": "AAPL",
+      "side": "buy",
+      "bucket": "deep",
+      "observations": 10003,
+      "mean_spread_cents": 14.840147955613316,
+      "median_executable_side_depth_shares": 1000,
+      "slippage_bps": 1.8672110763309737,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "AAPL",
+      "side": "sell",
+      "bucket": "thin",
+      "observations": 10081,
+      "mean_spread_cents": 17.328935621466126,
+      "median_executable_side_depth_shares": 409,
+      "slippage_bps": 2.590530644344088,
+      "fill_rate": 0.7623944053169328
+    },
+    {
+      "ticker": "AAPL",
+      "side": "sell",
+      "bucket": "middle",
+      "observations": 9970,
+      "mean_spread_cents": 15.398595787362087,
+      "median_executable_side_depth_shares": 629.0,
+      "slippage_bps": 2.184288101412738,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "AAPL",
+      "side": "sell",
+      "bucket": "deep",
+      "observations": 9989,
+      "mean_spread_cents": 14.093202522775053,
+      "median_executable_side_depth_shares": 1213,
+      "slippage_bps": 1.7177803824428028,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "GOOG",
+      "side": "buy",
+      "bucket": "thin",
+      "observations": 3734,
+      "mean_spread_cents": 30.152651312265668,
+      "median_executable_side_depth_shares": 229.0,
+      "slippage_bps": 3.7352212131255302,
+      "fill_rate": 0.4198398500267809
+    },
+    {
+      "ticker": "GOOG",
+      "side": "buy",
+      "bucket": "middle",
+      "observations": 3714,
+      "mean_spread_cents": 28.858642972536348,
+      "median_executable_side_depth_shares": 365.0,
+      "slippage_bps": 4.082809283585372,
+      "fill_rate": 0.753852450188476
+    },
+    {
+      "ticker": "GOOG",
+      "side": "buy",
+      "bucket": "deep",
+      "observations": 3721,
+      "mean_spread_cents": 29.65412523515184,
+      "median_executable_side_depth_shares": 575,
+      "slippage_bps": 4.442277150283383,
+      "fill_rate": 0.9921698468153722
+    },
+    {
+      "ticker": "GOOG",
+      "side": "sell",
+      "bucket": "thin",
+      "observations": 3729,
+      "mean_spread_cents": 32.60686511128989,
+      "median_executable_side_depth_shares": 261,
+      "slippage_bps": 4.4008849453938454,
+      "fill_rate": 0.5160895682488603
+    },
+    {
+      "ticker": "GOOG",
+      "side": "sell",
+      "bucket": "middle",
+      "observations": 3717,
+      "mean_spread_cents": 29.76567124024751,
+      "median_executable_side_depth_shares": 440,
+      "slippage_bps": 4.308102518633733,
+      "fill_rate": 0.8960129136400323
+    },
+    {
+      "ticker": "GOOG",
+      "side": "sell",
+      "bucket": "deep",
+      "observations": 3723,
+      "mean_spread_cents": 26.291700241740532,
+      "median_executable_side_depth_shares": 879,
+      "slippage_bps": 3.122323660710488,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "bucket": "thin",
+      "observations": 19154,
+      "mean_spread_cents": 1.2335282447530542,
+      "median_executable_side_depth_shares": 58538.0,
+      "slippage_bps": 2.3340713995432774,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "bucket": "middle",
+      "observations": 19154,
+      "mean_spread_cents": 1.2106609585465178,
+      "median_executable_side_depth_shares": 80404.5,
+      "slippage_bps": 2.243262960455895,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "buy",
+      "bucket": "deep",
+      "observations": 19154,
+      "mean_spread_cents": 1.2748773102224078,
+      "median_executable_side_depth_shares": 96080.0,
+      "slippage_bps": 2.376141380222091,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "sell",
+      "bucket": "thin",
+      "observations": 19155,
+      "mean_spread_cents": 1.2209866875489428,
+      "median_executable_side_depth_shares": 65808,
+      "slippage_bps": 2.292495255308928,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "sell",
+      "bucket": "middle",
+      "observations": 19154,
+      "mean_spread_cents": 1.2176568862900699,
+      "median_executable_side_depth_shares": 86894.5,
+      "slippage_bps": 2.2667779202342833,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "side": "sell",
+      "bucket": "deep",
+      "observations": 19153,
+      "mean_spread_cents": 1.2804260429175587,
+      "median_executable_side_depth_shares": 108984,
+      "slippage_bps": 2.3850197567036324,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "bucket": "thin",
+      "observations": 19794,
+      "mean_spread_cents": 1.2097605334949986,
+      "median_executable_side_depth_shares": 69804.0,
+      "slippage_bps": 2.028624811501067,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "bucket": "middle",
+      "observations": 19797,
+      "mean_spread_cents": 1.1953831388594232,
+      "median_executable_side_depth_shares": 84817,
+      "slippage_bps": 1.9630383944915648,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "buy",
+      "bucket": "deep",
+      "observations": 19791,
+      "mean_spread_cents": 1.350361275327169,
+      "median_executable_side_depth_shares": 101056,
+      "slippage_bps": 2.2270138098397485,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "sell",
+      "bucket": "thin",
+      "observations": 19794,
+      "mean_spread_cents": 1.2303728402546226,
+      "median_executable_side_depth_shares": 71139.5,
+      "slippage_bps": 2.0487672420599146,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "sell",
+      "bucket": "middle",
+      "observations": 19800,
+      "mean_spread_cents": 1.2288383838383838,
+      "median_executable_side_depth_shares": 87220.0,
+      "slippage_bps": 2.0176729016981976,
+      "fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "side": "sell",
+      "bucket": "deep",
+      "observations": 19788,
+      "mean_spread_cents": 1.296290681220942,
+      "median_executable_side_depth_shares": 104509.5,
+      "slippage_bps": 2.136802042675766,
+      "fill_rate": 1.0
+    }
+  ],
+  "volatility_buckets_500_shares": [
+    {
+      "ticker": "AMZN",
+      "bucket": "low",
+      "observations": 5178,
+      "mean_spread_cents": 12.153341058323678,
+      "median_two_sided_depth_shares": 1185.0,
+      "buy_slippage_bps": 4.060135207421684,
+      "buy_fill_rate": 0.8173155658555427,
+      "sell_slippage_bps": 3.979458777809392,
+      "sell_fill_rate": 0.911603707995365
+    },
+    {
+      "ticker": "AMZN",
+      "bucket": "middle",
+      "observations": 5173,
+      "mean_spread_cents": 13.088150009665572,
+      "median_two_sided_depth_shares": 1249,
+      "buy_slippage_bps": 4.353988201568938,
+      "buy_fill_rate": 0.8456698240866035,
+      "sell_slippage_bps": 4.291991747571726,
+      "sell_fill_rate": 0.9181237193118114
+    },
+    {
+      "ticker": "AMZN",
+      "bucket": "high",
+      "observations": 5172,
+      "mean_spread_cents": 14.93677494199536,
+      "median_two_sided_depth_shares": 1228.0,
+      "buy_slippage_bps": 5.211521659254655,
+      "buy_fill_rate": 0.8808634957463264,
+      "sell_slippage_bps": 5.433675691286795,
+      "sell_fill_rate": 0.9031105955143078
+    },
+    {
+      "ticker": "AAPL",
+      "bucket": "low",
+      "observations": 10014,
+      "mean_spread_cents": 13.273716796484921,
+      "median_two_sided_depth_shares": 1298.0,
+      "buy_slippage_bps": 1.8274526194307434,
+      "buy_fill_rate": 0.8572856001597763,
+      "sell_slippage_bps": 1.8421486356569556,
+      "sell_fill_rate": 0.9426127421609747
+    },
+    {
+      "ticker": "AAPL",
+      "bucket": "middle",
+      "observations": 10014,
+      "mean_spread_cents": 15.059816257239865,
+      "median_two_sided_depth_shares": 1294.0,
+      "buy_slippage_bps": 2.0489888729621875,
+      "buy_fill_rate": 0.8589734371879368,
+      "sell_slippage_bps": 2.0534615308504236,
+      "sell_fill_rate": 0.9294703415218694
+    },
+    {
+      "ticker": "AAPL",
+      "bucket": "high",
+      "observations": 10012,
+      "mean_spread_cents": 18.503995205753096,
+      "median_two_sided_depth_shares": 1320.5,
+      "buy_slippage_bps": 2.48736316780268,
+      "buy_fill_rate": 0.884005193767479,
+      "sell_slippage_bps": 2.6009548371488225,
+      "sell_fill_rate": 0.8886993607670794
+    },
+    {
+      "ticker": "GOOG",
+      "bucket": "low",
+      "observations": 3723,
+      "mean_spread_cents": 25.955949503088906,
+      "median_two_sided_depth_shares": 866,
+      "buy_slippage_bps": 3.3655498207515695,
+      "buy_fill_rate": 0.6954208971259737,
+      "sell_slippage_bps": 3.3692442172425032,
+      "sell_fill_rate": 0.8206709642761214
+    },
+    {
+      "ticker": "GOOG",
+      "bucket": "middle",
+      "observations": 3723,
+      "mean_spread_cents": 27.334407735697017,
+      "median_two_sided_depth_shares": 876,
+      "buy_slippage_bps": 3.634842158655011,
+      "buy_fill_rate": 0.7104625302175664,
+      "sell_slippage_bps": 3.5766832098960117,
+      "sell_fill_rate": 0.8182524845554661
+    },
+    {
+      "ticker": "GOOG",
+      "bucket": "high",
+      "observations": 3723,
+      "mean_spread_cents": 35.37845823260811,
+      "median_two_sided_depth_shares": 860,
+      "buy_slippage_bps": 5.258695575052531,
+      "buy_fill_rate": 0.7588638195004029,
+      "sell_slippage_bps": 4.885533226087482,
+      "sell_fill_rate": 0.7725667472468439
+    },
+    {
+      "ticker": "INTC",
+      "bucket": "low",
+      "observations": 19162,
+      "mean_spread_cents": 1.1937689176495148,
+      "median_two_sided_depth_shares": 174696.0,
+      "buy_slippage_bps": 2.2229281750124525,
+      "buy_fill_rate": 1.0,
+      "sell_slippage_bps": 2.222385813859313,
+      "sell_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "bucket": "middle",
+      "observations": 19150,
+      "mean_spread_cents": 1.2453263707571802,
+      "median_two_sided_depth_shares": 171740.5,
+      "buy_slippage_bps": 2.3152752268732293,
+      "buy_fill_rate": 1.0,
+      "sell_slippage_bps": 2.3252101192194106,
+      "sell_fill_rate": 1.0
+    },
+    {
+      "ticker": "INTC",
+      "bucket": "high",
+      "observations": 19150,
+      "mean_spread_cents": 1.28,
+      "median_two_sided_depth_shares": 154561.5,
+      "buy_slippage_bps": 2.415331803863557,
+      "buy_fill_rate": 1.0,
+      "sell_slippage_bps": 2.3967500549102234,
+      "sell_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "bucket": "low",
+      "observations": 19794,
+      "mean_spread_cents": 1.2352733151460038,
+      "median_two_sided_depth_shares": 174687.0,
+      "buy_slippage_bps": 2.040435924684059,
+      "buy_fill_rate": 1.0,
+      "sell_slippage_bps": 2.0341611031074254,
+      "sell_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "bucket": "middle",
+      "observations": 19811,
+      "mean_spread_cents": 1.2163444551007017,
+      "median_two_sided_depth_shares": 174314,
+      "buy_slippage_bps": 2.0155415960654612,
+      "buy_fill_rate": 1.0,
+      "sell_slippage_bps": 2.0083651964737212,
+      "sell_fill_rate": 1.0
+    },
+    {
+      "ticker": "MSFT",
+      "bucket": "high",
+      "observations": 19777,
+      "mean_spread_cents": 1.3039389189462507,
+      "median_two_sided_depth_shares": 170440,
+      "buy_slippage_bps": 2.162785946922737,
+      "buy_fill_rate": 1.0,
+      "sell_slippage_bps": 2.160810703401782,
+      "sell_fill_rate": 1.0
+    }
+  ],
+  "synthetic_stress": [
+    {
+      "depth_per_level": 2,
+      "shock_half_range_ticks": 0,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 0.25,
+      "mean_abs_slippage_ticks": 3.0
+    },
+    {
+      "depth_per_level": 2,
+      "shock_half_range_ticks": 2,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 0.25,
+      "mean_abs_slippage_ticks": 3.0078
+    },
+    {
+      "depth_per_level": 2,
+      "shock_half_range_ticks": 10,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 0.25,
+      "mean_abs_slippage_ticks": 5.7078
+    },
+    {
+      "depth_per_level": 10,
+      "shock_half_range_ticks": 0,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 1.0,
+      "mean_abs_slippage_ticks": 2.5
+    },
+    {
+      "depth_per_level": 10,
+      "shock_half_range_ticks": 2,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 1.0,
+      "mean_abs_slippage_ticks": 2.4939
+    },
+    {
+      "depth_per_level": 10,
+      "shock_half_range_ticks": 10,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 1.0,
+      "mean_abs_slippage_ticks": 5.5151
+    },
+    {
+      "depth_per_level": 50,
+      "shock_half_range_ticks": 0,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 1.0,
+      "mean_abs_slippage_ticks": 1.0
+    },
+    {
+      "depth_per_level": 50,
+      "shock_half_range_ticks": 2,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 1.0,
+      "mean_abs_slippage_ticks": 1.3969
+    },
+    {
+      "depth_per_level": 50,
+      "shock_half_range_ticks": 10,
+      "trials": 10000,
+      "order_size": 40,
+      "mean_fill_rate": 1.0,
+      "mean_abs_slippage_ticks": 5.2263
+    }
+  ],
+  "observation_csv": "results/lobster_execution_observations.csv"
+}

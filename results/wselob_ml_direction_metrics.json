@@ -1,0 +1,141 @@
+{
+  "study": "PEKAO next-mid-price direction classification",
+  "source_csv": "results/wselob_2017_execution_observations.csv",
+  "source_csv_sha256": "0587079af9afb40b68187713ddbc0c27b14d621ed962f1ee996dfee331c21309",
+  "source_rows": 94390,
+  "labeled_rows": 58426,
+  "label_definition": {
+    "horizon_seconds": 60.0,
+    "target_quote_rule": "first same-session sampled quote at or after the horizon",
+    "maximum_target_delay_seconds": 120.0,
+    "classes": {
+      "down": "future mid < current mid",
+      "flat": "future mid = current mid",
+      "up": "future mid > current mid"
+    },
+    "class_counts": {
+      "down": 26542,
+      "flat": 5875,
+      "up": 26009
+    },
+    "realized_delay_seconds": {
+      "median": 79.20655345916748,
+      "p95": 114.16791927814484,
+      "maximum": 119.99996590614319
+    }
+  },
+  "split_method": "chronological blocks of whole trading dates; no random row split",
+  "split_dates": {
+    "train": {
+      "first": "20170102",
+      "last": "20170912",
+      "date_count": 175
+    },
+    "validation": {
+      "first": "20170913",
+      "last": "20171103",
+      "date_count": 37
+    },
+    "test": {
+      "first": "20171106",
+      "last": "20171229",
+      "date_count": 38
+    }
+  },
+  "split_rows": {
+    "train": 44423,
+    "validation": 6639,
+    "test": 7364
+  },
+  "features": [
+    "spread_bps",
+    "depth_imbalance",
+    "log_bid_depth",
+    "log_ask_depth",
+    "log_total_depth",
+    "volatility_1m_bps",
+    "return_30s_bps",
+    "return_120s_bps",
+    "return_300s_bps"
+  ],
+  "models": {
+    "majority_baseline": "DummyClassifier(strategy=prior)",
+    "logistic_regression": "median imputation + standardization + LogisticRegression",
+    "hist_gradient_boosting": "median imputation + HistGradientBoostingClassifier; fixed settings, no test tuning"
+  },
+  "validation_metrics": {
+    "majority_baseline": {
+      "accuracy": 0.4331977707486067,
+      "balanced_accuracy": 0.3333333333333333,
+      "macro_f1": 0.20150639341390786,
+      "log_loss": 1.0050168433888027
+    },
+    "logistic_regression": {
+      "accuracy": 0.4324446452779033,
+      "balanced_accuracy": 0.3332598425808657,
+      "macro_f1": 0.3033946111495139,
+      "log_loss": 0.9931095466669526
+    },
+    "hist_gradient_boosting": {
+      "accuracy": 0.46919716824823016,
+      "balanced_accuracy": 0.3617486784614468,
+      "macro_f1": 0.3353243625838944,
+      "log_loss": 0.9909497560469083
+    }
+  },
+  "test_metrics": {
+    "majority_baseline": {
+      "accuracy": 0.4433731667571972,
+      "balanced_accuracy": 0.3333333333333333,
+      "macro_f1": 0.204785649324176,
+      "log_loss": 0.9658721445454044
+    },
+    "logistic_regression": {
+      "accuracy": 0.43604019554589896,
+      "balanced_accuracy": 0.3271353461330176,
+      "macro_f1": 0.29995111271553404,
+      "log_loss": 0.9673385417207554
+    },
+    "hist_gradient_boosting": {
+      "accuracy": 0.4670016295491581,
+      "balanced_accuracy": 0.3501322002108677,
+      "macro_f1": 0.3287767145480834,
+      "log_loss": 0.9676932756633222
+    }
+  },
+  "date_bootstrap": {
+    "method": "2,000 paired bootstrap resamples of held-out trading dates",
+    "balanced_accuracy_95ci": {
+      "majority_baseline": [
+        0.3333333333333333,
+        0.3333333333333333
+      ],
+      "logistic_regression": [
+        0.3175489898433386,
+        0.33676414931742193
+      ],
+      "hist_gradient_boosting": [
+        0.34068948405627864,
+        0.36045401542766564
+      ]
+    },
+    "delta_vs_majority_95ci": {
+      "logistic_regression": [
+        -0.015784343489994697,
+        0.003430815984088636
+      ],
+      "hist_gradient_boosting": [
+        0.007356150722945319,
+        0.02712068209433231
+      ]
+    }
+  },
+  "software": {
+    "python_packages": {
+      "numpy": "2.2.3",
+      "pandas": "2.3.3",
+      "scikit_learn": "1.6.1"
+    }
+  },
+  "interpretation": "Predictive classification only. No trading rule, net returns, or deployment claim is tested."
+}

@@ -1,0 +1,39 @@
+{
+  "data": "data\\wselob_2017\\PEKAO_lob_2017_zlib.h5",
+  "dates": 250,
+  "date_start": "20170102",
+  "date_end": "20171229",
+  "raw_events": 9869579,
+  "stride_raw_events": 100,
+  "python_hdf5_reconstruction_seconds": 168.9732483001426,
+  "normalized_binary_write_seconds": 89.27759249997325,
+  "cpp_runs_seconds": [
+    4.854731599800289,
+    6.560983000090346,
+    7.5065664001740515
+  ],
+  "cpp_median_seconds": 6.560983000090346,
+  "cpp_min_seconds": 4.854731599800289,
+  "cpp_build_optimization": "-O3 -DNDEBUG",
+  "cpp_events_per_second_median": 1504283.5806561448,
+  "cpp_output_bytes": 23377601,
+  "matched_snapshots": 96465,
+  "mismatches": 0,
+  "processed_events": 9869579,
+  "missing_modify_updates": 6239,
+  "output_sha256": "599830ee8be735abf9ddf210f3bf87546796463f3e6cf4f8492c1bc21c277cde",
+  "python_missing_modify_updates": 6239,
+  "aggregate_volume_checks": 9796236,
+  "aggregate_volume_mismatches": 1617,
+  "timing_note": "C++ measurement includes process startup, binary feed I/O, parsing, book mutations, and TSV snapshot output. Python time includes HDF5 decoding and reconstruction; it is a reference timing, not a controlled language speed comparison.",
+  "python_reconstruction_diagnostic_totals": {
+    "full_refreshes": 250,
+    "invalid_or_one_sided_snapshots": 2360,
+    "aggregate_volume_checks": 9796236,
+    "non_resting_adds_skipped": 14477,
+    "delete_without_live_nonresting_order": 8233,
+    "modify_without_live_nonresting_order": 6239,
+    "aggregate_volume_mismatches": 1617
+  },
+  "cpp_compiler": "g++ 14.2.0 (-O3)"
+}

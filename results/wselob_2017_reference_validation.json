@@ -1,0 +1,55 @@
+{
+  "reference": "data\\wselob_2017\\orderbook2.py",
+  "dates": 9,
+  "events_per_date": 5000,
+  "stride": 100,
+  "matched_snapshots": 425,
+  "mismatches": 0,
+  "per_date": [
+    {
+      "date": "20170102",
+      "events_replayed": 5000,
+      "matching_snapshots": 48
+    },
+    {
+      "date": "20170215",
+      "events_replayed": 5000,
+      "matching_snapshots": 46
+    },
+    {
+      "date": "20170330",
+      "events_replayed": 5000,
+      "matching_snapshots": 47
+    },
+    {
+      "date": "20170518",
+      "events_replayed": 5000,
+      "matching_snapshots": 48
+    },
+    {
+      "date": "20170703",
+      "events_replayed": 5000,
+      "matching_snapshots": 48
+    },
+    {
+      "date": "20170816",
+      "events_replayed": 5000,
+      "matching_snapshots": 47
+    },
+    {
+      "date": "20170928",
+      "events_replayed": 5000,
+      "matching_snapshots": 47
+    },
+    {
+      "date": "20171113",
+      "events_replayed": 5000,
+      "matching_snapshots": 48
+    },
+    {
+      "date": "20171229",
+      "events_replayed": 5000,
+      "matching_snapshots": 46
+    }
+  ]
+}

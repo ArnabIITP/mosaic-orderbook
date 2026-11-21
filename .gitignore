@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+build/
+build-ci/
+order_book.exe
+
+# Downloaded research datasets are kept locally and fetched from their sources.
+/data/lobster_amzn_2012-06-21/
+/data/lobster_other_tickers_2012-06-21/
+/data/wselob_2017/*.h5
+/data/wselob_2017/order_data.html
+
+# Large row-level outputs are reproducible from the analysis scripts.
+/results/lobster_execution_observations.csv
+/results/wselob_2017_execution_observations.csv
+/results/wselob_2017_latency_observations.csv
+/results/wselob_ml_direction_predictions.csv
