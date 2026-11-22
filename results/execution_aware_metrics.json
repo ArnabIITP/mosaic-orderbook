@@ -308,6 +308,7 @@
     "hist_gradient_boosting": "Histogram gradient boosting",
     "depth_imbalance_sign": "Depth-imbalance sign"
   },
+  "predictions_csv": "execution_aware_predictions.csv",
   "bootstrap": {
     "replicates": 2000,
     "method": "date-cluster bootstrap of trade-weighted mean net markout; seed 20261122"

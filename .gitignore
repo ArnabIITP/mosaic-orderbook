@@ -16,3 +16,4 @@ order_book.exe
 /results/wselob_2017_execution_observations.csv
 /results/wselob_2017_latency_observations.csv
 /results/wselob_ml_direction_predictions.csv
+/results/execution_aware_predictions.csv

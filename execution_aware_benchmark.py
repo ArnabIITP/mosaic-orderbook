@@ -43,6 +43,8 @@ def _attach_future_book(data: pd.DataFrame, source: pd.DataFrame) -> pd.DataFram
         positions = targets[valid]
         future = book.iloc[positions]
         selected["future_mid"] = future["mid"].to_numpy(dtype=float)
+        selected["future_event_index"] = future["event_index"].to_numpy(dtype=np.int64)
+        selected["future_timestamp"] = future["timestamp"].to_numpy(dtype=float)
         selected["future_buy_bps"] = future[f"buy_{ORDER_SIZE}_bps"].to_numpy(dtype=float)
         selected["future_sell_bps"] = future[f"sell_{ORDER_SIZE}_bps"].to_numpy(dtype=float)
         selected["future_buy_fill"] = future[f"buy_{ORDER_SIZE}_fill"].to_numpy(dtype=float)
@@ -139,7 +141,8 @@ def _render_report(metrics: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def run(input_path: Path, output_json: Path, output_report: Path, fee_bps: float) -> dict[str, Any]:
+def run(input_path: Path, output_json: Path, output_report: Path, fee_bps: float,
+        predictions_path: Path) -> dict[str, Any]:
     source = pd.read_csv(input_path, dtype={"date": str})
     source["date"] = source["date"].str.zfill(8)
     labeled = _with_features_and_labels(source, HORIZON_SECONDS, MAX_DELAY_SECONDS)
@@ -170,6 +173,11 @@ def run(input_path: Path, output_json: Path, output_report: Path, fee_bps: float
         "depth_imbalance_sign": "Depth-imbalance sign",
     }
     markouts = {name: _trade_outcomes(test, prediction, fee_bps) for name, prediction in predictions.items()}
+    prediction_rows = test[["date", "event_index", "timestamp", "mid", "label", "target_delay_seconds", "future_mid", "future_event_index", "future_timestamp"]].copy()
+    prediction_rows["prediction_hist_gradient_boosting"] = predictions["hist_gradient_boosting"]
+    prediction_rows["prediction_majority_baseline"] = predictions["majority_baseline"]
+    predictions_path.parent.mkdir(parents=True, exist_ok=True)
+    prediction_rows.to_csv(predictions_path, index=False)
     common_dates = sorted(set(markouts["majority_baseline"]["daily_mean_net_markout_bps"])
                           & set(markouts["hist_gradient_boosting"]["daily_mean_net_markout_bps"]))
     paired_differences = np.array([
@@ -215,6 +223,7 @@ def run(input_path: Path, output_json: Path, output_report: Path, fee_bps: float
         "predicted_class_counts": {name: {label: int(np.sum(prediction == label)) for label in ("up", "down", "flat")}
                                    for name, prediction in predictions.items()},
         "signal_rules": rules,
+        "predictions_csv": predictions_path.name,
         "bootstrap": {"replicates": BOOTSTRAP_REPS, "method": "date-cluster bootstrap of trade-weighted mean net markout; seed 20261122"},
         "interpretation": "Conditional, overlapping hypothetical round-trip markouts; not a portfolio backtest or evidence of a deployable strategy.",
     }
@@ -230,9 +239,10 @@ def main() -> None:
     parser.add_argument("--input", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output-json", type=Path, default=ROOT / "results" / "execution_aware_metrics.json")
     parser.add_argument("--output-report", type=Path, default=ROOT / "results" / "execution_aware_study.md")
+    parser.add_argument("--predictions", type=Path, default=ROOT / "results" / "execution_aware_predictions.csv")
     parser.add_argument("--fee-bps-per-side", type=float, default=FEE_BPS_PER_SIDE)
     args = parser.parse_args()
-    result = run(args.input, args.output_json, args.output_report, args.fee_bps_per_side)
+    result = run(args.input, args.output_json, args.output_report, args.fee_bps_per_side, args.predictions)
     print(json.dumps({"target": result["target"], "split_rows": result["split_rows"], "full_fill_coverage_pct": result["full_fill_coverage_pct"], "markout_metrics": result["markout_metrics"], "outputs": [str(args.output_json), str(args.output_report)]}, indent=2))
 
 

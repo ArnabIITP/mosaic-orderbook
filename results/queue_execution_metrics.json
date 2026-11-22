@@ -1,0 +1,99 @@
+{
+  "study": "WSELOB PEKAO queue-aware passive execution sensitivity",
+  "data_source": "PEKAO_lob_2017_zlib.h5",
+  "data_sha256": "3c418a55a492ebe2e39c8513cd7fc7e3e6827dc1a176af09fdcaad9f3485bae6",
+  "signals_source": "execution_aware_predictions.csv",
+  "signals_sha256": "f7e45ba414dc4b0f36a6b916e6235a9653d43f6532a0f8caf0a68af506a9e200",
+  "selected_predictions": 383,
+  "simulated_orders": 383,
+  "selection": "Every 20th directional out-of-sample boosted-tree prediction per session.",
+  "order_size_shares": 500,
+  "event_stride": 100,
+  "latency_assumption": "Orders are placed after the first complete timestamp group at or after configured latency; this quantizes arrival to source event timestamps.",
+  "configured_latency_ms": 0.0,
+  "entry_maker_fee_bps_assumption": 0.1,
+  "taker_fee_bps_per_side_assumption": 1.0,
+  "bootstrap_replicates": 2000,
+  "queue_model": {
+    "priority": "FIFO at the displayed best bid for up calls and best ask for down calls; order joins behind all visible same-price orders.",
+    "additions": "New same-price orders after placement are behind the simulated order.",
+    "deletions": "D events cancel the named order ahead without filling the simulated order.",
+    "ambiguity_sensitivity": "WSELOB encodes order modifications and partial fills as M updates without an independent trade-print event; report contrasts treating same-price quantity decreases as executions versus cancellations.",
+    "order_remainder": "Unfilled quantity is cancelled at the target horizon."
+  },
+  "results": {
+    "passive_execution_proxy": {
+      "policy": "passive_execution_proxy",
+      "orders": 383,
+      "filled_orders": 88,
+      "fill_probability_pct": 22.97650130548303,
+      "mean_fill_fraction_pct": 11.153002610966057,
+      "mean_queue_ahead_shares_at_submission": 565.8459530026109,
+      "complete_round_trip_orders": 88,
+      "complete_round_trip_probability_pct": 22.97650130548303,
+      "complete_exit_probability_given_entry_fill_pct": 100.0,
+      "mean_round_trip_net_bps_on_completed_notional": -4.282802635125975,
+      "mean_round_trip_net_bps_on_requested_notional": -0.6001823122285114,
+      "requested_notional_date_bootstrap_95ci_bps": [
+        -0.9748425377891105,
+        -0.2586730062778418
+      ],
+      "conditional_midpoint_markout_after_entry_fee_bps": 2.5679439904781782,
+      "conditional_midpoint_markout_date_bootstrap_95ci_bps": [
+        null,
+        null
+      ],
+      "entry_fee_bps_assumption": 0.1,
+      "exit_fee_bps_assumption": 1.0
+    },
+    "passive_cancellation": {
+      "policy": "passive_cancellation",
+      "orders": 383,
+      "filled_orders": 0,
+      "fill_probability_pct": 0.0,
+      "mean_fill_fraction_pct": 0.0,
+      "mean_queue_ahead_shares_at_submission": 565.8459530026109,
+      "complete_round_trip_orders": 0,
+      "complete_round_trip_probability_pct": 0.0,
+      "complete_exit_probability_given_entry_fill_pct": null,
+      "mean_round_trip_net_bps_on_completed_notional": null,
+      "mean_round_trip_net_bps_on_requested_notional": 0.0,
+      "requested_notional_date_bootstrap_95ci_bps": [
+        0.0,
+        0.0
+      ],
+      "conditional_midpoint_markout_after_entry_fee_bps": null,
+      "conditional_midpoint_markout_date_bootstrap_95ci_bps": [
+        null,
+        null
+      ],
+      "entry_fee_bps_assumption": 0.1,
+      "exit_fee_bps_assumption": 1.0
+    },
+    "marketable_taker": {
+      "policy": "marketable_taker",
+      "orders": 383,
+      "filled_orders": 383,
+      "fill_probability_pct": 100.0,
+      "mean_fill_fraction_pct": 100.0,
+      "mean_queue_ahead_shares_at_submission": 0.0,
+      "complete_round_trip_orders": 383,
+      "complete_round_trip_probability_pct": 100.0,
+      "complete_exit_probability_given_entry_fill_pct": 100.0,
+      "mean_round_trip_net_bps_on_completed_notional": -17.13992551358743,
+      "mean_round_trip_net_bps_on_requested_notional": -17.13992551358743,
+      "requested_notional_date_bootstrap_95ci_bps": [
+        -19.203818993792652,
+        -16.176930872672834
+      ],
+      "conditional_midpoint_markout_after_entry_fee_bps": null,
+      "conditional_midpoint_markout_date_bootstrap_95ci_bps": [
+        null,
+        null
+      ],
+      "entry_fee_bps_assumption": 1.0,
+      "exit_fee_bps_assumption": 1.0
+    }
+  },
+  "interpretation": "Queue-aware passive fill sensitivity and displayed-book entry/exit comparison. Market impact, hidden liquidity, own-order interference, portfolio risk, and identified trade prints are not modeled; outcomes are not live strategy P&L."
+}

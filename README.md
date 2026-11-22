@@ -7,11 +7,17 @@
 
 MOSAIC started as a price-time-priority order-book simulator. It now includes a Python reference, a C++17 replay engine, historical execution studies, and a multi-stock direction benchmark. The research asks whether displayed liquidity and volatility are associated with execution cost, and whether order-book features transfer across instruments.
 
+## Quick demo
+
+Run `python demo.py` with Python 3.10+ and no downloaded data. It shows a passive order joining behind a FIFO queue, advancing on trades, not on cancellations, and a marketable-order sweep baseline. This is a deterministic synthetic illustration of the simulator, not a historical result.
+
 ## Findings
 
 ![MOSAIC research results: held-out stock direction, volatility-related execution costs, replay verification, and costed markouts](assets/mosaic_readme_results.png)
 
 - **Unseen-stock transfer:** From 85.8 million updates, 817,626 usable sampled books were reconstructed across five WSE stocks. Train on four stocks’ early 2017 dates and test on a fifth’s final 38 dates, with the held-out stock excluded from training. The boosted tree beats the training-prior baseline on all five names by 1.58–3.95 balanced-accuracy points; every 95% date-bootstrap interval excludes zero. Its log loss is also lower on all five. Mean lift is 2.77 points. This is historical cross-stock transfer within one exchange and one year, not evidence of a tradeable edge. [Protocol and per-stock results](results/multi_stock_ml_study.md)
+- **Walk-forward and ablation:** Across five expanding test blocks with five-session embargoes, the PEKAO boosted model reaches 35.4% balanced accuracy versus 33.3% for the prior baseline (date-bootstrap lift interval +1.48 to +2.63 points). Removing book-state features leaves the pooled score essentially unchanged; removing recent returns lowers it to 34.0%. In this setup, the measured lift is not evidence that book-state features add value beyond recent returns. [Fold results and ablations](results/walk_forward_study.md)
+- **Execution-policy comparison:** On the same 383 held-out calls, a 500-share passive order filled at least partially on 23.0% of calls under the optimistic assumption that same-price WSE `M` decreases represent execution. After sweeping the displayed opposite-side book at the target and charging 0.1 bp maker entry plus 1 bp taker exit, the mean was **−0.60 bps per requested notional** (date-bootstrap 95% interval −0.97 to −0.26). Conditional midpoint markout had been +2.57 bps, showing why midpoint marks alone overstate execution quality. An immediate marketable entry and exit at 1 bp per side averaged **−17.14 bps** (95% interval −19.20 to −16.18). Treating ambiguous `M` decreases as cancellations produced no passive fills. These are displayed-depth diagnostics, not strategy returns; both the passive fill interpretation and static-book assumptions are material limitations. [Policy comparison and sensitivity](results/queue_execution_sensitivity.md)
 - **Five-stock reconstruction check:** MOSAIC's top-ten books matched the dataset author's reference on 2,022 sampled books across nine dates, with zero mismatches. The check covers only the first 5,000 events per selected date; it is not exhaustive. [Validation details](results/wselob_multi_stock_reference_validation.md)
 - **Within-stock direction:** On PEKAO’s final 38 trading dates, the boosted tree reached 35.0% balanced accuracy versus 33.3% for the training-prior baseline (7,364 snapshots). Lift was 1.68 points (95% date-bootstrap interval: 0.74–2.71). Log loss was slightly worse than baseline. [Methods and full results](results/ml_direction_study.md)
 - **Horizon sensitivity:** The boosted tree’s balanced-accuracy lift was 1.68–2.64 points across requested 5–60 second horizons using identical date blocks. However, the 5- and 10-second targets cover only 13.3% and 21.8% of snapshots, and their log loss is worse than the baseline. The faster-horizon rows are selected toward busier intervals. [Full comparison](results/horizon_sensitivity_study.md)
@@ -41,6 +47,8 @@ The multi-stock study uses the same fixed tree and linear baselines, not a Trans
 - Time-ordered ML classification benchmark, baseline comparisons, held-out results, and date-clustered uncertainty intervals.
 - Five-fold leave-one-stock-out WSE benchmark with date-based out-of-sample tests and equal total training weight per instrument.
 - Cost-aware out-of-sample directional markouts using displayed-book entry and exit sweeps, with date-clustered uncertainty intervals.
+- Event-driven passive FIFO shadow orders with order-ahead cancellations, partial fills, configurable arrival delay, fee assumptions, and markout sensitivity.
+- Expanding-window walk-forward model comparisons with five-session embargoes and feature-family ablations.
 - Fixed-date horizon sensitivity at 5, 10, 30, and 60 seconds, including row coverage and realized target delay.
 - Sampled C++ book-mutation latency percentiles, reported separately from full replay throughput.
 - Python and C++ checks plus GitHub Actions CI with AddressSanitizer and UndefinedBehaviorSanitizer on Linux.
@@ -69,6 +77,12 @@ flowchart LR
     N --> O[Per-stock held-out metrics]
     G --> L[Costed 500-share round-trip markout]
     K --> L
+    I --> P[Queue-aware passive shadow orders]
+    A --> P
+    P --> Q[Queue fill and passive policy sensitivity]
+    G --> R[Marketable entry / exit baseline]
+    Q --> S[Displayed-book round-trip comparison]
+    R --> S
 ```
 
 ## Reproduce the studies
@@ -93,9 +107,12 @@ python horizon_sensitivity.py
 python multi_stock_ml_benchmark.py --data-dir data\wselob_2017 --stride 100
 python validate_wselob_multi_stock.py
 python ml_direction_benchmark.py
+python walk_forward_benchmark.py
+python execution_aware_benchmark.py --fee-bps-per-side 1
+python queue_execution_study.py
 ```
 
-The WSELOB analysis writes the row-level observation CSV locally. The cost-aware and horizon scripts read that file and write their reports under `results/`. The multi-stock command builds a cached snapshot file under `build/` from the five raw HDF5 inputs. The final ML command regenerates the PEKAO metrics and README figure, including the cross-stock and cost-aware panels. Markout observations overlap in time and are not strategy returns. For an independent sampled-book comparison against the data author’s reference code:
+The WSELOB analysis writes the row-level observation CSV locally. The cost-aware, queue, and horizon scripts read it and write reports under `results/`; the execution-aware benchmark exports local held-out predictions with entry and target event indices. To reproduce queue sensitivities, run the default 500-share study, then rerun with `--order-size 100` and with `--latency-ms 100`, using separate output paths; finish with `python summarize_queue_execution.py`. The multi-stock command builds a cache under `build/` from the five raw HDF5 inputs. Markout observations overlap in time and are not strategy returns. For an independent sampled-book comparison against the data author’s reference code:
 
 ```powershell
 python -m pip install -r requirements-validation.txt
@@ -122,6 +139,13 @@ ctest --test-dir build-ci --output-on-failure
 - [Execution-aware machine-readable metrics](results/execution_aware_metrics.json)
 - [Horizon sensitivity study](results/horizon_sensitivity_study.md)
 - [Horizon sensitivity machine-readable metrics](results/horizon_sensitivity_metrics.json)
+- [Walk-forward and feature-ablation study](results/walk_forward_study.md)
+- [Walk-forward machine-readable metrics](results/walk_forward_metrics.json)
+- [Queue-aware passive execution study](results/queue_execution_study.md)
+- [Queue execution and policy comparison](results/queue_execution_sensitivity.md)
+- [Queue execution metrics: 500 shares, immediate](results/queue_execution_metrics.json)
+- [Queue execution metrics: 100 shares, immediate](results/queue_execution_100share_metrics.json)
+- [Queue execution metrics: 500 shares, 100 ms arrival](results/queue_execution_latency100ms_metrics.json)
 - [WSELOB machine-readable metrics](results/wselob_2017_metrics.json)
 - [ML machine-readable metrics](results/wselob_ml_direction_metrics.json)
 - [C++ raw-feed replay benchmark](results/cpp_event_replay_benchmark.json)
