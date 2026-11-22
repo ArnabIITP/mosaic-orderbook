@@ -346,6 +346,16 @@ def analyze(data_path: Path = DEFAULT_DATA, output_dir: Path = ROOT / "results",
     meta = {**metadata, "ticker": "PEKAO", "date_start": min(by_day), "date_end": max(by_day), "usable_days": len(by_day), "stride_raw_events": stride, "usable_snapshots": len(rows), "hdf5_size_bytes": data_path.stat().st_size, "hdf5_sha256": hashlib.sha256(data_path.read_bytes()).hexdigest(), "reference_validation": reference_validation, "cpp_event_replay_benchmark": event_benchmark, "replay_execution_engine": {**cpp, "python_sweep_seconds": py_seconds}, "latency_replay_validation": latency_validation, "overall_execution": overall, "volatility_terciles_500_shares": vol_rows, "directional_depth_terciles_500_shares": liq_rows, "paired_daily_volatility_effects": vol_effects, "paired_daily_depth_effects": liq_effects, "latency_fee_sensitivity": latency_summary, "fee_assumption_bps_per_side": fee_bps, "observation_csv": csv_path.name, "latency_csv": latency_path.name}
     (output_dir / "wselob_2017_metrics.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
 
+    if event_benchmark:
+        mutation_profile = event_benchmark.get("cpp_mutation_latency_profile", {})
+        mutation_ns = mutation_profile.get("percentiles_ns", {})
+        event_replay_summary = (
+            f"A separate Release build (`{event_benchmark['cpp_compiler']}`, `{event_benchmark['cpp_build_optimization']}`) replayed all {event_benchmark['processed_events']:,} source updates after one warmup, then completed {len(event_benchmark['cpp_runs_seconds'])} uninstrumented runs. Median wall time was {event_benchmark['cpp_median_seconds']:.2f}s ({event_benchmark['cpp_events_per_second_median']:,.0f} updates/s); runs ranged from {event_benchmark['cpp_min_seconds']:.2f}s to {event_benchmark['cpp_max_seconds']:.2f}s. The benchmark host was `{event_benchmark['benchmark_host']['platform']}`, `{event_benchmark['benchmark_host']['processor']}`. It emitted {event_benchmark['matched_snapshots']:,} sampled books and matched Python exactly (zero mismatches); output SHA-256 `{event_benchmark['output_sha256']}`. The uninstrumented timing includes process startup, binary feed I/O, parsing, book updates, and snapshot output.\n\n"
+            f"A separate pass timed one book mutation per {mutation_profile.get('sample_every_events', 0):,} feed events after binary decoding. Across {mutation_profile.get('sample_count', 0):,} deterministic samples, measured p50/p95/p99/p99.9 mutation times were {mutation_ns.get('p50_ns', 0):,}/{mutation_ns.get('p95_ns', 0):,}/{mutation_ns.get('p99_ns', 0):,}/{mutation_ns.get('p999_ns', 0):,} ns. These sampled software mutation times exclude parsing and output; they are not network or exchange latency and may miss rare event types. The profile pass matched the same output. Python's {event_benchmark['python_hdf5_reconstruction_seconds']:.2f}s reconstruction reads/decompresses HDF5 and is not a controlled language-versus-language benchmark."
+        )
+    else:
+        event_replay_summary = "Run `python replay_wselob_cpp.py --stride 100 --repetitions 7 --profile-every 1024` to perform the full-stream Release benchmark and sampled mutation profile."
+
     report = f"""# WSELOB 2017 PEKAO Execution Study
 
 ## Executive summary
@@ -376,7 +386,7 @@ The C++17 matcher is used for the reported execution outcomes and Python indepen
 
 ## C++ full-stream replay benchmark
 
-{f"A separate Release build (`{event_benchmark['cpp_compiler']}`, `{event_benchmark['cpp_build_optimization']}`) replayed all {event_benchmark['processed_events']:,} source updates {len(event_benchmark['cpp_runs_seconds'])} times. Median wall time was {event_benchmark['cpp_median_seconds']:.2f}s ({event_benchmark['cpp_events_per_second_median']:,.0f} updates/s), with run times {', '.join(f'{v:.2f}s' for v in event_benchmark['cpp_runs_seconds'])}. It emitted {event_benchmark['matched_snapshots']:,} sampled books and matched Python exactly (zero mismatches); output SHA-256 `{event_benchmark['output_sha256']}`. This includes binary feed I/O, parsing, state updates, and snapshot output. Python's {event_benchmark['python_hdf5_reconstruction_seconds']:.2f}s reconstruction reads/decompresses HDF5 and is not a controlled language-versus-language benchmark." if event_benchmark else "Run `python replay_wselob_cpp.py --stride 100 --repetitions 3` to perform and verify the full-stream Release benchmark."}
+{event_replay_summary}
 
 {f"The independent order-book reference comparison matched {reference_validation['matched_snapshots']:,} snapshots over {reference_validation['dates']} dates with zero mismatches." if reference_validation else "The independent order-book reference comparison has not yet been run."} The `agg_volume` boundary audit found {metadata['reconstruction_diagnostics'].get('aggregate_volume_mismatches', 0):,} differences across {metadata['reconstruction_diagnostics'].get('aggregate_volume_checks', 0):,} checks ({(metadata['reconstruction_diagnostics'].get('aggregate_volume_mismatches', 0) / max(1, metadata['reconstruction_diagnostics'].get('aggregate_volume_checks', 0)) * 100):.4f}%). The metrics file records the mismatches and example rows.
 
@@ -430,7 +440,7 @@ Install Python 3.10+, `h5py`, and a C++17 compiler. From the project root run:
 python -m pip install -r requirements-research.txt
 python -m pip install -r requirements-validation.txt
 python validate_wselob_reference.py --days 5 --events-per-day 5000
-python replay_wselob_cpp.py --stride 100 --repetitions 3
+python replay_wselob_cpp.py --stride 100 --repetitions 7 --profile-every 1024
 python analyze_wselob.py --stride 100 --fee-bps 1
 ```
 

@@ -1,11 +1,15 @@
 #include "order_book.hpp"
 
 #include <array>
+#include <algorithm>
+#include <chrono>
+#include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
 #include <map>
 #include <sstream>
+#include <vector>
 
 namespace {
 
@@ -132,7 +136,7 @@ std::int64_t decode_signed(const std::array<unsigned char, 51>& bytes, std::size
     return static_cast<std::int64_t>(value);
 }
 
-int run_binary_feed(const std::string& path, std::size_t stride) {
+int run_binary_feed(const std::string& path, std::size_t stride, std::size_t profile_every = 0) {
     if (stride == 0) throw std::invalid_argument("stride must be positive");
     std::ifstream input(path, std::ios::binary);
     if (!input) throw std::runtime_error("could not open binary feed: " + path);
@@ -145,6 +149,7 @@ int run_binary_feed(const std::string& path, std::size_t stride) {
     std::int64_t event_index = -1, timestamp = 0;
     std::array<unsigned char, 51> bytes{};
     std::uint64_t processed = 0;
+    std::vector<std::uint64_t> mutation_samples_ns;
     while (input.read(reinterpret_cast<char*>(bytes.data()), static_cast<std::streamsize>(bytes.size()))) {
         const auto next_date = static_cast<std::uint32_t>(decode_unsigned(bytes, 0, 4));
         const auto next_index = static_cast<std::uint32_t>(decode_unsigned(bytes, 4, 4));
@@ -168,6 +173,9 @@ int run_binary_feed(const std::string& path, std::size_t stride) {
         const std::string type = type_char == '-' ? "-1" : std::string(1, type_char);
         const FeedKey key{order_date, order_id};
 
+        const bool sample_mutation = profile_every > 0 && processed % profile_every == 0;
+        const auto mutation_started = sample_mutation ? std::chrono::steady_clock::now()
+                                                      : std::chrono::steady_clock::time_point{};
         if (action == "F") {
             book.clear();
             orders.clear();
@@ -192,12 +200,30 @@ int run_binary_feed(const std::string& path, std::size_t stride) {
         } else {
             throw std::runtime_error("unsupported binary feed action");
         }
+        if (sample_mutation) {
+            const auto elapsed = std::chrono::duration_cast<std::chrono::nanoseconds>(
+                std::chrono::steady_clock::now() - mutation_started).count();
+            mutation_samples_ns.push_back(static_cast<std::uint64_t>(elapsed));
+        }
         if (event_index % static_cast<std::int64_t>(stride) == 0) sample_pending = true;
         ++processed;
     }
     if (input.gcount() != 0) throw std::runtime_error("truncated binary feed record");
     if (sample_pending) emit_feed_snapshot(book, std::to_string(date_index), event_index, timestamp);
     std::cout << "Q\tprocessed_events\t" << processed << "\tmissing_modify_updates\t" << missing_updates << '\n';
+    if (profile_every > 0 && !mutation_samples_ns.empty()) {
+        std::sort(mutation_samples_ns.begin(), mutation_samples_ns.end());
+        const auto quantile = [&mutation_samples_ns](double q) {
+            const auto rank = static_cast<std::size_t>(std::ceil(q * mutation_samples_ns.size()));
+            return mutation_samples_ns[std::max<std::size_t>(1, rank) - 1];
+        };
+        std::cerr << "PROFILE\tmutation_every\t" << profile_every
+                  << "\tmutation_samples\t" << mutation_samples_ns.size()
+                  << "\tmutation_p50_ns\t" << quantile(0.50)
+                  << "\tmutation_p95_ns\t" << quantile(0.95)
+                  << "\tmutation_p99_ns\t" << quantile(0.99)
+                  << "\tmutation_p999_ns\t" << quantile(0.999) << '\n';
+    }
     return 0;
 }
 
@@ -291,6 +317,16 @@ int main(int argc, char** argv) {
         } catch (const std::exception& error) {
             std::cerr << "order_book_cli: " << error.what() << '\n';
             return 2;
+        }
+    }
+    if (argc == 6 && std::string(argv[1]) == "--replay-events" &&
+        std::string(argv[4]) == "--profile-every") {
+        try {
+            return run_binary_feed(argv[2], static_cast<std::size_t>(std::stoull(argv[3])),
+                                   static_cast<std::size_t>(std::stoull(argv[5])));
+        } catch (const std::exception& error) {
+            std::cerr << "error: " << error.what() << '\n';
+            return 1;
         }
     }
     lob::OrderBook book;

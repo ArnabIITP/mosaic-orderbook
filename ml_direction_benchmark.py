@@ -44,7 +44,8 @@ FEATURES = (
 def _with_features_and_labels(frame: pd.DataFrame, horizon_seconds: float, max_delay_seconds: float) -> pd.DataFrame:
     """Build prediction-time features and same-session forward labels."""
     rows: list[pd.DataFrame] = []
-    for _date, group in frame.groupby("date", sort=True):
+    grouping = ["ticker", "date"] if "ticker" in frame.columns else ["date"]
+    for _date, group in frame.groupby(grouping, sort=True):
         group = group.sort_values("timestamp", kind="stable").copy()
         timestamps = group["timestamp"].to_numpy(dtype=np.float64)
         mid = group["mid"].to_numpy(dtype=np.float64)
@@ -216,33 +217,51 @@ def _render_report(metrics: dict[str, Any]) -> str:
         "",
         "The lift is small and comes from one stock in one historical year. It may not persist on another instrument or in current data. Snapshots are sampled every 100 source events, so the quote used for the one-minute label arrives later: the median delay is 79.2 seconds and the 95th percentile is 114.2 seconds. No trading rule or net-return calculation is tested. Forward labels overlap within each date; the chronological split keeps dates separate, and the bootstrap resamples whole test dates, but observations within a date remain dependent.",
         "",
-        "The next check is to repeat the same split on another stock and with finer sampling, then test whether any directional signal survives a costed execution simulation.",
+        "The separate [leave-one-stock-out study](multi_stock_ml_study.md) now tests transfer to four unseen WSE names using the same 2017 source. It finds a small positive balanced-accuracy lift across the five held-out stocks, but the [PEKAO cost-aware study](execution_aware_study.md) still shows negative average markout after its illustrative costs.",
         "",
     ])
     return "\n".join(lines)
 
 
-def _make_figure(metrics: dict[str, Any], execution_metrics_path: Path, output_path: Path) -> None:
+def _make_figure(metrics: dict[str, Any], execution_metrics_path: Path, output_path: Path,
+                 execution_aware_metrics_path: Path | None = None,
+                 multi_stock_metrics_path: Path | None = None) -> None:
     execution = json.loads(execution_metrics_path.read_text(encoding="utf-8"))
-    ml = metrics["test_metrics"]
-    ci = metrics["date_bootstrap"]["balanced_accuracy_95ci"]
-    order = ("majority_baseline", "logistic_regression", "hist_gradient_boosting")
-    pretty = ("Majority", "Logistic", "Boosted trees")
-    colors = ("#9aa7b5", "#2078b4", "#dd7b28")
-
-    fig, axes = plt.subplots(1, 3, figsize=(15.5, 4.8))
+    fig, axes = plt.subplots(1, 4, figsize=(19.5, 4.8))
     ax = axes[0]
-    values = [ml[name]["balanced_accuracy"] for name in order]
-    lows = [values[i] - ci[order[i]][0] for i in range(3)]
-    highs = [ci[order[i]][1] - values[i] for i in range(3)]
-    ax.bar(pretty, values, color=colors, width=0.65)
-    ax.errorbar(pretty, values, yerr=[lows, highs], fmt="none", ecolor="#263746", capsize=4, linewidth=1.2)
-    ax.axhline(1 / 3, color="#6b7280", linestyle="--", linewidth=1, label="33.3% chance level")
-    ax.set_ylim(0.25, max(ci[name][1] for name in order) + 0.09)
+    cross_path = multi_stock_metrics_path or (ROOT / "results" / "multi_stock_ml_metrics.json")
+    if cross_path.exists():
+        cross = json.loads(cross_path.read_text(encoding="utf-8"))
+        folds = cross["folds"]
+        names = [fold["held_out_ticker"] for fold in folds]
+        values = [fold["test_metrics"]["hist_gradient_boosting"]["balanced_accuracy"] for fold in folds]
+        intervals = [fold["date_bootstrap"]["balanced_accuracy_95ci"]["hist_gradient_boosting"] for fold in folds]
+        lows = [values[i] - intervals[i][0] for i in range(len(folds))]
+        highs = [intervals[i][1] - values[i] for i in range(len(folds))]
+        ax.bar(names, values, color="#dd7b28", width=0.68)
+        ax.errorbar(names, values, yerr=[lows, highs], fmt="none", ecolor="#263746", capsize=3, linewidth=1.1)
+        ax.axhline(1 / 3, color="#6b7280", linestyle="--", linewidth=1, label="33.3% prior baseline")
+        ax.set_ylim(0.31, max(interval[1] for interval in intervals) + 0.018)
+        ax.set_title("Unseen-stock tests · boosted trees")
+        ax.legend(frameon=False, fontsize=7, loc="upper left")
+        ax.tick_params(axis="x", labelrotation=20, labelsize=8)
+    else:
+        ml = metrics["test_metrics"]
+        ci = metrics["date_bootstrap"]["balanced_accuracy_95ci"]
+        order = ("majority_baseline", "logistic_regression", "hist_gradient_boosting")
+        pretty = ("Majority", "Logistic", "Boosted trees")
+        colors = ("#9aa7b5", "#2078b4", "#dd7b28")
+        values = [ml[name]["balanced_accuracy"] for name in order]
+        lows = [values[i] - ci[order[i]][0] for i in range(3)]
+        highs = [ci[order[i]][1] - values[i] for i in range(3)]
+        ax.bar(pretty, values, color=colors, width=0.65)
+        ax.errorbar(pretty, values, yerr=[lows, highs], fmt="none", ecolor="#263746", capsize=4, linewidth=1.2)
+        ax.axhline(1 / 3, color="#6b7280", linestyle="--", linewidth=1, label="33.3% prior baseline")
+        ax.set_ylim(0.25, max(ci[name][1] for name in order) + 0.09)
+        ax.set_title("Held-out dates · direction model")
+        ax.tick_params(axis="x", labelrotation=12)
+        ax.legend(frameon=False, fontsize=8, loc="upper left")
     ax.set_ylabel("Balanced accuracy")
-    ax.set_title("Held-out dates · direction model")
-    ax.tick_params(axis="x", labelrotation=12)
-    ax.legend(frameon=False, fontsize=8, loc="upper left")
 
     ax = axes[1]
     effects = execution["paired_daily_volatility_effects"]
@@ -278,7 +297,30 @@ def _make_figure(metrics: dict[str, Any], execution_metrics_path: Path, output_p
         ax.text(x0 + 0.04, y0 + 0.24, value, transform=ax.transAxes, fontsize=18, weight="bold", color="#176b50", va="center")
         ax.text(x0 + 0.04, y0 + 0.07, caption, transform=ax.transAxes, fontsize=8.2, color="#334155", va="center", linespacing=0.95)
 
-    fig.subplots_adjust(top=0.80, bottom=0.19, wspace=0.34)
+    ax = axes[3]
+    costed_path = execution_aware_metrics_path or (ROOT / "results" / "execution_aware_metrics.json")
+    if costed_path.exists():
+        costed = json.loads(costed_path.read_text(encoding="utf-8"))
+        names = ("majority_baseline", "logistic_regression", "hist_gradient_boosting", "depth_imbalance_sign")
+        labels = ("Majority", "Logistic", "Boosted", "Imbalance")
+        rows = [costed["markout_metrics"][name] for name in names]
+        means = [row["mean_net_markout_bps_per_trade"] for row in rows]
+        intervals = [row["trade_weighted_date_bootstrap_95ci_bps"] for row in rows]
+        lower = [means[i] - intervals[i][0] for i in range(len(rows))]
+        upper = [intervals[i][1] - means[i] for i in range(len(rows))]
+        x = np.arange(len(rows))
+        ax.bar(x, means, color=("#9aa7b5", "#2078b4", "#dd7b28", "#789b8a"), width=0.68)
+        ax.errorbar(x, means, yerr=[lower, upper], fmt="none", ecolor="#263746", capsize=3, linewidth=1.1)
+        ax.axhline(0, color="#6b7280", linewidth=1)
+        ax.set_xticks(x, labels, rotation=12)
+        ax.set_ylabel("Net markout (bps/trade)")
+        ax.set_title("Held-out net round trip\n95% date-bootstrap intervals")
+    else:
+        ax.axis("off")
+        ax.set_title("Execution-aware markout")
+        ax.text(0.05, 0.5, "Run execution_aware_benchmark.py\nto add costed held-out results", transform=ax.transAxes, fontsize=10, color="#5b6570")
+
+    fig.subplots_adjust(top=0.80, bottom=0.19, wspace=0.38)
     fig.suptitle("MOSAIC · research and systems evidence", fontsize=15, fontweight="bold", y=0.97)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     fig.savefig(output_path, dpi=180, facecolor="white")
@@ -286,12 +328,15 @@ def _make_figure(metrics: dict[str, Any], execution_metrics_path: Path, output_p
 
 
 def run(input_path: Path, output_path: Path, execution_metrics_path: Path, figure_path: Path,
-        horizon_seconds: float, max_delay_seconds: float) -> dict[str, Any]:
+        horizon_seconds: float, max_delay_seconds: float,
+        execution_aware_metrics_path: Path | None = None,
+        fixed_partitions: dict[str, list[str]] | None = None,
+        multi_stock_metrics_path: Path | None = None) -> dict[str, Any]:
     source = pd.read_csv(input_path, dtype={"date": str})
     source["date"] = source["date"].str.zfill(8)
     data = _with_features_and_labels(source, horizon_seconds, max_delay_seconds)
     dates = sorted(data["date"].unique().tolist())
-    partitions = _date_partitions(dates)
+    partitions = fixed_partitions or _date_partitions(dates)
     split_masks = {split: data["date"].isin(split_dates) for split, split_dates in partitions.items()}
 
     X_train = data.loc[split_masks["train"], FEATURES].replace([np.inf, -np.inf], np.nan)
@@ -372,7 +417,8 @@ def run(input_path: Path, output_path: Path, execution_metrics_path: Path, figur
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(json.dumps(metrics, indent=2) + "\n", encoding="utf-8")
     output_path.with_name("ml_direction_study.md").write_text(_render_report(metrics), encoding="utf-8")
-    _make_figure(metrics, execution_metrics_path, figure_path)
+    _make_figure(metrics, execution_metrics_path, figure_path, execution_aware_metrics_path,
+                 multi_stock_metrics_path)
     return metrics
 
 
@@ -382,11 +428,13 @@ def main() -> None:
     parser.add_argument("--output", type=Path, default=ROOT / "results" / "wselob_ml_direction_metrics.json")
     parser.add_argument("--execution-metrics", type=Path, default=ROOT / "results" / "wselob_2017_metrics.json")
     parser.add_argument("--figure", type=Path, default=ROOT / "assets" / "mosaic_readme_results.png")
+    parser.add_argument("--execution-aware-metrics", type=Path, default=ROOT / "results" / "execution_aware_metrics.json")
     parser.add_argument("--horizon-seconds", type=float, default=60.0)
     parser.add_argument("--max-target-delay-seconds", type=float, default=120.0)
     args = parser.parse_args()
     result = run(args.input, args.output, args.execution_metrics, args.figure,
-                 args.horizon_seconds, args.max_target_delay_seconds)
+                 args.horizon_seconds, args.max_target_delay_seconds,
+                 args.execution_aware_metrics)
     print(json.dumps({
         "labeled_rows": result["labeled_rows"],
         "split_dates": result["split_dates"],

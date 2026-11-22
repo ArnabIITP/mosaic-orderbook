@@ -34,4 +34,4 @@ The boosted tree reaches 35.01% balanced accuracy versus 33.33% for the majority
 
 The lift is small and comes from one stock in one historical year. It may not persist on another instrument or in current data. Snapshots are sampled every 100 source events, so the quote used for the one-minute label arrives later: the median delay is 79.2 seconds and the 95th percentile is 114.2 seconds. No trading rule or net-return calculation is tested. Forward labels overlap within each date; the chronological split keeps dates separate, and the bootstrap resamples whole test dates, but observations within a date remain dependent.
 
-The next check is to repeat the same split on another stock and with finer sampling, then test whether any directional signal survives a costed execution simulation.
+The separate [leave-one-stock-out study](multi_stock_ml_study.md) now tests transfer to four unseen WSE names using the same 2017 source. It finds a small positive balanced-accuracy lift across the five held-out stocks, but the [PEKAO cost-aware study](execution_aware_study.md) still shows negative average markout after its illustrative costs.

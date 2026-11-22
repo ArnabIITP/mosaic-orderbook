@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-The replay rebuilds PEKAO's displayed limit book for 250 trading dates in 2017 from 9,869,579 order updates. The execution study uses 94,390 snapshots sampled every 100 source events. Each C++ sweep is checked against the Python implementation. These results cover one stock and historical displayed depth; they do not establish causality or predict current execution.
+The replay rebuilds PEKAO's displayed limit book for 250 trading dates in 2017 from 9,869,579 order updates. The execution study uses 94,390 snapshots sampled every 100 source events. Each C++ sweep is checked against the Python implementation. The results cover one stock and historical displayed depth; they do not establish causal effects or predict current execution.
 
 ## Research question and related work
 
@@ -12,7 +12,7 @@ The study measures how displayed liquidity and recent price variability relate t
 
 - **Source:** PEKAO file from [WSELOB-2017 on Mendeley Data](https://data.mendeley.com/datasets/3g4mhdp899/1), DOI [10.17632/3g4mhdp899.1](https://doi.org/10.17632/3g4mhdp899.1). The dataset record describes Warsaw Stock Exchange order-book data for 2017 and is licensed CC BY 4.0. The downloaded HDF5 is 152,759,953 bytes; SHA-256: `3c418a55a492ebe2e39c8513cd7fc7e3e6827dc1a176af09fdcaad9f3485bae6`.
 - **Coverage:** 20170102 through 20171229; 250 dates, 9,869,579 raw events, 94,390 usable snapshots. The source has five equities, but this run uses PEKAO only.
-- **State reconstruction:** orders are keyed by `(order_date, order_id)`. Adds and retransmissions create or update displayed orders; modifications preserve omitted fields and replace remaining quantity; deletes remove orders; full-refresh messages clear the book. Snapshots are taken at timestamp-group boundaries. The source `agg_volume` field was checked at those boundaries: 9,796,236 checks, with 1,617 differences. Example rows and the remaining reconstruction counters are in `wselob_2017_metrics.json`.
+- **State reconstruction:** order identity is `(order_date, order_id)`. Adds and retransmissions create or update displayed orders; modifications preserve omitted fields and replace remaining quantity; deletes remove orders; full-refresh messages clear the book. Buy side 1 and sell sides 2/5 are kept by integer price. Priced limit, peg, and market-to-limit orders rest; unpriced market orders do not. Snapshots are taken only at timestamp-group boundaries. The source `agg_volume` field was checked at those boundaries: 9,796,236 checks, with 1,617 differences. The full diagnostics and example rows are in `wselob_2017_metrics.json`.
 - **Reference validation:** the author's `orderbook2.py` implementation matched all 425 sampled ten-level books across 9 dates with zero mismatches (first 5,000 events per date).
 - **Scaling:** prices are source integer units (100 units per PLN); quantities are shares. Basis-point ratios are invariant to the price scaling.
 
@@ -20,17 +20,19 @@ The study measures how displayed liquidity and recent price variability relate t
 
 The book is sampled when each 100-event threshold is reached, then captured after all updates with that timestamp have been applied. Crossed or one-sided states are omitted. We compute trailing one-minute realised volatility from sampled midpoints independently within each trading date and omit the first minute. Liquidity buckets use that date's terciles of executable-side top-ten depth; volatility buckets use that date's volatility terciles. The 500-share comparisons are descriptive and do not control for spread or time of day.
 
-For each snapshot, hypothetical marketable buys consume asks and sells consume bids at displayed prices, up to ten occupied levels. Shortfall is VWAP relative to the snapshot midpoint; fill rate is filled/requested quantity. This includes the static book sweep's depth-dependent price concession, not endogenous market impact after the order changes the book.
+For each snapshot, hypothetical marketable buys consume asks and sells consume bids at displayed prices, up to ten occupied levels. Shortfall is VWAP relative to the snapshot midpoint; fill rate is filled divided by requested quantity. This captures the price concession from sweeping the observed book, not the market impact after the book changes.
 
 Latency sensitivity executes using the first sampled book at least 1 or 5 seconds after the decision timestamp, while measuring price relative to the decision midpoint. The report varies fees from 0 to 5 bps per side. Because observations are sampled every 100 events, latency timing is quantized by the next sampled observation and is not an exchange/network latency simulation. Fees are explicit scenario assumptions, not observed broker fees.
 
-The C++17 matcher is used for the reported execution outcomes and Python independently replays each side/size. Baseline replay passed 566,340 comparisons over 94,390 snapshots; delayed replay passed 1,129,662 additional comparisons. Maximum shortfall difference was 0 bps. Python sweep elapsed 0.75s; baseline C++ CLI elapsed 7.13s. These timings have different measurement boundaries and should not be treated as a speedup ratio.
+The C++17 matcher is used for the reported execution outcomes and Python independently replays each side/size. Baseline replay passed 566,340 comparisons over 94,390 snapshots; delayed replay passed 1,129,662 additional comparisons. Maximum shortfall difference was 0 bps. Python sweep elapsed 0.73s; baseline C++ CLI elapsed 7.67s. These timings have different measurement boundaries and should not be treated as a speedup ratio.
 
 ## C++ full-stream replay benchmark
 
-A separate Release build (`g++ 14.2.0 (-O3)`, `-O3 -DNDEBUG`) replayed all 9,869,579 source updates 3 times. Median wall time was 6.56s (1,504,284 updates/s), with run times 4.85s, 6.56s, 7.51s. It emitted 96,465 sampled books and matched Python exactly (zero mismatches); output SHA-256 `599830ee8be735abf9ddf210f3bf87546796463f3e6cf4f8492c1bc21c277cde`. This includes binary feed I/O, parsing, state updates, and snapshot output. Python's 168.97s reconstruction reads/decompresses HDF5 and is not a controlled language-versus-language benchmark.
+A separate Release build (`C:\msys64\ucrt64\bin\g++.exe (-O3)`, `-O3 -DNDEBUG`) replayed all 9,869,579 source updates after one warmup, then completed 7 uninstrumented runs. Median wall time was 5.05s (1,954,713 updates/s); runs ranged from 4.89s to 5.30s. The benchmark host was `Windows-11-10.0.26300-SP0`, `Intel64 Family 6 Model 154 Stepping 3, GenuineIntel`. It emitted 96,465 sampled books and matched Python exactly (zero mismatches); output SHA-256 `599830ee8be735abf9ddf210f3bf87546796463f3e6cf4f8492c1bc21c277cde`. The uninstrumented timing includes process startup, binary feed I/O, parsing, book updates, and snapshot output.
 
-The independent order-book reference comparison matched 425 snapshots over 9 dates with zero mismatches. The `agg_volume` audit found 1,617 differences across 9,796,236 checks (0.0165%); example rows and the full counters are in the metrics file.
+A separate pass timed one book mutation per 1,024 feed events after binary decoding. Across 9,639 deterministic samples, measured p50/p95/p99/p99.9 mutation times were 400/800/1,000/6,100 ns. These sampled software mutation times exclude parsing and output; they are not network or exchange latency and may miss rare event types. The profile pass matched the same output. Python's 130.32s reconstruction reads/decompresses HDF5 and is not a controlled language-versus-language benchmark.
+
+The independent order-book reference comparison matched 425 snapshots over 9 dates with zero mismatches. The `agg_volume` boundary audit found 1,617 differences across 9,796,236 checks (0.0165%). The metrics file records the mismatches and example rows.
 
 ## Overall execution outcomes
 
@@ -122,7 +124,7 @@ Install Python 3.10+, `h5py`, and a C++17 compiler. From the project root run:
 python -m pip install -r requirements-research.txt
 python -m pip install -r requirements-validation.txt
 python validate_wselob_reference.py --days 5 --events-per-day 5000
-python replay_wselob_cpp.py --stride 100 --repetitions 3
+python replay_wselob_cpp.py --stride 100 --repetitions 7 --profile-every 1024
 python analyze_wselob.py --stride 100 --fee-bps 1
 ```
 

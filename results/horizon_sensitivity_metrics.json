@@ -1,0 +1,885 @@
+{
+  "study": "PEKAO direction-model horizon sensitivity",
+  "source_csv": "wselob_2017_execution_observations.csv",
+  "source_rows": 94390,
+  "date_splits": {
+    "train": {
+      "first": "20170102",
+      "last": "20170912",
+      "count": 175
+    },
+    "validation": {
+      "first": "20170913",
+      "last": "20171103",
+      "count": 37
+    },
+    "test": {
+      "first": "20171106",
+      "last": "20171229",
+      "count": 38
+    }
+  },
+  "maximum_target_delay_rule": "twice requested horizon",
+  "model_protocol": "same features, fixed model settings, training-only preprocessing, and chronological date blocks across horizons",
+  "horizons": [
+    {
+      "horizon_seconds": 5.0,
+      "labeled_rows": 12515,
+      "coverage_pct": 13.258819790232016,
+      "test_rows": 1473,
+      "realized_delay_seconds": {
+        "median": 7.1054368019104,
+        "p95": 9.680094790458678,
+        "maximum": 9.999994993209839
+      },
+      "class_counts": {
+        "down": 5445,
+        "flat": 1735,
+        "up": 5335
+      },
+      "majority_balanced_accuracy": 0.3333333333333333,
+      "boosted_balanced_accuracy": 0.3593617303609342,
+      "balanced_accuracy_lift_pp": 2.6028397027600905,
+      "balanced_accuracy_lift_ci95": [
+        0.5809504896877635,
+        4.817856664454782
+      ],
+      "majority_log_loss": 1.0004216179709564,
+      "boosted_log_loss": 1.0180052900788168,
+      "log_loss_change_vs_majority": 0.017583672107860382,
+      "all_model_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4263408010862186,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.19927018879898462,
+          "log_loss": 1.0004216179709564
+        },
+        "logistic_regression": {
+          "accuracy": 0.4304141208418194,
+          "balanced_accuracy": 0.3342489384288747,
+          "macro_f1": 0.3022049328898055,
+          "log_loss": 1.000170761245863
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4636795655125594,
+          "balanced_accuracy": 0.3593617303609342,
+          "macro_f1": 0.33224421342763827,
+          "log_loss": 1.0180052900788168
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.31687644740535315,
+            0.3543994857347383
+          ],
+          "hist_gradient_boosting": [
+            0.33914283823021096,
+            0.38151189997788115
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.01645688592798017,
+            0.021066152401404952
+          ],
+          "hist_gradient_boosting": [
+            0.005809504896877635,
+            0.04817856664454782
+          ]
+        }
+      }
+    },
+    {
+      "horizon_seconds": 10.0,
+      "labeled_rows": 20562,
+      "coverage_pct": 21.7840872973832,
+      "test_rows": 2434,
+      "realized_delay_seconds": {
+        "median": 14.040953040122986,
+        "p95": 19.25915879011154,
+        "maximum": 19.999267101287842
+      },
+      "class_counts": {
+        "down": 9303,
+        "flat": 2382,
+        "up": 8877
+      },
+      "majority_balanced_accuracy": 0.3333333333333333,
+      "boosted_balanced_accuracy": 0.3597134531325887,
+      "balanced_accuracy_lift_pp": 2.6380119799255364,
+      "balanced_accuracy_lift_ci95": [
+        1.1779221968138973,
+        4.352478943248763
+      ],
+      "majority_log_loss": 0.9968314551068154,
+      "boosted_log_loss": 1.0063548415970205,
+      "log_loss_change_vs_majority": 0.009523386490205121,
+      "all_model_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4375513557929334,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20291511860531583,
+          "log_loss": 0.9968314551068154
+        },
+        "logistic_regression": {
+          "accuracy": 0.4322103533278554,
+          "balanced_accuracy": 0.33103358336481215,
+          "macro_f1": 0.2909961873454547,
+          "log_loss": 0.9939239570751276
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4675431388660641,
+          "balanced_accuracy": 0.3597134531325887,
+          "macro_f1": 0.3340599879461812,
+          "log_loss": 1.0063548415970205
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3131217969250051,
+            0.34774745073656627
+          ],
+          "hist_gradient_boosting": [
+            0.3451125553014723,
+            0.3768581227658209
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.020211536408328214,
+            0.014414117403232929
+          ],
+          "hist_gradient_boosting": [
+            0.011779221968138973,
+            0.04352478943248763
+          ]
+        }
+      }
+    },
+    {
+      "horizon_seconds": 30.0,
+      "labeled_rows": 40230,
+      "coverage_pct": 42.621040364445385,
+      "test_rows": 4880,
+      "realized_delay_seconds": {
+        "median": 40.899767994880676,
+        "p95": 57.64276244640349,
+        "maximum": 59.99773812294006
+      },
+      "class_counts": {
+        "down": 18302,
+        "flat": 4157,
+        "up": 17771
+      },
+      "majority_balanced_accuracy": 0.3333333333333333,
+      "boosted_balanced_accuracy": 0.35797100274517435,
+      "balanced_accuracy_lift_pp": 2.4637669411841037,
+      "balanced_accuracy_lift_ci95": [
+        1.2284904317139789,
+        3.6915718399546034
+      ],
+      "majority_log_loss": 0.9680609398187341,
+      "boosted_log_loss": 0.9685519075046594,
+      "log_loss_change_vs_majority": 0.0004909676859252698,
+      "all_model_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4514344262295082,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20735093416160763,
+          "log_loss": 0.9680609398187341
+        },
+        "logistic_regression": {
+          "accuracy": 0.4375,
+          "balanced_accuracy": 0.3255667397044586,
+          "macro_f1": 0.2829576832520872,
+          "log_loss": 0.9692340844875902
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.47725409836065574,
+          "balanced_accuracy": 0.35797100274517435,
+          "macro_f1": 0.3362553157807518,
+          "log_loss": 0.9685519075046594
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3152123998360927,
+            0.3362947867154682
+          ],
+          "hist_gradient_boosting": [
+            0.3456182376504731,
+            0.37024905173287936
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.018120933497240616,
+            0.002961453382134895
+          ],
+          "hist_gradient_boosting": [
+            0.01228490431713979,
+            0.036915718399546035
+          ]
+        }
+      }
+    },
+    {
+      "horizon_seconds": 60.0,
+      "labeled_rows": 58426,
+      "coverage_pct": 61.89850619769043,
+      "test_rows": 7364,
+      "realized_delay_seconds": {
+        "median": 79.20655345916748,
+        "p95": 114.16791927814484,
+        "maximum": 119.99996590614319
+      },
+      "class_counts": {
+        "down": 26542,
+        "flat": 5875,
+        "up": 26009
+      },
+      "majority_balanced_accuracy": 0.3333333333333333,
+      "boosted_balanced_accuracy": 0.3501322002108677,
+      "balanced_accuracy_lift_pp": 1.6798866877534402,
+      "balanced_accuracy_lift_ci95": [
+        0.7356150722945318,
+        2.712068209433231
+      ],
+      "majority_log_loss": 0.9658721445454044,
+      "boosted_log_loss": 0.9676932756633222,
+      "log_loss_change_vs_majority": 0.001821131117917818,
+      "all_model_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4433731667571972,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.204785649324176,
+          "log_loss": 0.9658721445454044
+        },
+        "logistic_regression": {
+          "accuracy": 0.43604019554589896,
+          "balanced_accuracy": 0.3271353461330176,
+          "macro_f1": 0.29995111271553404,
+          "log_loss": 0.9673385417207554
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4670016295491581,
+          "balanced_accuracy": 0.3501322002108677,
+          "macro_f1": 0.3287767145480834,
+          "log_loss": 0.9676932756633222
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3175489898433386,
+            0.33676414931742193
+          ],
+          "hist_gradient_boosting": [
+            0.34068948405627864,
+            0.36045401542766564
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.015784343489994697,
+            0.003430815984088636
+          ],
+          "hist_gradient_boosting": [
+            0.007356150722945319,
+            0.02712068209433231
+          ]
+        }
+      }
+    }
+  ],
+  "full_metrics_by_horizon": {
+    "5s": {
+      "study": "PEKAO next-mid-price direction classification",
+      "source_csv": "results/wselob_2017_execution_observations.csv",
+      "source_csv_sha256": "0587079af9afb40b68187713ddbc0c27b14d621ed962f1ee996dfee331c21309",
+      "source_rows": 94390,
+      "labeled_rows": 12515,
+      "label_definition": {
+        "horizon_seconds": 5.0,
+        "target_quote_rule": "first same-session sampled quote at or after the horizon",
+        "maximum_target_delay_seconds": 10.0,
+        "classes": {
+          "down": "future mid < current mid",
+          "flat": "future mid = current mid",
+          "up": "future mid > current mid"
+        },
+        "class_counts": {
+          "down": 5445,
+          "flat": 1735,
+          "up": 5335
+        },
+        "realized_delay_seconds": {
+          "median": 7.1054368019104,
+          "p95": 9.680094790458678,
+          "maximum": 9.999994993209839
+        }
+      },
+      "split_method": "chronological blocks of whole trading dates; no random row split",
+      "split_dates": {
+        "train": {
+          "first": "20170102",
+          "last": "20170912",
+          "date_count": 175
+        },
+        "validation": {
+          "first": "20170913",
+          "last": "20171103",
+          "date_count": 37
+        },
+        "test": {
+          "first": "20171106",
+          "last": "20171229",
+          "date_count": 38
+        }
+      },
+      "split_rows": {
+        "train": 9800,
+        "validation": 1242,
+        "test": 1473
+      },
+      "features": [
+        "spread_bps",
+        "depth_imbalance",
+        "log_bid_depth",
+        "log_ask_depth",
+        "log_total_depth",
+        "volatility_1m_bps",
+        "return_30s_bps",
+        "return_120s_bps",
+        "return_300s_bps"
+      ],
+      "models": {
+        "majority_baseline": "DummyClassifier(strategy=prior)",
+        "logistic_regression": "median imputation + standardization + LogisticRegression",
+        "hist_gradient_boosting": "median imputation + HistGradientBoostingClassifier; fixed settings, no test tuning"
+      },
+      "validation_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4227053140096618,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.1980758347481607,
+          "log_loss": 1.0486241949283528
+        },
+        "logistic_regression": {
+          "accuracy": 0.41626409017713367,
+          "balanced_accuracy": 0.33418847998969703,
+          "macro_f1": 0.289292965011174,
+          "log_loss": 1.0374582953154443
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.43719806763285024,
+          "balanced_accuracy": 0.3571009208281013,
+          "macro_f1": 0.32589618596033737,
+          "log_loss": 1.0559900977803156
+        }
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4263408010862186,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.19927018879898462,
+          "log_loss": 1.0004216179709564
+        },
+        "logistic_regression": {
+          "accuracy": 0.4304141208418194,
+          "balanced_accuracy": 0.3342489384288747,
+          "macro_f1": 0.3022049328898055,
+          "log_loss": 1.000170761245863
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4636795655125594,
+          "balanced_accuracy": 0.3593617303609342,
+          "macro_f1": 0.33224421342763827,
+          "log_loss": 1.0180052900788168
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.31687644740535315,
+            0.3543994857347383
+          ],
+          "hist_gradient_boosting": [
+            0.33914283823021096,
+            0.38151189997788115
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.01645688592798017,
+            0.021066152401404952
+          ],
+          "hist_gradient_boosting": [
+            0.005809504896877635,
+            0.04817856664454782
+          ]
+        }
+      },
+      "software": {
+        "python_packages": {
+          "numpy": "2.2.3",
+          "pandas": "2.3.3",
+          "scikit_learn": "1.6.1"
+        }
+      },
+      "interpretation": "Predictive classification only. No trading rule, net returns, or deployment claim is tested."
+    },
+    "10s": {
+      "study": "PEKAO next-mid-price direction classification",
+      "source_csv": "results/wselob_2017_execution_observations.csv",
+      "source_csv_sha256": "0587079af9afb40b68187713ddbc0c27b14d621ed962f1ee996dfee331c21309",
+      "source_rows": 94390,
+      "labeled_rows": 20562,
+      "label_definition": {
+        "horizon_seconds": 10.0,
+        "target_quote_rule": "first same-session sampled quote at or after the horizon",
+        "maximum_target_delay_seconds": 20.0,
+        "classes": {
+          "down": "future mid < current mid",
+          "flat": "future mid = current mid",
+          "up": "future mid > current mid"
+        },
+        "class_counts": {
+          "down": 9303,
+          "flat": 2382,
+          "up": 8877
+        },
+        "realized_delay_seconds": {
+          "median": 14.040953040122986,
+          "p95": 19.25915879011154,
+          "maximum": 19.999267101287842
+        }
+      },
+      "split_method": "chronological blocks of whole trading dates; no random row split",
+      "split_dates": {
+        "train": {
+          "first": "20170102",
+          "last": "20170912",
+          "date_count": 175
+        },
+        "validation": {
+          "first": "20170913",
+          "last": "20171103",
+          "date_count": 37
+        },
+        "test": {
+          "first": "20171106",
+          "last": "20171229",
+          "date_count": 38
+        }
+      },
+      "split_rows": {
+        "train": 16093,
+        "validation": 2035,
+        "test": 2434
+      },
+      "features": [
+        "spread_bps",
+        "depth_imbalance",
+        "log_bid_depth",
+        "log_ask_depth",
+        "log_total_depth",
+        "volatility_1m_bps",
+        "return_30s_bps",
+        "return_120s_bps",
+        "return_300s_bps"
+      ],
+      "models": {
+        "majority_baseline": "DummyClassifier(strategy=prior)",
+        "logistic_regression": "median imputation + standardization + LogisticRegression",
+        "hist_gradient_boosting": "median imputation + HistGradientBoostingClassifier; fixed settings, no test tuning"
+      },
+      "validation_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4353808353808354,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20221385370306974,
+          "log_loss": 1.0286119542810124
+        },
+        "logistic_regression": {
+          "accuracy": 0.43144963144963144,
+          "balanced_accuracy": 0.3343325193159356,
+          "macro_f1": 0.27674540299125017,
+          "log_loss": 1.022925102762682
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.44176904176904175,
+          "balanced_accuracy": 0.34833379965030753,
+          "macro_f1": 0.318735264155899,
+          "log_loss": 1.0341389950676858
+        }
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4375513557929334,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20291511860531583,
+          "log_loss": 0.9968314551068154
+        },
+        "logistic_regression": {
+          "accuracy": 0.4322103533278554,
+          "balanced_accuracy": 0.33103358336481215,
+          "macro_f1": 0.2909961873454547,
+          "log_loss": 0.9939239570751276
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4675431388660641,
+          "balanced_accuracy": 0.3597134531325887,
+          "macro_f1": 0.3340599879461812,
+          "log_loss": 1.0063548415970205
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3131217969250051,
+            0.34774745073656627
+          ],
+          "hist_gradient_boosting": [
+            0.3451125553014723,
+            0.3768581227658209
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.020211536408328214,
+            0.014414117403232929
+          ],
+          "hist_gradient_boosting": [
+            0.011779221968138973,
+            0.04352478943248763
+          ]
+        }
+      },
+      "software": {
+        "python_packages": {
+          "numpy": "2.2.3",
+          "pandas": "2.3.3",
+          "scikit_learn": "1.6.1"
+        }
+      },
+      "interpretation": "Predictive classification only. No trading rule, net returns, or deployment claim is tested."
+    },
+    "30s": {
+      "study": "PEKAO next-mid-price direction classification",
+      "source_csv": "results/wselob_2017_execution_observations.csv",
+      "source_csv_sha256": "0587079af9afb40b68187713ddbc0c27b14d621ed962f1ee996dfee331c21309",
+      "source_rows": 94390,
+      "labeled_rows": 40230,
+      "label_definition": {
+        "horizon_seconds": 30.0,
+        "target_quote_rule": "first same-session sampled quote at or after the horizon",
+        "maximum_target_delay_seconds": 60.0,
+        "classes": {
+          "down": "future mid < current mid",
+          "flat": "future mid = current mid",
+          "up": "future mid > current mid"
+        },
+        "class_counts": {
+          "down": 18302,
+          "flat": 4157,
+          "up": 17771
+        },
+        "realized_delay_seconds": {
+          "median": 40.899767994880676,
+          "p95": 57.64276244640349,
+          "maximum": 59.99773812294006
+        }
+      },
+      "split_method": "chronological blocks of whole trading dates; no random row split",
+      "split_dates": {
+        "train": {
+          "first": "20170102",
+          "last": "20170912",
+          "date_count": 175
+        },
+        "validation": {
+          "first": "20170913",
+          "last": "20171103",
+          "date_count": 37
+        },
+        "test": {
+          "first": "20171106",
+          "last": "20171229",
+          "date_count": 38
+        }
+      },
+      "split_rows": {
+        "train": 31080,
+        "validation": 4270,
+        "test": 4880
+      },
+      "features": [
+        "spread_bps",
+        "depth_imbalance",
+        "log_bid_depth",
+        "log_ask_depth",
+        "log_total_depth",
+        "volatility_1m_bps",
+        "return_30s_bps",
+        "return_120s_bps",
+        "return_300s_bps"
+      ],
+      "models": {
+        "majority_baseline": "DummyClassifier(strategy=prior)",
+        "logistic_regression": "median imputation + standardization + LogisticRegression",
+        "hist_gradient_boosting": "median imputation + HistGradientBoostingClassifier; fixed settings, no test tuning"
+      },
+      "validation_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4278688524590164,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.1997703788748565,
+          "log_loss": 1.0093367232445112
+        },
+        "logistic_regression": {
+          "accuracy": 0.43208430913348944,
+          "balanced_accuracy": 0.335861956477014,
+          "macro_f1": 0.275933674026865,
+          "log_loss": 1.0011229549876948
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4533957845433255,
+          "balanced_accuracy": 0.3512295634784958,
+          "macro_f1": 0.3246747997949279,
+          "log_loss": 1.0050883618026318
+        }
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4514344262295082,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20735093416160763,
+          "log_loss": 0.9680609398187341
+        },
+        "logistic_regression": {
+          "accuracy": 0.4375,
+          "balanced_accuracy": 0.3255667397044586,
+          "macro_f1": 0.2829576832520872,
+          "log_loss": 0.9692340844875902
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.47725409836065574,
+          "balanced_accuracy": 0.35797100274517435,
+          "macro_f1": 0.3362553157807518,
+          "log_loss": 0.9685519075046594
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3152123998360927,
+            0.3362947867154682
+          ],
+          "hist_gradient_boosting": [
+            0.3456182376504731,
+            0.37024905173287936
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.018120933497240616,
+            0.002961453382134895
+          ],
+          "hist_gradient_boosting": [
+            0.01228490431713979,
+            0.036915718399546035
+          ]
+        }
+      },
+      "software": {
+        "python_packages": {
+          "numpy": "2.2.3",
+          "pandas": "2.3.3",
+          "scikit_learn": "1.6.1"
+        }
+      },
+      "interpretation": "Predictive classification only. No trading rule, net returns, or deployment claim is tested."
+    },
+    "60s": {
+      "study": "PEKAO next-mid-price direction classification",
+      "source_csv": "results/wselob_2017_execution_observations.csv",
+      "source_csv_sha256": "0587079af9afb40b68187713ddbc0c27b14d621ed962f1ee996dfee331c21309",
+      "source_rows": 94390,
+      "labeled_rows": 58426,
+      "label_definition": {
+        "horizon_seconds": 60.0,
+        "target_quote_rule": "first same-session sampled quote at or after the horizon",
+        "maximum_target_delay_seconds": 120.0,
+        "classes": {
+          "down": "future mid < current mid",
+          "flat": "future mid = current mid",
+          "up": "future mid > current mid"
+        },
+        "class_counts": {
+          "down": 26542,
+          "flat": 5875,
+          "up": 26009
+        },
+        "realized_delay_seconds": {
+          "median": 79.20655345916748,
+          "p95": 114.16791927814484,
+          "maximum": 119.99996590614319
+        }
+      },
+      "split_method": "chronological blocks of whole trading dates; no random row split",
+      "split_dates": {
+        "train": {
+          "first": "20170102",
+          "last": "20170912",
+          "date_count": 175
+        },
+        "validation": {
+          "first": "20170913",
+          "last": "20171103",
+          "date_count": 37
+        },
+        "test": {
+          "first": "20171106",
+          "last": "20171229",
+          "date_count": 38
+        }
+      },
+      "split_rows": {
+        "train": 44423,
+        "validation": 6639,
+        "test": 7364
+      },
+      "features": [
+        "spread_bps",
+        "depth_imbalance",
+        "log_bid_depth",
+        "log_ask_depth",
+        "log_total_depth",
+        "volatility_1m_bps",
+        "return_30s_bps",
+        "return_120s_bps",
+        "return_300s_bps"
+      ],
+      "models": {
+        "majority_baseline": "DummyClassifier(strategy=prior)",
+        "logistic_regression": "median imputation + standardization + LogisticRegression",
+        "hist_gradient_boosting": "median imputation + HistGradientBoostingClassifier; fixed settings, no test tuning"
+      },
+      "validation_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4331977707486067,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20150639341390786,
+          "log_loss": 1.0050168433888027
+        },
+        "logistic_regression": {
+          "accuracy": 0.4324446452779033,
+          "balanced_accuracy": 0.3332598425808657,
+          "macro_f1": 0.3033946111495139,
+          "log_loss": 0.9931095466669526
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.46919716824823016,
+          "balanced_accuracy": 0.3617486784614468,
+          "macro_f1": 0.3353243625838944,
+          "log_loss": 0.9909497560469083
+        }
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4433731667571972,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.204785649324176,
+          "log_loss": 0.9658721445454044
+        },
+        "logistic_regression": {
+          "accuracy": 0.43604019554589896,
+          "balanced_accuracy": 0.3271353461330176,
+          "macro_f1": 0.29995111271553404,
+          "log_loss": 0.9673385417207554
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4670016295491581,
+          "balanced_accuracy": 0.3501322002108677,
+          "macro_f1": 0.3287767145480834,
+          "log_loss": 0.9676932756633222
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3175489898433386,
+            0.33676414931742193
+          ],
+          "hist_gradient_boosting": [
+            0.34068948405627864,
+            0.36045401542766564
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.015784343489994697,
+            0.003430815984088636
+          ],
+          "hist_gradient_boosting": [
+            0.007356150722945319,
+            0.02712068209433231
+          ]
+        }
+      },
+      "software": {
+        "python_packages": {
+          "numpy": "2.2.3",
+          "pandas": "2.3.3",
+          "scikit_learn": "1.6.1"
+        }
+      },
+      "interpretation": "Predictive classification only. No trading rule, net returns, or deployment claim is tested."
+    }
+  },
+  "interpretation": "Shorter horizon results have lower coverage and are selected toward faster-activity intervals; they are not broad HFT evidence."
+}

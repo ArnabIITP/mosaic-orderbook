@@ -1,0 +1,728 @@
+{
+  "study": "WSELOB leave-one-stock-out direction generalization",
+  "source_dataset": "WSELOB-2017, DOI 10.17632/3g4mhdp899.1, CC BY 4.0",
+  "source_totals": {
+    "tickers": [
+      "KGHM",
+      "PEKAO",
+      "PKOBP",
+      "PKNORLEN",
+      "PZU"
+    ],
+    "raw_events": 85846918,
+    "usable_snapshots": 817626,
+    "source_counts_by_ticker": {
+      "KGHM": {
+        "source_file": "KGHM_lob_2017_zlib.h5",
+        "raw_events": 21218914,
+        "dates": 250,
+        "usable_snapshots": 201336,
+        "reconstruction_diagnostics": {
+          "full_refreshes": 250,
+          "invalid_or_one_sided_snapshots": 3999,
+          "aggregate_volume_checks": 21107280,
+          "non_resting_adds_skipped": 26717,
+          "delete_without_live_nonresting_order": 13245,
+          "aggregate_volume_mismatches": 3187,
+          "aggregate_volume_mismatch_examples": [
+            {
+              "event_index": 4540,
+              "side": 1,
+              "price": 9171,
+              "source_aggregate": 0,
+              "reconstructed_aggregate": 50
+            },
+            {
+              "event_index": 4642,
+              "side": 1,
+              "price": 9174,
+              "source_aggregate": 150,
+              "reconstructed_aggregate": 0
+            },
+            {
+              "event_index": 4714,
+              "side": 1,
+              "price": 9171,
+              "source_aggregate": 0,
+              "reconstructed_aggregate": 50
+            },
+            {
+              "event_index": 24986,
+              "side": 2,
+              "price": 9200,
+              "source_aggregate": 24,
+              "reconstructed_aggregate": 0
+            },
+            {
+              "event_index": 32255,
+              "side": 1,
+              "price": 9196,
+              "source_aggregate": 100,
+              "reconstructed_aggregate": 314
+            }
+          ],
+          "modify_without_live_nonresting_order": 13460
+        }
+      },
+      "PKNORLEN": {
+        "source_file": "PKNORLEN_lob_2017_zlib.h5",
+        "raw_events": 19284598,
+        "dates": 250,
+        "usable_snapshots": 188367,
+        "reconstruction_diagnostics": {
+          "full_refreshes": 250,
+          "invalid_or_one_sided_snapshots": 3601,
+          "aggregate_volume_checks": 19204197,
+          "non_resting_adds_skipped": 20375,
+          "delete_without_live_nonresting_order": 12007,
+          "aggregate_volume_mismatches": 52139,
+          "aggregate_volume_mismatch_examples": [
+            {
+              "event_index": 10230,
+              "side": 2,
+              "price": 8560,
+              "source_aggregate": 510,
+              "reconstructed_aggregate": 180
+            },
+            {
+              "event_index": 44292,
+              "side": 1,
+              "price": 8563,
+              "source_aggregate": 699,
+              "reconstructed_aggregate": 1781
+            },
+            {
+              "event_index": 44353,
+              "side": 1,
+              "price": 8564,
+              "source_aggregate": 280,
+              "reconstructed_aggregate": 980
+            },
+            {
+              "event_index": 61338,
+              "side": 1,
+              "price": 8550,
+              "source_aggregate": 800,
+              "reconstructed_aggregate": 300
+            },
+            {
+              "event_index": 74713,
+              "side": 2,
+              "price": 8564,
+              "source_aggregate": 420,
+              "reconstructed_aggregate": 220
+            }
+          ],
+          "modify_without_live_nonresting_order": 8366
+        }
+      },
+      "PKOBP": {
+        "source_file": "PKOBP_lob_2017_zlib.h5",
+        "raw_events": 18296436,
+        "dates": 250,
+        "usable_snapshots": 170132,
+        "reconstruction_diagnostics": {
+          "full_refreshes": 250,
+          "invalid_or_one_sided_snapshots": 7859,
+          "aggregate_volume_checks": 18197836,
+          "non_resting_adds_skipped": 18216,
+          "aggregate_volume_mismatches": 3481831,
+          "aggregate_volume_mismatch_examples": [
+            {
+              "event_index": 460,
+              "side": 2,
+              "price": 4079,
+              "source_aggregate": 261,
+              "reconstructed_aggregate": 281
+            },
+            {
+              "event_index": 524,
+              "side": 2,
+              "price": 3286,
+              "source_aggregate": 60,
+              "reconstructed_aggregate": 122
+            },
+            {
+              "event_index": 526,
+              "side": 2,
+              "price": 3929,
+              "source_aggregate": 400,
+              "reconstructed_aggregate": 420
+            },
+            {
+              "event_index": 529,
+              "side": 2,
+              "price": 3929,
+              "source_aggregate": 70,
+              "reconstructed_aggregate": 470
+            },
+            {
+              "event_index": 572,
+              "side": 2,
+              "price": 3629,
+              "source_aggregate": 200,
+              "reconstructed_aggregate": 220
+            }
+          ],
+          "delete_without_live_nonresting_order": 10455,
+          "modify_without_live_nonresting_order": 7754
+        }
+      },
+      "PZU": {
+        "source_file": "PZU_lob_2017_zlib.h5",
+        "raw_events": 17177391,
+        "dates": 250,
+        "usable_snapshots": 163401,
+        "reconstruction_diagnostics": {
+          "full_refreshes": 250,
+          "invalid_or_one_sided_snapshots": 5107,
+          "aggregate_volume_checks": 17082824,
+          "non_resting_adds_skipped": 19039,
+          "aggregate_volume_mismatches": 1183329,
+          "aggregate_volume_mismatch_examples": [
+            {
+              "event_index": 138,
+              "side": 1,
+              "price": 3229,
+              "source_aggregate": 100,
+              "reconstructed_aggregate": 430
+            },
+            {
+              "event_index": 187,
+              "side": 2,
+              "price": 3615,
+              "source_aggregate": 28,
+              "reconstructed_aggregate": 178
+            },
+            {
+              "event_index": 189,
+              "side": 2,
+              "price": 3615,
+              "source_aggregate": 32,
+              "reconstructed_aggregate": 182
+            },
+            {
+              "event_index": 192,
+              "side": 2,
+              "price": 3390,
+              "source_aggregate": 175,
+              "reconstructed_aggregate": 225
+            },
+            {
+              "event_index": 229,
+              "side": 2,
+              "price": 3397,
+              "source_aggregate": 210,
+              "reconstructed_aggregate": 259
+            }
+          ],
+          "delete_without_live_nonresting_order": 10397,
+          "modify_without_live_nonresting_order": 8628
+        }
+      },
+      "PEKAO": {
+        "source_file": "PEKAO_lob_2017_zlib.h5",
+        "raw_events": 9869579,
+        "dates": 250,
+        "usable_snapshots": 94390,
+        "reconstruction_diagnostics": {
+          "full_refreshes": 250,
+          "invalid_or_one_sided_snapshots": 2360,
+          "aggregate_volume_checks": 9796236,
+          "non_resting_adds_skipped": 14477,
+          "delete_without_live_nonresting_order": 8233,
+          "modify_without_live_nonresting_order": 6239,
+          "aggregate_volume_mismatches": 1617,
+          "aggregate_volume_mismatch_examples": [
+            {
+              "event_index": 8963,
+              "side": 2,
+              "price": 12745,
+              "source_aggregate": 6183,
+              "reconstructed_aggregate": 6011
+            },
+            {
+              "event_index": 14008,
+              "side": 2,
+              "price": 12860,
+              "source_aggregate": 250,
+              "reconstructed_aggregate": 0
+            },
+            {
+              "event_index": 12134,
+              "side": 2,
+              "price": 12894,
+              "source_aggregate": 317,
+              "reconstructed_aggregate": 17
+            },
+            {
+              "event_index": 13795,
+              "side": 2,
+              "price": 12900,
+              "source_aggregate": 134,
+              "reconstructed_aggregate": 0
+            },
+            {
+              "event_index": 17579,
+              "side": 2,
+              "price": 12980,
+              "source_aggregate": 4446,
+              "reconstructed_aggregate": 4386
+            }
+          ]
+        }
+      }
+    }
+  },
+  "snapshot_stride_raw_events": 100,
+  "target": {
+    "horizon_seconds": 60.0,
+    "maximum_target_delay_seconds": 120.0,
+    "rule": "first same-session sampled midpoint at or after the requested horizon"
+  },
+  "date_splits": {
+    "train": {
+      "first": "20170102",
+      "last": "20170912",
+      "count": 175
+    },
+    "validation": {
+      "first": "20170913",
+      "last": "20171103",
+      "count": 37
+    },
+    "test": {
+      "first": "20171106",
+      "last": "20171229",
+      "count": 38
+    }
+  },
+  "train_method": "each held-out ticker is excluded from fitting; the other four are trained on the first chronological date block with equal total sample weights by ticker",
+  "model_settings": "Same nine features and fixed baseline/logistic/histogram-gradient-boosting settings as the PEKAO benchmark; no test tuning.",
+  "folds": [
+    {
+      "held_out_ticker": "KGHM",
+      "train_tickers": [
+        "PEKAO",
+        "PKNORLEN",
+        "PKOBP",
+        "PZU"
+      ],
+      "train_ticker_rows": {
+        "PEKAO": 44423,
+        "PKNORLEN": 105451,
+        "PKOBP": 96321,
+        "PZU": 87610
+      },
+      "ticker_weighting": "equal total sample weight per training ticker",
+      "train_rows": 333805,
+      "test_rows": 17626,
+      "test_dates": 38,
+      "test_date_range": [
+        "20171106",
+        "20171229"
+      ],
+      "test_class_counts": {
+        "down": 7671,
+        "flat": 2305,
+        "up": 7650
+      },
+      "target_delay_seconds": {
+        "median": 76.455162525177,
+        "p95": 112.2533705830574
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.43401792806081924,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20177243234689032,
+          "log_loss": 0.9977659492733527
+        },
+        "logistic_regression": {
+          "accuracy": 0.42057188244638605,
+          "balanced_accuracy": 0.32262625642965653,
+          "macro_f1": 0.2985220568945015,
+          "log_loss": 0.9934192040892723
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4552365823215704,
+          "balanced_accuracy": 0.3491645387134126,
+          "macro_f1": 0.32465941875043874,
+          "log_loss": 0.9909303699893515
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3146069570249179,
+            0.33083016256302017
+          ],
+          "hist_gradient_boosting": [
+            0.3416426541005718,
+            0.35768041052048793
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.018726376308415397,
+            -0.0025031707703131556
+          ],
+          "hist_gradient_boosting": [
+            0.008309320767238495,
+            0.024347077187154613
+          ]
+        }
+      }
+    },
+    {
+      "held_out_ticker": "PEKAO",
+      "train_tickers": [
+        "KGHM",
+        "PKNORLEN",
+        "PKOBP",
+        "PZU"
+      ],
+      "train_ticker_rows": {
+        "KGHM": 129488,
+        "PKNORLEN": 105451,
+        "PKOBP": 96321,
+        "PZU": 87610
+      },
+      "ticker_weighting": "equal total sample weight per training ticker",
+      "train_rows": 418870,
+      "test_rows": 7364,
+      "test_dates": 38,
+      "test_date_range": [
+        "20171106",
+        "20171229"
+      ],
+      "test_class_counts": {
+        "down": 3265,
+        "flat": 814,
+        "up": 3285
+      },
+      "target_delay_seconds": {
+        "median": 79.65188133716583,
+        "p95": 114.54748579263686
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.44608908202064096,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20565311296835384,
+          "log_loss": 0.9651846011176473
+        },
+        "logistic_regression": {
+          "accuracy": 0.4398424769147203,
+          "balanced_accuracy": 0.32961665435180715,
+          "macro_f1": 0.31014592232154764,
+          "log_loss": 0.9688262645311635
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4720260727865291,
+          "balanced_accuracy": 0.35379153934189705,
+          "macro_f1": 0.33309313950333125,
+          "log_loss": 0.9644463416382557
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.31732696737871235,
+            0.34214409983277666
+          ],
+          "hist_gradient_boosting": [
+            0.3429860359535438,
+            0.3654983580366007
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.016006365954620974,
+            0.008810766499443347
+          ],
+          "hist_gradient_boosting": [
+            0.00965270262021052,
+            0.03216502470326738
+          ]
+        }
+      }
+    },
+    {
+      "held_out_ticker": "PKOBP",
+      "train_tickers": [
+        "KGHM",
+        "PEKAO",
+        "PKNORLEN",
+        "PZU"
+      ],
+      "train_ticker_rows": {
+        "KGHM": 129488,
+        "PEKAO": 44423,
+        "PKNORLEN": 105451,
+        "PZU": 87610
+      },
+      "ticker_weighting": "equal total sample weight per training ticker",
+      "train_rows": 366972,
+      "test_rows": 17436,
+      "test_dates": 38,
+      "test_date_range": [
+        "20171106",
+        "20171229"
+      ],
+      "test_class_counts": {
+        "down": 7442,
+        "flat": 1805,
+        "up": 8189
+      },
+      "target_delay_seconds": {
+        "median": 77.03948163986206,
+        "p95": 113.300057888031
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.4696604725854554,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.21304715447154474,
+          "log_loss": 0.9545104802174905
+        },
+        "logistic_regression": {
+          "accuracy": 0.45096352374397797,
+          "balanced_accuracy": 0.334711150362658,
+          "macro_f1": 0.3164375904029007,
+          "log_loss": 0.9498107103762702
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.49386327139252123,
+          "balanced_accuracy": 0.3664700453838445,
+          "macro_f1": 0.3464729651247876,
+          "log_loss": 0.9400113685953
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.32660499726270875,
+            0.34381721376935437
+          ],
+          "hist_gradient_boosting": [
+            0.3587422525660599,
+            0.37328197566475146
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.006728336070624579,
+            0.010483880436021043
+          ],
+          "hist_gradient_boosting": [
+            0.02540891923272658,
+            0.03994864233141817
+          ]
+        }
+      }
+    },
+    {
+      "held_out_ticker": "PKNORLEN",
+      "train_tickers": [
+        "KGHM",
+        "PEKAO",
+        "PKOBP",
+        "PZU"
+      ],
+      "train_ticker_rows": {
+        "KGHM": 129488,
+        "PEKAO": 44423,
+        "PKOBP": 96321,
+        "PZU": 87610
+      },
+      "ticker_weighting": "equal total sample weight per training ticker",
+      "train_rows": 357842,
+      "test_rows": 20613,
+      "test_dates": 38,
+      "test_date_range": [
+        "20171106",
+        "20171229"
+      ],
+      "test_class_counts": {
+        "down": 9493,
+        "flat": 2166,
+        "up": 8954
+      },
+      "target_delay_seconds": {
+        "median": 75.88759207725525,
+        "p95": 112.28609719276427
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.43438606704506866,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.20189174868378035,
+          "log_loss": 0.9566266193681474
+        },
+        "logistic_regression": {
+          "accuracy": 0.42337359918498035,
+          "balanced_accuracy": 0.31631795073278274,
+          "macro_f1": 0.2975209224514824,
+          "log_loss": 0.9585253774010842
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.4874593703002959,
+          "balanced_accuracy": 0.3630559972074772,
+          "macro_f1": 0.34288112076637844,
+          "log_loss": 0.951535393512475
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.30938584395524327,
+            0.3231450984606046
+          ],
+          "hist_gradient_boosting": [
+            0.3562501199988115,
+            0.3703209701504743
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.02394748937809006,
+            -0.010188234872728739
+          ],
+          "hist_gradient_boosting": [
+            0.022916786665478167,
+            0.03698763681714103
+          ]
+        }
+      }
+    },
+    {
+      "held_out_ticker": "PZU",
+      "train_tickers": [
+        "KGHM",
+        "PEKAO",
+        "PKNORLEN",
+        "PKOBP"
+      ],
+      "train_ticker_rows": {
+        "KGHM": 129488,
+        "PEKAO": 44423,
+        "PKNORLEN": 105451,
+        "PKOBP": 96321
+      },
+      "ticker_weighting": "equal total sample weight per training ticker",
+      "train_rows": 375683,
+      "test_rows": 18967,
+      "test_dates": 38,
+      "test_date_range": [
+        "20171106",
+        "20171229"
+      ],
+      "test_class_counts": {
+        "down": 8660,
+        "flat": 1450,
+        "up": 8857
+      },
+      "target_delay_seconds": {
+        "median": 76.31223011016846,
+        "p95": 112.4776312351227
+      },
+      "test_metrics": {
+        "majority_baseline": {
+          "accuracy": 0.45658248536932566,
+          "balanced_accuracy": 0.3333333333333333,
+          "macro_f1": 0.2089743125686225,
+          "log_loss": 0.9127518523774646
+        },
+        "logistic_regression": {
+          "accuracy": 0.4401855854905889,
+          "balanced_accuracy": 0.3182822257643754,
+          "macro_f1": 0.3036592772916091,
+          "log_loss": 0.9131633637036977
+        },
+        "hist_gradient_boosting": {
+          "accuracy": 0.516370538303369,
+          "balanced_accuracy": 0.3728548845078718,
+          "macro_f1": 0.35790720197395637,
+          "log_loss": 0.9039209380866059
+        }
+      },
+      "date_bootstrap": {
+        "method": "2,000 paired bootstrap resamples of held-out trading dates",
+        "balanced_accuracy_95ci": {
+          "majority_baseline": [
+            0.3333333333333333,
+            0.3333333333333333
+          ],
+          "logistic_regression": [
+            0.3091204336507039,
+            0.3284082579056115
+          ],
+          "hist_gradient_boosting": [
+            0.36370969640242556,
+            0.3819689178045376
+          ]
+        },
+        "delta_vs_majority_95ci": {
+          "logistic_regression": [
+            -0.024212899682629407,
+            -0.0049250754277217895
+          ],
+          "hist_gradient_boosting": [
+            0.030376363069092232,
+            0.048635584471204286
+          ]
+        }
+      }
+    }
+  ],
+  "unweighted_mean_boosted_lift_pp": 2.7734067697567313,
+  "input_manifest": {
+    "KGHM": {
+      "path": "data\\wselob_2017\\all_stocks\\KGHM_lob_2017_zlib.h5",
+      "size_bytes": 325838174,
+      "sha256": "0246f994b42af04c65deb38f28f64988b7b6fa71d0fb83e41bda8487afff4c5c"
+    },
+    "PKNORLEN": {
+      "path": "data\\wselob_2017\\all_stocks\\PKNORLEN_lob_2017_zlib.h5",
+      "size_bytes": 290678577,
+      "sha256": "5b8f394144b8a3dace3e08bb2b4228d63231a12ae21f5f27aa662a8d09f3fa40"
+    },
+    "PKOBP": {
+      "path": "data\\wselob_2017\\all_stocks\\PKOBP_lob_2017_zlib.h5",
+      "size_bytes": 281092890,
+      "sha256": "ecf94a905b04836442c9124c7f7d7edc5b7d98e7236ca4026f0ec37b9407407e"
+    },
+    "PZU": {
+      "path": "data\\wselob_2017\\all_stocks\\PZU_lob_2017_zlib.h5",
+      "size_bytes": 262873333,
+      "sha256": "4ca8f7c136c940d71b271cc427d641c3881857e01b43555792d484d9eb2f4b8c"
+    },
+    "PEKAO": {
+      "path": "data\\wselob_2017\\PEKAO_lob_2017_zlib.h5",
+      "size_bytes": 152759953,
+      "sha256": "3c418a55a492ebe2e39c8513cd7fc7e3e6827dc1a176af09fdcaad9f3485bae6"
+    }
+  },
+  "limitations": "Single year, five WSE instruments, sampled events, direction labels only, no costed multi-instrument trading test."
+}

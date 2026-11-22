@@ -23,6 +23,30 @@ diagnostics.
 The author's schema and reference implementation are retained in this folder
 for the optional independent validation command in the main README.
 
+### Five-stock generalization study
+
+The same CC BY 4.0 dataset also contains full-year order-book files for KGHM,
+PKNORLEN, PKOBP, and PZU. The five-stock archive is about 1.3 GB. Download it
+from the [WSELOB-2017 record](https://data.mendeley.com/datasets/3g4mhdp899/1),
+then extract the four additional `orders/*_lob_2017_zlib.h5` files into:
+
+```text
+data/wselob_2017/all_stocks/
+```
+
+Keep the existing `PEKAO_lob_2017_zlib.h5` in `data/wselob_2017/`. The source
+archive is not committed. After extraction, reproduce the leave-one-stock-out
+direction study with:
+
+```powershell
+python multi_stock_ml_benchmark.py --data-dir data/wselob_2017 --stride 100
+python validate_wselob_multi_stock.py
+```
+
+The script writes a snapshot cache under ignored `build/`; the results include
+source hashes and reconstruction diagnostics for each instrument. Follow the
+CC BY 4.0 attribution and licensing requirements above.
+
 ## LOBSTER samples
 
 Download the five official sample archives for AMZN, AAPL, GOOG, INTC, and

@@ -9,6 +9,7 @@ order_book.exe
 /data/lobster_other_tickers_2012-06-21/
 /data/wselob_2017/*.h5
 /data/wselob_2017/order_data.html
+/data/wselob_2017/all_stocks/
 
 # Large row-level outputs are reproducible from the analysis scripts.
 /results/lobster_execution_observations.csv

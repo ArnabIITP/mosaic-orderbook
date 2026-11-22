@@ -6,6 +6,7 @@ import argparse
 from collections import Counter
 import hashlib
 import json
+import platform
 import statistics
 import struct
 import subprocess
@@ -120,11 +121,14 @@ def _check_output(path: Path, dates: list[str], python_rows: dict[str, list[dict
             "missing_modify_updates": missing_updates, "output_sha256": digest.hexdigest()}
 
 
-def replay(data_path: Path = DEFAULT_DATA, stride: int = 100, repetitions: int = 3,
+def replay(data_path: Path = DEFAULT_DATA, stride: int = 100, repetitions: int = 7,
            days: int | None = None, events_per_day: int | None = None,
-           keep_intermediates: bool = False, output_json: Path | None = None) -> dict[str, Any]:
+           keep_intermediates: bool = False, output_json: Path | None = None,
+           profile_every: int = 1024) -> dict[str, Any]:
     if stride < 1 or repetitions < 1:
         raise ValueError("stride and repetitions must be positive")
+    if profile_every < 1:
+        raise ValueError("profile_every must be positive")
     binary = ROOT / "build" / ("order_book_cli.exe" if sys.platform == "win32" else "order_book_cli")
     feed_file = ROOT / "build" / "wselob_event_stream.bin"
     output_file = ROOT / "build" / "wselob_cpp_snapshots.tsv"
@@ -137,8 +141,16 @@ def replay(data_path: Path = DEFAULT_DATA, stride: int = 100, repetitions: int =
     feed_write_seconds = time.perf_counter() - write_started
     compiler = _build_binary(binary)
 
+    warmup_started = time.perf_counter()
+    with output_file.open("wb") as stdout:
+        warmup = subprocess.run([str(binary), "--replay-events", str(feed_file), str(stride)],
+                                cwd=ROOT, stdout=stdout, stderr=subprocess.PIPE)
+    warmup_seconds = time.perf_counter() - warmup_started
+    if warmup.returncode:
+        raise RuntimeError("C++ replay warmup failed:\n" + warmup.stderr.decode(errors="replace"))
+    warmup_checks = _check_output(output_file, dates, python_rows, event_count)
+    output_digest = warmup_checks["output_sha256"]
     timings = []
-    output_digest = None
     checks: dict[str, Any] | None = None
     for _ in range(repetitions):
         started = time.perf_counter()
@@ -149,11 +161,31 @@ def replay(data_path: Path = DEFAULT_DATA, stride: int = 100, repetitions: int =
         if result.returncode:
             raise RuntimeError("C++ raw event replay failed:\n" + result.stderr.decode(errors="replace"))
         run_checks = _check_output(output_file, dates, python_rows, event_count)
-        if output_digest is not None and output_digest != run_checks["output_sha256"]:
+        if output_digest != run_checks["output_sha256"]:
             raise AssertionError("C++ replay output changed between benchmark repetitions")
-        output_digest = run_checks["output_sha256"]
         checks = run_checks
         timings.append(elapsed)
+
+    profile_started = time.perf_counter()
+    with output_file.open("wb") as stdout:
+        profiled = subprocess.run(
+            [str(binary), "--replay-events", str(feed_file), str(stride),
+             "--profile-every", str(profile_every)],
+            cwd=ROOT, stdout=stdout, stderr=subprocess.PIPE,
+        )
+    profile_wall_seconds = time.perf_counter() - profile_started
+    if profiled.returncode:
+        raise RuntimeError("C++ replay profiling pass failed:\n" + profiled.stderr.decode(errors="replace"))
+    profile_checks = _check_output(output_file, dates, python_rows, event_count)
+    if profile_checks["output_sha256"] != output_digest:
+        raise AssertionError("C++ profiling pass changed replay output")
+    profile_line = next((line for line in profiled.stderr.decode(errors="replace").splitlines()
+                         if line.startswith("PROFILE\t")), None)
+    if profile_line is None:
+        raise RuntimeError("C++ profiling pass did not emit mutation latency samples")
+    profile_fields = profile_line.split("\t")
+    profile_values = {profile_fields[i]: int(profile_fields[i + 1])
+                      for i in range(1, len(profile_fields), 2)}
 
     missing_python = sum(
         int(v["diagnostics"].get("modify_without_live_resting_order", 0)) +
@@ -177,16 +209,33 @@ def replay(data_path: Path = DEFAULT_DATA, stride: int = 100, repetitions: int =
         "cpp_runs_seconds": timings,
         "cpp_median_seconds": statistics.median(timings),
         "cpp_min_seconds": min(timings),
+        "cpp_max_seconds": max(timings),
+        "cpp_run_spread_pct_of_median": (max(timings) - min(timings)) / statistics.median(timings) * 100.0,
+        "cpp_warmup_seconds": warmup_seconds,
         "cpp_build_optimization": "-O3 -DNDEBUG",
         "cpp_compiler": compiler,
         "cpp_events_per_second_median": event_count / statistics.median(timings),
         "cpp_output_bytes": output_file.stat().st_size,
+        "cpp_mutation_latency_profile": {
+            "sample_every_events": profile_every,
+            "profiled_pass_wall_seconds": profile_wall_seconds,
+            "scope": "sampled event book mutation after binary decoding; excludes feed parsing and snapshot output",
+            "percentiles_ns": {key.removeprefix("mutation_"): value for key, value in profile_values.items()
+                                if key.startswith("mutation_p")},
+            "sample_count": profile_values.get("mutation_samples", 0),
+        },
+        "benchmark_host": {
+            "platform": platform.platform(),
+            "machine": platform.machine(),
+            "processor": platform.processor() or "not reported by operating system",
+            "python": platform.python_version(),
+        },
         **(checks or {}),
         "python_missing_modify_updates": missing_python,
         "aggregate_volume_checks": sum(int(v["diagnostics"].get("aggregate_volume_checks", 0)) for v in python_metadata.values()),
         "aggregate_volume_mismatches": sum(int(v["diagnostics"].get("aggregate_volume_mismatches", 0)) for v in python_metadata.values()),
         "python_reconstruction_diagnostic_totals": diagnostic_totals,
-        "timing_note": "C++ measurement includes process startup, binary feed I/O, parsing, book mutations, and TSV snapshot output. Python time includes HDF5 decoding and reconstruction; it is a reference timing, not a controlled language speed comparison.",
+        "timing_note": "The uninstrumented C++ repetitions include process startup, binary feed I/O, parsing, book mutations, and TSV snapshot output. The separate profiled pass samples one book mutation per configured event interval after decoding; its nanosecond percentiles are sampled mutation timings, not exchange or end-to-end latency. Python time includes HDF5 decoding and reconstruction and is not a controlled language speed comparison.",
     }
     output_json = output_json or (ROOT / "results" / "cpp_event_replay_benchmark.json")
     output_json.parent.mkdir(parents=True, exist_ok=True)
@@ -201,18 +250,22 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data", type=Path, default=DEFAULT_DATA)
     parser.add_argument("--stride", type=int, default=100)
-    parser.add_argument("--repetitions", type=int, default=3)
+    parser.add_argument("--repetitions", type=int, default=7)
+    parser.add_argument("--profile-every", type=int, default=1024)
     parser.add_argument("--days", type=int)
     parser.add_argument("--events-per-day", type=int)
     parser.add_argument("--keep-intermediates", action="store_true")
     parser.add_argument("--output-json", type=Path)
     args = parser.parse_args()
     result = replay(args.data, args.stride, args.repetitions, args.days,
-                    args.events_per_day, args.keep_intermediates, args.output_json)
+                    args.events_per_day, args.keep_intermediates, args.output_json,
+                    args.profile_every)
     summary_keys = (
         "dates", "date_start", "date_end", "raw_events", "python_hdf5_reconstruction_seconds",
         "normalized_binary_write_seconds", "cpp_compiler", "cpp_build_optimization",
         "cpp_runs_seconds", "cpp_median_seconds", "cpp_events_per_second_median",
+        "cpp_min_seconds", "cpp_max_seconds", "cpp_run_spread_pct_of_median",
+        "cpp_mutation_latency_profile", "benchmark_host",
         "matched_snapshots", "mismatches", "processed_events", "aggregate_volume_checks",
         "aggregate_volume_mismatches", "output_sha256",
     )
