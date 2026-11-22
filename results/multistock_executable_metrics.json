@@ -1,0 +1,991 @@
+{
+  "study": "multi-session, five-stock costed executable-target cross-stock study",
+  "dataset": "WSELOB-2017, DOI 10.17632/3g4mhdp899.1, CC BY 4.0",
+  "source_manifest": {
+    "KGHM": {
+      "filename": "KGHM_lob_2017_zlib.h5",
+      "size_bytes": 325838174,
+      "sha256": "0246f994b42af04c65deb38f28f64988b7b6fa71d0fb83e41bda8487afff4c5c",
+      "sessions": 250,
+      "raw_events": 21218914,
+      "usable_samples": 165648,
+      "reconstruction_diagnostics": {
+        "full_refreshes": 250,
+        "invalid_or_one_sided_snapshots": 3999,
+        "aggregate_volume_checks": 21107280,
+        "non_resting_adds_skipped": 26717,
+        "delete_without_live_nonresting_order": 13245,
+        "aggregate_volume_mismatches": 3187,
+        "aggregate_volume_mismatch_examples": [
+          {
+            "event_index": 4540,
+            "side": 1,
+            "price": 9171,
+            "source_aggregate": 0,
+            "reconstructed_aggregate": 50
+          },
+          {
+            "event_index": 4642,
+            "side": 1,
+            "price": 9174,
+            "source_aggregate": 150,
+            "reconstructed_aggregate": 0
+          },
+          {
+            "event_index": 4714,
+            "side": 1,
+            "price": 9171,
+            "source_aggregate": 0,
+            "reconstructed_aggregate": 50
+          },
+          {
+            "event_index": 24986,
+            "side": 2,
+            "price": 9200,
+            "source_aggregate": 24,
+            "reconstructed_aggregate": 0
+          },
+          {
+            "event_index": 32255,
+            "side": 1,
+            "price": 9196,
+            "source_aggregate": 100,
+            "reconstructed_aggregate": 314
+          }
+        ],
+        "modify_without_live_nonresting_order": 13460
+      }
+    },
+    "PKNORLEN": {
+      "filename": "PKNORLEN_lob_2017_zlib.h5",
+      "size_bytes": 290678577,
+      "sha256": "5b8f394144b8a3dace3e08bb2b4228d63231a12ae21f5f27aa662a8d09f3fa40",
+      "sessions": 250,
+      "raw_events": 19284598,
+      "usable_samples": 145417,
+      "reconstruction_diagnostics": {
+        "full_refreshes": 250,
+        "invalid_or_one_sided_snapshots": 3601,
+        "aggregate_volume_checks": 19204197,
+        "non_resting_adds_skipped": 20375,
+        "delete_without_live_nonresting_order": 12007,
+        "aggregate_volume_mismatches": 52139,
+        "aggregate_volume_mismatch_examples": [
+          {
+            "event_index": 10230,
+            "side": 2,
+            "price": 8560,
+            "source_aggregate": 510,
+            "reconstructed_aggregate": 180
+          },
+          {
+            "event_index": 44292,
+            "side": 1,
+            "price": 8563,
+            "source_aggregate": 699,
+            "reconstructed_aggregate": 1781
+          },
+          {
+            "event_index": 44353,
+            "side": 1,
+            "price": 8564,
+            "source_aggregate": 280,
+            "reconstructed_aggregate": 980
+          },
+          {
+            "event_index": 61338,
+            "side": 1,
+            "price": 8550,
+            "source_aggregate": 800,
+            "reconstructed_aggregate": 300
+          },
+          {
+            "event_index": 74713,
+            "side": 2,
+            "price": 8564,
+            "source_aggregate": 420,
+            "reconstructed_aggregate": 220
+          }
+        ],
+        "modify_without_live_nonresting_order": 8366
+      }
+    },
+    "PKOBP": {
+      "filename": "PKOBP_lob_2017_zlib.h5",
+      "size_bytes": 281092890,
+      "sha256": "ecf94a905b04836442c9124c7f7d7edc5b7d98e7236ca4026f0ec37b9407407e",
+      "sessions": 250,
+      "raw_events": 18296436,
+      "usable_samples": 128866,
+      "reconstruction_diagnostics": {
+        "full_refreshes": 250,
+        "invalid_or_one_sided_snapshots": 7859,
+        "aggregate_volume_checks": 18197836,
+        "non_resting_adds_skipped": 18216,
+        "aggregate_volume_mismatches": 3481831,
+        "aggregate_volume_mismatch_examples": [
+          {
+            "event_index": 460,
+            "side": 2,
+            "price": 4079,
+            "source_aggregate": 261,
+            "reconstructed_aggregate": 281
+          },
+          {
+            "event_index": 524,
+            "side": 2,
+            "price": 3286,
+            "source_aggregate": 60,
+            "reconstructed_aggregate": 122
+          },
+          {
+            "event_index": 526,
+            "side": 2,
+            "price": 3929,
+            "source_aggregate": 400,
+            "reconstructed_aggregate": 420
+          },
+          {
+            "event_index": 529,
+            "side": 2,
+            "price": 3929,
+            "source_aggregate": 70,
+            "reconstructed_aggregate": 470
+          },
+          {
+            "event_index": 572,
+            "side": 2,
+            "price": 3629,
+            "source_aggregate": 200,
+            "reconstructed_aggregate": 220
+          }
+        ],
+        "delete_without_live_nonresting_order": 10455,
+        "modify_without_live_nonresting_order": 7754
+      }
+    },
+    "PZU": {
+      "filename": "PZU_lob_2017_zlib.h5",
+      "size_bytes": 262873333,
+      "sha256": "4ca8f7c136c940d71b271cc427d641c3881857e01b43555792d484d9eb2f4b8c",
+      "sessions": 250,
+      "raw_events": 17177391,
+      "usable_samples": 122758,
+      "reconstruction_diagnostics": {
+        "full_refreshes": 250,
+        "invalid_or_one_sided_snapshots": 5107,
+        "aggregate_volume_checks": 17082824,
+        "non_resting_adds_skipped": 19039,
+        "aggregate_volume_mismatches": 1183329,
+        "aggregate_volume_mismatch_examples": [
+          {
+            "event_index": 138,
+            "side": 1,
+            "price": 3229,
+            "source_aggregate": 100,
+            "reconstructed_aggregate": 430
+          },
+          {
+            "event_index": 187,
+            "side": 2,
+            "price": 3615,
+            "source_aggregate": 28,
+            "reconstructed_aggregate": 178
+          },
+          {
+            "event_index": 189,
+            "side": 2,
+            "price": 3615,
+            "source_aggregate": 32,
+            "reconstructed_aggregate": 182
+          },
+          {
+            "event_index": 192,
+            "side": 2,
+            "price": 3390,
+            "source_aggregate": 175,
+            "reconstructed_aggregate": 225
+          },
+          {
+            "event_index": 229,
+            "side": 2,
+            "price": 3397,
+            "source_aggregate": 210,
+            "reconstructed_aggregate": 259
+          }
+        ],
+        "delete_without_live_nonresting_order": 10397,
+        "modify_without_live_nonresting_order": 8628
+      }
+    },
+    "PEKAO": {
+      "filename": "PEKAO_lob_2017_zlib.h5",
+      "size_bytes": 152759953,
+      "sha256": "3c418a55a492ebe2e39c8513cd7fc7e3e6827dc1a176af09fdcaad9f3485bae6",
+      "sessions": 250,
+      "raw_events": 9869579,
+      "usable_samples": 58425,
+      "reconstruction_diagnostics": {
+        "full_refreshes": 250,
+        "invalid_or_one_sided_snapshots": 2360,
+        "aggregate_volume_checks": 9796236,
+        "non_resting_adds_skipped": 14477,
+        "delete_without_live_nonresting_order": 8233,
+        "modify_without_live_nonresting_order": 6239,
+        "aggregate_volume_mismatches": 1617,
+        "aggregate_volume_mismatch_examples": [
+          {
+            "event_index": 8963,
+            "side": 2,
+            "price": 12745,
+            "source_aggregate": 6183,
+            "reconstructed_aggregate": 6011
+          },
+          {
+            "event_index": 14008,
+            "side": 2,
+            "price": 12860,
+            "source_aggregate": 250,
+            "reconstructed_aggregate": 0
+          },
+          {
+            "event_index": 12134,
+            "side": 2,
+            "price": 12894,
+            "source_aggregate": 317,
+            "reconstructed_aggregate": 17
+          },
+          {
+            "event_index": 13795,
+            "side": 2,
+            "price": 12900,
+            "source_aggregate": 134,
+            "reconstructed_aggregate": 0
+          },
+          {
+            "event_index": 17579,
+            "side": 2,
+            "price": 12980,
+            "source_aggregate": 4446,
+            "reconstructed_aggregate": 4386
+          }
+        ]
+      }
+    }
+  },
+  "observations": {
+    "raw_events": 85846918,
+    "usable_samples": 621114,
+    "sessions": 250,
+    "tickers": [
+      "KGHM",
+      "PEKAO",
+      "PKOBP",
+      "PKNORLEN",
+      "PZU"
+    ]
+  },
+  "protocol": {
+    "chronological_split": {
+      "train": {
+        "first": "20170102",
+        "last": "20170912",
+        "sessions": 175
+      },
+      "validation": {
+        "first": "20170913",
+        "last": "20171103",
+        "sessions": 37
+      },
+      "test": {
+        "first": "20171106",
+        "last": "20171229",
+        "sessions": 38
+      }
+    },
+    "train": "first 70% of sessions; held-out instrument excluded; all forward labels remain within their session",
+    "validation": "middle 15% reserved and unused; model settings fixed in advance",
+    "test": "final 15% sessions; one held-out ticker at a time",
+    "target": "direction with positive net hypothetical 500-share marketable round-trip outcome at first sampled book >= 60s, max delay 120s; otherwise flat",
+    "execution": "sweep up to ten reconstructed displayed levels at entry and target; require full size at all four side/time sweeps; charge stated fee on each side",
+    "fee_bps_per_side": 1.0,
+    "order_size_shares": 500,
+    "models": "training-prior baseline, regularized logistic regression, fixed histogram gradient boosting; no test tuning",
+    "trade_policy": "flat predictions skip; directional calls executed sequentially within each ticker-session, next entry only after prior target timestamp",
+    "uncertainty": "seeded bootstrap over active test-session mean returns (5000 replicates), equal weight per active session"
+  },
+  "folds": [
+    {
+      "heldout_ticker": "KGHM",
+      "train_tickers": [
+        "PEKAO",
+        "PKNORLEN",
+        "PKOBP",
+        "PZU"
+      ],
+      "train_rows": 333805,
+      "test_rows": 17626,
+      "test_dates": 38,
+      "test_class_counts": {
+        "down": 1106,
+        "flat": 15535,
+        "up": 985
+      },
+      "scores": {
+        "majority_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.8813684329967094,
+          "macro_f1": 0.31231466682749814,
+          "target_counts": {
+            "down": 1106,
+            "flat": 15535,
+            "up": 985
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 17626,
+            "up": 0
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 0,
+            "active_test_dates": 0,
+            "mean_net_bps_per_trade": null,
+            "median_net_bps_per_trade": null,
+            "profitable_trade_rate_pct": null,
+            "equal_weight_mean_daily_bps": null,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              null,
+              null
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3333284320052368,
+          "accuracy": 0.8805174174514921,
+          "macro_f1": 0.3128972281215667,
+          "target_counts": {
+            "down": 1106,
+            "flat": 15535,
+            "up": 985
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 17600,
+            "up": 26
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 9,
+            "active_test_dates": 9,
+            "mean_net_bps_per_trade": -40.31104661554525,
+            "median_net_bps_per_trade": -43.139769098502384,
+            "profitable_trade_rate_pct": 0.0,
+            "equal_weight_mean_daily_bps": -40.31104661554525,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -47.057483606903496,
+              -33.10072364428491
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 9,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3336288289583534,
+          "accuracy": 0.8813116986270283,
+          "macro_f1": 0.31299495132285576,
+          "target_counts": {
+            "down": 1106,
+            "flat": 15535,
+            "up": 985
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 17621,
+            "up": 5
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 2,
+            "active_test_dates": 2,
+            "mean_net_bps_per_trade": 5.949898568399668,
+            "median_net_bps_per_trade": 5.949898568399668,
+            "profitable_trade_rate_pct": 50.0,
+            "equal_weight_mean_daily_bps": 5.949898568399668,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -7.016329196603717,
+              18.916126333403053
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 2,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "heldout_ticker": "PEKAO",
+      "train_tickers": [
+        "KGHM",
+        "PKNORLEN",
+        "PKOBP",
+        "PZU"
+      ],
+      "train_rows": 418870,
+      "test_rows": 7363,
+      "test_dates": 38,
+      "test_class_counts": {
+        "down": 431,
+        "flat": 6537,
+        "up": 395
+      },
+      "scores": {
+        "majority_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.8878174657069129,
+          "macro_f1": 0.3135251798561151,
+          "target_counts": {
+            "down": 431,
+            "flat": 6537,
+            "up": 395
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 7363,
+            "up": 0
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 0,
+            "active_test_dates": 0,
+            "mean_net_bps_per_trade": null,
+            "median_net_bps_per_trade": null,
+            "profitable_trade_rate_pct": null,
+            "equal_weight_mean_daily_bps": null,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              null,
+              null
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3331293661720463,
+          "accuracy": 0.8872742088822491,
+          "macro_f1": 0.3134235271540971,
+          "target_counts": {
+            "down": 431,
+            "flat": 6537,
+            "up": 395
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 7359,
+            "up": 4
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 2,
+            "active_test_dates": 2,
+            "mean_net_bps_per_trade": -19.55562680611809,
+            "median_net_bps_per_trade": -19.55562680611809,
+            "profitable_trade_rate_pct": 0.0,
+            "equal_weight_mean_daily_bps": -19.55562680611809,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -33.33823821833337,
+              -5.773015393902807
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 2,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3332313497526898,
+          "accuracy": 0.887545837294581,
+          "macro_f1": 0.3134743608193025,
+          "target_counts": {
+            "down": 431,
+            "flat": 6537,
+            "up": 395
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 7361,
+            "up": 2
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 2,
+            "active_test_dates": 2,
+            "mean_net_bps_per_trade": -23.130903174326406,
+            "median_net_bps_per_trade": -23.130903174326406,
+            "profitable_trade_rate_pct": 0.0,
+            "equal_weight_mean_daily_bps": -23.130903174326406,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -29.615322049653074,
+              -16.646484298999734
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 2,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "heldout_ticker": "PKOBP",
+      "train_tickers": [
+        "KGHM",
+        "PEKAO",
+        "PKNORLEN",
+        "PZU"
+      ],
+      "train_rows": 366972,
+      "test_rows": 17435,
+      "test_dates": 38,
+      "test_class_counts": {
+        "down": 1276,
+        "flat": 14425,
+        "up": 1734
+      },
+      "scores": {
+        "majority_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.8273587611127043,
+          "macro_f1": 0.3018413894120109,
+          "target_counts": {
+            "down": 1276,
+            "flat": 14425,
+            "up": 1734
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 17435,
+            "up": 0
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 0,
+            "active_test_dates": 0,
+            "mean_net_bps_per_trade": null,
+            "median_net_bps_per_trade": null,
+            "profitable_trade_rate_pct": null,
+            "equal_weight_mean_daily_bps": null,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              null,
+              null
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3335255670895809,
+          "accuracy": 0.8274161170060224,
+          "macro_f1": 0.30224458450319497,
+          "target_counts": {
+            "down": 1276,
+            "flat": 14425,
+            "up": 1734
+          },
+          "predicted_counts": {
+            "down": 1,
+            "flat": 17433,
+            "up": 1
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 1,
+            "active_test_dates": 1,
+            "mean_net_bps_per_trade": 7.768009768009769,
+            "median_net_bps_per_trade": 7.768009768009769,
+            "profitable_trade_rate_pct": 100.0,
+            "equal_weight_mean_daily_bps": 7.768009768009769,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              7.768009768009769,
+              7.768009768009769
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 1,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3334100269393787,
+          "accuracy": 0.8271293375394322,
+          "macro_f1": 0.302177845883901,
+          "target_counts": {
+            "down": 1276,
+            "flat": 14425,
+            "up": 1734
+          },
+          "predicted_counts": {
+            "down": 5,
+            "flat": 17429,
+            "up": 1
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 3,
+            "active_test_dates": 3,
+            "mean_net_bps_per_trade": -6.834484043547026,
+            "median_net_bps_per_trade": -3.5586361933303268,
+            "profitable_trade_rate_pct": 33.33333333333333,
+            "equal_weight_mean_daily_bps": -6.834484043547026,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -18.558185404338992,
+              1.6133694670282381
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 3,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "heldout_ticker": "PKNORLEN",
+      "train_tickers": [
+        "KGHM",
+        "PEKAO",
+        "PKOBP",
+        "PZU"
+      ],
+      "train_rows": 357842,
+      "test_rows": 20612,
+      "test_dates": 38,
+      "test_class_counts": {
+        "down": 1856,
+        "flat": 17088,
+        "up": 1668
+      },
+      "scores": {
+        "majority_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.8290316320589948,
+          "macro_f1": 0.30217506631299734,
+          "target_counts": {
+            "down": 1856,
+            "flat": 17088,
+            "up": 1668
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 20612,
+            "up": 0
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 0,
+            "active_test_dates": 0,
+            "mean_net_bps_per_trade": null,
+            "median_net_bps_per_trade": null,
+            "profitable_trade_rate_pct": null,
+            "equal_weight_mean_daily_bps": null,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              null,
+              null
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3333381047970612,
+          "accuracy": 0.8285949932078401,
+          "macro_f1": 0.30248414604026047,
+          "target_counts": {
+            "down": 1856,
+            "flat": 17088,
+            "up": 1668
+          },
+          "predicted_counts": {
+            "down": 3,
+            "flat": 20601,
+            "up": 8
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 5,
+            "active_test_dates": 5,
+            "mean_net_bps_per_trade": -35.13346429390887,
+            "median_net_bps_per_trade": -27.080111087374807,
+            "profitable_trade_rate_pct": 0.0,
+            "equal_weight_mean_daily_bps": -35.13346429390887,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -46.9361825429765,
+              -23.33074604484124
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 5,
+              "PZU": 0
+            }
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.33398544628071275,
+          "accuracy": 0.8280128080729672,
+          "macro_f1": 0.30432980187242475,
+          "target_counts": {
+            "down": 1856,
+            "flat": 17088,
+            "up": 1668
+          },
+          "predicted_counts": {
+            "down": 1,
+            "flat": 20572,
+            "up": 39
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 11,
+            "active_test_dates": 8,
+            "mean_net_bps_per_trade": -22.131299383300885,
+            "median_net_bps_per_trade": -7.887115979995515,
+            "profitable_trade_rate_pct": 27.27272727272727,
+            "equal_weight_mean_daily_bps": -17.21384815669238,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -39.04350930598356,
+              -1.4664414361140332
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 11,
+              "PZU": 0
+            }
+          }
+        }
+      }
+    },
+    {
+      "heldout_ticker": "PZU",
+      "train_tickers": [
+        "KGHM",
+        "PEKAO",
+        "PKNORLEN",
+        "PKOBP"
+      ],
+      "train_rows": 375683,
+      "test_rows": 18967,
+      "test_dates": 38,
+      "test_class_counts": {
+        "down": 1583,
+        "flat": 15693,
+        "up": 1691
+      },
+      "scores": {
+        "majority_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.8273844044920124,
+          "macro_f1": 0.3018465089440277,
+          "target_counts": {
+            "down": 1583,
+            "flat": 15693,
+            "up": 1691
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 18967,
+            "up": 0
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 0,
+            "active_test_dates": 0,
+            "mean_net_bps_per_trade": null,
+            "median_net_bps_per_trade": null,
+            "profitable_trade_rate_pct": null,
+            "equal_weight_mean_daily_bps": null,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              null,
+              null
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 0
+            }
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3334879735659286,
+          "accuracy": 0.827331681341277,
+          "macro_f1": 0.3022361883983363,
+          "target_counts": {
+            "down": 1583,
+            "flat": 15693,
+            "up": 1691
+          },
+          "predicted_counts": {
+            "down": 0,
+            "flat": 18963,
+            "up": 4
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 2,
+            "active_test_dates": 2,
+            "mean_net_bps_per_trade": -30.15955395868486,
+            "median_net_bps_per_trade": -30.15955395868486,
+            "profitable_trade_rate_pct": 50.0,
+            "equal_weight_mean_daily_bps": -30.15955395868486,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -86.37287764267656,
+              26.053769725306836
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 2
+            }
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3336773033194133,
+          "accuracy": 0.827331681341277,
+          "macro_f1": 0.30264647041006937,
+          "target_counts": {
+            "down": 1583,
+            "flat": 15693,
+            "up": 1691
+          },
+          "predicted_counts": {
+            "down": 3,
+            "flat": 18962,
+            "up": 2
+          },
+          "trading_metrics": {
+            "non_overlapping_round_trips": 3,
+            "active_test_dates": 3,
+            "mean_net_bps_per_trade": -5.362410717544182,
+            "median_net_bps_per_trade": -0.025520483546883632,
+            "profitable_trade_rate_pct": 33.33333333333333,
+            "equal_weight_mean_daily_bps": -5.362410717544182,
+            "equal_weight_date_bootstrap_95ci_bps": [
+              -19.246196058868083,
+              3.1844843897824204
+            ],
+            "per_ticker_non_overlapping_trips": {
+              "KGHM": 0,
+              "PEKAO": 0,
+              "PKOBP": 0,
+              "PKNORLEN": 0,
+              "PZU": 3
+            }
+          }
+        }
+      }
+    }
+  ],
+  "pooled_non_overlapping_trades": {
+    "majority_baseline": {
+      "non_overlapping_round_trips": 0,
+      "active_test_dates": 0,
+      "mean_net_bps_per_trade": null,
+      "median_net_bps_per_trade": null,
+      "profitable_trade_rate_pct": null,
+      "equal_weight_mean_daily_bps": null,
+      "equal_weight_date_bootstrap_95ci_bps": [
+        null,
+        null
+      ],
+      "per_ticker_non_overlapping_trips": {
+        "KGHM": 0,
+        "PEKAO": 0,
+        "PKOBP": 0,
+        "PKNORLEN": 0,
+        "PZU": 0
+      }
+    },
+    "logistic_regression": {
+      "non_overlapping_round_trips": 19,
+      "active_test_dates": 14,
+      "mean_net_bps_per_trade": -33.16468909321305,
+      "median_net_bps_per_trade": -33.33823821833337,
+      "profitable_trade_rate_pct": 10.526315789473683,
+      "equal_weight_mean_daily_bps": -34.47907231463954,
+      "equal_weight_date_bootstrap_95ci_bps": [
+        -44.229411604066705,
+        -24.408650096784626
+      ],
+      "per_ticker_non_overlapping_trips": {
+        "KGHM": 9,
+        "PEKAO": 2,
+        "PKOBP": 1,
+        "PKNORLEN": 5,
+        "PZU": 2
+      }
+    },
+    "hist_gradient_boosting": {
+      "non_overlapping_round_trips": 21,
+      "active_test_dates": 16,
+      "mean_net_bps_per_trade": -14.971285081496987,
+      "median_net_bps_per_trade": -7.016329196603717,
+      "profitable_trade_rate_pct": 28.57142857142857,
+      "equal_weight_mean_daily_bps": -11.660878755117135,
+      "equal_weight_date_bootstrap_95ci_bps": [
+        -20.62578470224044,
+        -3.9358387362327614
+      ],
+      "per_ticker_non_overlapping_trips": {
+        "KGHM": 2,
+        "PEKAO": 2,
+        "PKOBP": 3,
+        "PKNORLEN": 11,
+        "PZU": 3
+      }
+    }
+  },
+  "limitations": [
+    "WSELOB does not provide an independent trade-print stream; passive fills and queue priority are not validated.",
+    "Displayed-book sweeps are hypothetical immediate marketable fills; no arrival latency, intervening event path, hidden liquidity, market impact, or market interaction.",
+    "Target rows with incomplete displayed depth are excluded; resulting sample is conditional on full visible fillability.",
+    "The 2017 WSE universe has five instruments and one year; this is not evidence of performance on current markets or other venues.",
+    "Trade P&L diagnostics use a one-position-per-instrument policy but omit capital constraints, portfolio netting, and risk controls."
+  ],
+  "interpretation": "Exploratory cross-stock model selection diagnostic on simulated displayed-depth round trips; not a passive queue study or deployable strategy claim."
+}

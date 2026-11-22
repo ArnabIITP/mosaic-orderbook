@@ -2,275 +2,275 @@
   "PEKAO": {
     "reference": "data\\wselob_2017\\orderbook2.py",
     "dates": 9,
-    "events_per_date": 5000,
+    "events_per_date": 100000,
     "stride": 100,
-    "matched_snapshots": 425,
+    "matched_snapshots": 2986,
     "mismatches": 0,
     "per_date": [
       {
         "date": "20170102",
-        "events_replayed": 5000,
-        "matching_snapshots": 48
+        "events_replayed": 26935,
+        "matching_snapshots": 265
       },
       {
         "date": "20170215",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 48582,
+        "matching_snapshots": 475
       },
       {
         "date": "20170330",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 41560,
+        "matching_snapshots": 407
       },
       {
         "date": "20170518",
-        "events_replayed": 5000,
-        "matching_snapshots": 48
+        "events_replayed": 61416,
+        "matching_snapshots": 604
       },
       {
         "date": "20170703",
-        "events_replayed": 5000,
-        "matching_snapshots": 48
+        "events_replayed": 16968,
+        "matching_snapshots": 163
       },
       {
         "date": "20170816",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 19462,
+        "matching_snapshots": 187
       },
       {
         "date": "20170928",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 40452,
+        "matching_snapshots": 394
       },
       {
         "date": "20171113",
-        "events_replayed": 5000,
-        "matching_snapshots": 48
+        "events_replayed": 28535,
+        "matching_snapshots": 275
       },
       {
         "date": "20171229",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 22370,
+        "matching_snapshots": 216
       }
     ]
   },
   "KGHM": {
     "reference": "data\\wselob_2017\\orderbook2.py",
     "dates": 9,
-    "events_per_date": 5000,
+    "events_per_date": 100000,
     "stride": 100,
-    "matched_snapshots": 377,
+    "matched_snapshots": 6933,
     "mismatches": 0,
     "per_date": [
       {
         "date": "20170102",
-        "events_replayed": 5000,
-        "matching_snapshots": 38
+        "events_replayed": 96330,
+        "matching_snapshots": 947
       },
       {
         "date": "20170215",
-        "events_replayed": 5000,
-        "matching_snapshots": 29
+        "events_replayed": 100000,
+        "matching_snapshots": 979
       },
       {
         "date": "20170330",
-        "events_replayed": 5000,
-        "matching_snapshots": 44
+        "events_replayed": 93924,
+        "matching_snapshots": 928
       },
       {
         "date": "20170518",
-        "events_replayed": 5000,
-        "matching_snapshots": 42
+        "events_replayed": 100000,
+        "matching_snapshots": 992
       },
       {
         "date": "20170703",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 76844,
+        "matching_snapshots": 756
       },
       {
         "date": "20170816",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 93741,
+        "matching_snapshots": 926
       },
       {
         "date": "20170928",
-        "events_replayed": 5000,
-        "matching_snapshots": 44
+        "events_replayed": 46534,
+        "matching_snapshots": 453
       },
       {
         "date": "20171113",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 53766,
+        "matching_snapshots": 523
       },
       {
         "date": "20171229",
-        "events_replayed": 5000,
-        "matching_snapshots": 44
+        "events_replayed": 43913,
+        "matching_snapshots": 429
       }
     ]
   },
   "PKOBP": {
     "reference": "data\\wselob_2017\\orderbook2.py",
     "dates": 9,
-    "events_per_date": 5000,
+    "events_per_date": 100000,
     "stride": 100,
-    "matched_snapshots": 401,
+    "matched_snapshots": 5595,
     "mismatches": 0,
     "per_date": [
       {
         "date": "20170102",
-        "events_replayed": 5000,
-        "matching_snapshots": 41
+        "events_replayed": 25732,
+        "matching_snapshots": 245
       },
       {
         "date": "20170215",
-        "events_replayed": 5000,
-        "matching_snapshots": 40
+        "events_replayed": 100000,
+        "matching_snapshots": 966
       },
       {
         "date": "20170330",
-        "events_replayed": 5000,
-        "matching_snapshots": 48
+        "events_replayed": 76141,
+        "matching_snapshots": 737
       },
       {
         "date": "20170518",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 87961,
+        "matching_snapshots": 856
       },
       {
         "date": "20170703",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 43074,
+        "matching_snapshots": 412
       },
       {
         "date": "20170816",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 58175,
+        "matching_snapshots": 539
       },
       {
         "date": "20170928",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 52301,
+        "matching_snapshots": 496
       },
       {
         "date": "20171113",
-        "events_replayed": 5000,
-        "matching_snapshots": 44
+        "events_replayed": 77618,
+        "matching_snapshots": 732
       },
       {
         "date": "20171229",
-        "events_replayed": 5000,
-        "matching_snapshots": 44
+        "events_replayed": 62425,
+        "matching_snapshots": 612
       }
     ]
   },
   "PKNORLEN": {
     "reference": "data\\wselob_2017\\orderbook2.py",
     "dates": 9,
-    "events_per_date": 5000,
+    "events_per_date": 100000,
     "stride": 100,
-    "matched_snapshots": 418,
+    "matched_snapshots": 6002,
     "mismatches": 0,
     "per_date": [
       {
         "date": "20170102",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 76464,
+        "matching_snapshots": 757
       },
       {
         "date": "20170215",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 100000,
+        "matching_snapshots": 996
       },
       {
         "date": "20170330",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 58328,
+        "matching_snapshots": 572
       },
       {
         "date": "20170518",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 100000,
+        "matching_snapshots": 995
       },
       {
         "date": "20170703",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 36879,
+        "matching_snapshots": 359
       },
       {
         "date": "20170816",
-        "events_replayed": 5000,
-        "matching_snapshots": 48
+        "events_replayed": 53775,
+        "matching_snapshots": 516
       },
       {
         "date": "20170928",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 66997,
+        "matching_snapshots": 659
       },
       {
         "date": "20171113",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 63573,
+        "matching_snapshots": 623
       },
       {
         "date": "20171229",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 53874,
+        "matching_snapshots": 525
       }
     ]
   },
   "PZU": {
     "reference": "data\\wselob_2017\\orderbook2.py",
     "dates": 9,
-    "events_per_date": 5000,
+    "events_per_date": 100000,
     "stride": 100,
-    "matched_snapshots": 401,
+    "matched_snapshots": 6066,
     "mismatches": 0,
     "per_date": [
       {
         "date": "20170102",
-        "events_replayed": 5000,
-        "matching_snapshots": 44
+        "events_replayed": 50897,
+        "matching_snapshots": 488
       },
       {
         "date": "20170215",
-        "events_replayed": 5000,
-        "matching_snapshots": 43
+        "events_replayed": 100000,
+        "matching_snapshots": 966
       },
       {
         "date": "20170330",
-        "events_replayed": 5000,
-        "matching_snapshots": 46
+        "events_replayed": 81664,
+        "matching_snapshots": 788
       },
       {
         "date": "20170518",
-        "events_replayed": 5000,
-        "matching_snapshots": 42
+        "events_replayed": 100000,
+        "matching_snapshots": 992
       },
       {
         "date": "20170703",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 31293,
+        "matching_snapshots": 304
       },
       {
         "date": "20170816",
-        "events_replayed": 5000,
-        "matching_snapshots": 47
+        "events_replayed": 71162,
+        "matching_snapshots": 698
       },
       {
         "date": "20170928",
-        "events_replayed": 5000,
-        "matching_snapshots": 42
+        "events_replayed": 70026,
+        "matching_snapshots": 681
       },
       {
         "date": "20171113",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 62654,
+        "matching_snapshots": 603
       },
       {
         "date": "20171229",
-        "events_replayed": 5000,
-        "matching_snapshots": 45
+        "events_replayed": 55870,
+        "matching_snapshots": 546
       }
     ]
   }

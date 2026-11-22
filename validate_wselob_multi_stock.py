@@ -17,7 +17,7 @@ DATES = ("20170102", "20170215", "20170330", "20170518", "20170703",
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--data-dir", type=Path, default=ROOT / "data" / "wselob_2017")
-    parser.add_argument("--events-per-day", type=int, default=5000)
+    parser.add_argument("--events-per-day", type=int, default=100000)
     parser.add_argument("--stride", type=int, default=100)
     parser.add_argument("--output", type=Path, default=ROOT / "results" / "wselob_multi_stock_reference_validation.json")
     args = parser.parse_args()
