@@ -78,8 +78,8 @@ def run(compiler: str, repetitions: int, runs: int, output: Path) -> dict[str, A
     output.parent.mkdir(parents=True, exist_ok=True)
     output.write_text(json.dumps(result, indent=2) + "\n", encoding="utf-8")
     report = ["# C++ Order-Book Operation Benchmark", "",
-        f"Host: {platform.platform()} ({platform.processor() or platform.machine()})  ",
-        f"Compiler: {version}  ", f"Build: `{result['build_flags']}`  ",
+        f"Host: {platform.platform()} ({platform.processor() or platform.machine()})<br>",
+        f"Compiler: {version}<br>", f"Build: `{result['build_flags']}`<br>",
         f"Workload: {repetitions:,} operations per run, {runs} measured runs after a warm-up. Timing overhead and scope caveats are recorded in the JSON artifact.", "",
         "| Operation | Median throughput (ops/s) | Run range (ops/s) | Sampled p50 ns | p95 ns | p99 ns | p99.9 ns | Samples/run |", "|---|---:|---:|---:|---:|---:|---:|---:|"]
     for name, data in summary.items():

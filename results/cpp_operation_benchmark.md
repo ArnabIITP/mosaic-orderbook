@@ -1,8 +1,8 @@
 # C++ Order-Book Operation Benchmark
 
-Host: Windows-11-10.0.26300-SP0 (Intel64 Family 6 Model 154 Stepping 3, GenuineIntel)  
-Compiler: g++.exe (Rev2, Built by MSYS2 project) 14.2.0  
-Build: `-std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic`  
+Host: Windows-11-10.0.26300-SP0 (Intel64 Family 6 Model 154 Stepping 3, GenuineIntel)<br>
+Compiler: g++.exe (Rev2, Built by MSYS2 project) 14.2.0<br>
+Build: `-std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic`<br>
 Workload: 200,000 operations per run, 7 measured runs after a warm-up. Timing overhead and scope caveats are recorded in the JSON artifact.
 
 | Operation | Median throughput (ops/s) | Run range (ops/s) | Sampled p50 ns | p95 ns | p99 ns | p99.9 ns | Samples/run |
