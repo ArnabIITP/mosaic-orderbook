@@ -18,6 +18,9 @@ Run `python demo.py` with Python 3.10+ and no downloaded data. It shows a passiv
 - **Unseen-stock transfer:** From 85.8 million updates, 817,626 usable sampled books were reconstructed across five WSE stocks. Train on four stocks’ early 2017 dates and test on a fifth’s final 38 dates, with the held-out stock excluded from training. The boosted tree beats the training-prior baseline on all five names by 1.58–3.95 balanced-accuracy points; every 95% date-bootstrap interval excludes zero. Its log loss is also lower on all five. Mean lift is 2.77 points. This is historical cross-stock transfer within one exchange and one year, not evidence of a tradeable edge. [Protocol and per-stock results](results/multi_stock_ml_study.md)
 - **Walk-forward and ablation:** Across five expanding test blocks with five-session embargoes, the PEKAO boosted model reaches 35.4% balanced accuracy versus 33.3% for the prior baseline (date-bootstrap lift interval +1.48 to +2.63 points). Removing book-state features leaves the pooled score essentially unchanged; removing recent returns lowers it to 34.0%. In this setup, the measured lift is not evidence that book-state features add value beyond recent returns. [Fold results and ablations](results/walk_forward_study.md)
 - **Execution-policy comparison:** On the same 383 held-out calls, a 500-share passive order filled at least partially on 23.0% of calls under the optimistic assumption that same-price WSE `M` decreases represent execution. After sweeping the displayed opposite-side book at the target and charging 0.1 bp maker entry plus 1 bp taker exit, the mean was **−0.60 bps per requested notional** (date-bootstrap 95% interval −0.97 to −0.26). Conditional midpoint markout had been +2.57 bps, showing why midpoint marks alone overstate execution quality. An immediate marketable entry and exit at 1 bp per side averaged **−17.14 bps** (95% interval −19.20 to −16.18). Treating ambiguous `M` decreases as cancellations produced no passive fills. These are displayed-depth diagnostics, not strategy returns; both the passive fill interpretation and static-book assumptions are material limitations. [Policy comparison and sensitivity](results/queue_execution_sensitivity.md)
+- **Explicit-execution policy replay:** The included LOBSTER messages identify visible executions and cancellations. On five stocks from one 2012 session, a fixed imbalance rule generated 332 matched, non-overlapping intents. The best-quote passive order had **zero fills** at a 250 ms working time; a 2-second posting scenario also had zero. A marketable 100-share entry/exit baseline filled 99.1% of requested entry size and ended at **−3.23 bps per round-trip turnover**, after illustrative 1 bp/side fees. This makes the queue-versus-immediacy tradeoff measurable, but one day cannot establish a general execution result. [Event-driven policy study](results/lobster_queue_backtest.md) · [2-second posting sensitivity](results/lobster_queue_backtest_2s.md)
+- **Executable-target ML:** A five-fold held-out-stock, time-ordered benchmark asks whether book and recent order flow can identify a fully displayed-depth-fillable 100-share round trip with positive net return after fees. In the 1,081 held-out eligible samples, only 21 labels were directional and 1,060 were flat. The boosted model’s balanced accuracy was 0.331, near the 0.333 prior baseline; its six non-overlapping predicted trades averaged −4.05 bps. The logistic model selected one trade, which made +0.59 bps, far too few to support an edge claim. Removing flow changed the boosted score negligibly (0.331 to 0.330). Some held-out stocks have very few eligible samples. This is an exploratory one-day 2012 study, not multi-date validation. [Protocol, fold results, and limitations](results/lobster_executable_ml_study.md)
+- **C++ operation benchmark:** Seven 200,000-operation runs measured limit insert/cancel cycles, FIFO cancellation, single-level market matching, and top-five snapshots separately. Median throughputs were 3.82M, 8.87M, 5.44M, and 1.50M operations/s on the recorded Windows host. Sampled latency includes timer overhead and is not exchange latency; Linux hardware-counter profiling remains unavailable in this environment. [Benchmark settings and results](results/cpp_operation_benchmark.md)
 - **Five-stock reconstruction check:** MOSAIC's top-ten books matched the dataset author's reference on 2,022 sampled books across nine dates, with zero mismatches. The check covers only the first 5,000 events per selected date; it is not exhaustive. [Validation details](results/wselob_multi_stock_reference_validation.md)
 - **Within-stock direction:** On PEKAO’s final 38 trading dates, the boosted tree reached 35.0% balanced accuracy versus 33.3% for the training-prior baseline (7,364 snapshots). Lift was 1.68 points (95% date-bootstrap interval: 0.74–2.71). Log loss was slightly worse than baseline. [Methods and full results](results/ml_direction_study.md)
 - **Horizon sensitivity:** The boosted tree’s balanced-accuracy lift was 1.68–2.64 points across requested 5–60 second horizons using identical date blocks. However, the 5- and 10-second targets cover only 13.3% and 21.8% of snapshots, and their log loss is worse than the baseline. The faster-horizon rows are selected toward busier intervals. [Full comparison](results/horizon_sensitivity_study.md)
@@ -83,6 +86,10 @@ flowchart LR
     G --> R[Marketable entry / exit baseline]
     Q --> S[Displayed-book round-trip comparison]
     R --> S
+    T[LOBSTER event messages] --> U[Explicit execution / cancel replay]
+    U --> V[Passive FIFO vs marketable policy]
+    U --> W[Executable round-trip labels]
+    W --> X[Time-ordered held-out-stock ML]
 ```
 
 ## Reproduce the studies
@@ -110,6 +117,9 @@ python ml_direction_benchmark.py
 python walk_forward_benchmark.py
 python execution_aware_benchmark.py --fee-bps-per-side 1
 python queue_execution_study.py
+python lobster_queue_backtest.py
+python lobster_executable_ml.py
+python benchmark_cpp_operations.py --repetitions 200000 --runs 7
 ```
 
 The WSELOB analysis writes the row-level observation CSV locally. The cost-aware, queue, and horizon scripts read it and write reports under `results/`; the execution-aware benchmark exports local held-out predictions with entry and target event indices. To reproduce queue sensitivities, run the default 500-share study, then rerun with `--order-size 100` and with `--latency-ms 100`, using separate output paths; finish with `python summarize_queue_execution.py`. The multi-stock command builds a cache under `build/` from the five raw HDF5 inputs. Markout observations overlap in time and are not strategy returns. For an independent sampled-book comparison against the data author’s reference code:
@@ -146,6 +156,14 @@ ctest --test-dir build-ci --output-on-failure
 - [Queue execution metrics: 500 shares, immediate](results/queue_execution_metrics.json)
 - [Queue execution metrics: 100 shares, immediate](results/queue_execution_100share_metrics.json)
 - [Queue execution metrics: 500 shares, 100 ms arrival](results/queue_execution_latency100ms_metrics.json)
+- [Explicit-execution LOBSTER policy study](results/lobster_queue_backtest.md)
+- [Explicit-execution policy metrics](results/lobster_queue_backtest.json)
+- [Two-second passive posting sensitivity](results/lobster_queue_backtest_2s.md)
+- [Executable-target cross-stock ML study](results/lobster_executable_ml_study.md)
+- [Executable-target ML metrics](results/lobster_executable_ml_metrics.json)
+- [C++ operation benchmark report](results/cpp_operation_benchmark.md)
+- [C++ operation benchmark metrics](results/cpp_operation_benchmark.json)
+- [C++ performance measurement and Linux profiling instructions](docs/cpp_performance.md)
 - [WSELOB machine-readable metrics](results/wselob_2017_metrics.json)
 - [ML machine-readable metrics](results/wselob_ml_direction_metrics.json)
 - [C++ raw-feed replay benchmark](results/cpp_event_replay_benchmark.json)

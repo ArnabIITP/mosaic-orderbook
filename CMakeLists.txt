@@ -5,8 +5,9 @@ option(LOB_ENABLE_SANITIZERS "Enable AddressSanitizer and UndefinedBehaviorSanit
 
 add_executable(order_book_cli cpp/order_book_cli.cpp)
 add_executable(order_book_tests cpp/order_book_tests.cpp)
+add_executable(order_book_benchmark cpp/order_book_benchmark.cpp)
 
-foreach(target order_book_cli order_book_tests)
+foreach(target order_book_cli order_book_tests order_book_benchmark)
   target_compile_features(${target} PRIVATE cxx_std_17)
   if(MSVC)
     target_compile_options(${target} PRIVATE /W4 /permissive-)

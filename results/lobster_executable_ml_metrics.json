@@ -1,0 +1,843 @@
+{
+  "study": "LOBSTER executable-target order-flow ML benchmark",
+  "data": "Official LOBSTER five-level event samples, 2012-06-21, five US stocks",
+  "source_files": [
+    {
+      "name": "AMZN_2012-06-21_34200000_57600000_message_5.csv",
+      "sha256": "be35922a0a6e677d153b5e47dd63c0107a32ae35e3a15003eed089e19f0a882e"
+    },
+    {
+      "name": "AAPL_2012-06-21_34200000_57600000_message_5.csv",
+      "sha256": "8ca6fcbbf439c973d8ef74cb096a3aa340f66db816feea3ef09dcb7522bb625d"
+    },
+    {
+      "name": "GOOG_2012-06-21_34200000_57600000_message_5.csv",
+      "sha256": "95a70c44ed1ae0effc56f28e79d12a8f105b29bd21482ed78deff20167a5e8e0"
+    },
+    {
+      "name": "INTC_2012-06-21_34200000_57600000_message_5.csv",
+      "sha256": "b62066aa7e0b333cbcda4b19aad611adc313208f9cc02313688469f84ccf9e06"
+    },
+    {
+      "name": "MSFT_2012-06-21_34200000_57600000_message_5.csv",
+      "sha256": "cf720eaed847d59b79ab3c34b22de366c6c70c7d4ac4239fa787aacaa6a12c59"
+    }
+  ],
+  "protocol": {
+    "event_stride": 100,
+    "order_size_shares": 100,
+    "label": "Choose up/down only if the better fully filled 100-share displayed-book round trip earns positive net bps after 1 bp per side; otherwise flat.",
+    "horizon": "First sampled book at or after 1 second, capped at 2 seconds.",
+    "split": "For each held-out stock, train on the first 70% of each training stock's session; test on the held-out stock's final 20%; leave a 10% time gap. Training labels must end before the training cutoff.",
+    "features": [
+      "depth_imbalance",
+      "spread_bps",
+      "log_top5_depth",
+      "ofi_100_norm",
+      "return_1s_bps",
+      "volatility_1s_bps"
+    ],
+    "models": [
+      "prior_baseline",
+      "logistic_regression",
+      "hist_gradient_boosting",
+      "hgb_without_order_flow",
+      "hgb_book_only"
+    ],
+    "trading_metrics": "Test predictions are executed only when directional and only if the prior simulated round trip for that ticker has ended; displayed-depth marketable entry and exit, overlapping trades excluded."
+  },
+  "usable_samples_by_ticker": {
+    "AMZN": 37,
+    "AAPL": 304,
+    "GOOG": 40,
+    "INTC": 1417,
+    "MSFT": 1394
+  },
+  "folds": [
+    {
+      "heldout_ticker": "AAPL",
+      "train_tickers": [
+        "AMZN",
+        "GOOG",
+        "INTC",
+        "MSFT"
+      ],
+      "train_rows": 1810,
+      "train_target_counts": {
+        "down": 62,
+        "flat": 1730,
+        "up": 18
+      },
+      "test_rows": 119,
+      "test_time_start": 53047.235072349,
+      "test_time_end": 57576.268853384,
+      "scores": {
+        "prior_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9411764705882353,
+          "macro_f1": 0.32323232323232326,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 119,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 4,
+            "flat": 112,
+            "up": 3
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.4166666666666667,
+          "accuracy": 0.9495798319327731,
+          "macro_f1": 0.4579710144927536,
+          "predicted_counts": {
+            "down": 1,
+            "flat": 118,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 4,
+            "flat": 112,
+            "up": 3
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.33035714285714285,
+          "accuracy": 0.9327731092436975,
+          "macro_f1": 0.3217391304347826,
+          "predicted_counts": {
+            "down": 1,
+            "flat": 118,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 4,
+            "flat": 112,
+            "up": 3
+          }
+        },
+        "hgb_without_order_flow": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9411764705882353,
+          "macro_f1": 0.32323232323232326,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 119,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 4,
+            "flat": 112,
+            "up": 3
+          }
+        },
+        "hgb_book_only": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9411764705882353,
+          "macro_f1": 0.32323232323232326,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 119,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 4,
+            "flat": 112,
+            "up": 3
+          }
+        }
+      },
+      "non_overlapping_trade_metrics": {
+        "prior_baseline": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "logistic_regression": {
+          "non_overlapping_trades": 1,
+          "mean_net_bps_per_trade": 0.593652467860323,
+          "win_rate_pct": 100.0,
+          "net_pnl_usd": 3.433299999999999,
+          "traded_notional_usd": 115667.0,
+          "net_bps_per_round_trip_turnover": 0.2968262339301615
+        },
+        "hist_gradient_boosting": {
+          "non_overlapping_trades": 1,
+          "mean_net_bps_per_trade": -3.0344114199020757,
+          "win_rate_pct": 0.0,
+          "net_pnl_usd": -17.6008,
+          "traded_notional_usd": 116008.0,
+          "net_bps_per_round_trip_turnover": -1.5172057099510379
+        },
+        "hgb_without_order_flow": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hgb_book_only": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        }
+      }
+    },
+    {
+      "heldout_ticker": "AMZN",
+      "train_tickers": [
+        "AAPL",
+        "GOOG",
+        "INTC",
+        "MSFT"
+      ],
+      "train_rows": 1957,
+      "train_target_counts": {
+        "down": 63,
+        "flat": 1875,
+        "up": 19
+      },
+      "test_rows": 15,
+      "test_time_start": 54259.903161966,
+      "test_time_end": 57587.674176653,
+      "scores": {
+        "prior_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9333333333333333,
+          "macro_f1": 0.3218390804597701,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 15,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 1,
+            "flat": 14,
+            "up": 0
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9333333333333333,
+          "macro_f1": 0.3218390804597701,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 15,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 1,
+            "flat": 14,
+            "up": 0
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9333333333333333,
+          "macro_f1": 0.3218390804597701,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 15,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 1,
+            "flat": 14,
+            "up": 0
+          }
+        },
+        "hgb_without_order_flow": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9333333333333333,
+          "macro_f1": 0.3218390804597701,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 15,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 1,
+            "flat": 14,
+            "up": 0
+          }
+        },
+        "hgb_book_only": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9333333333333333,
+          "macro_f1": 0.3218390804597701,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 15,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 1,
+            "flat": 14,
+            "up": 0
+          }
+        }
+      },
+      "non_overlapping_trade_metrics": {
+        "prior_baseline": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "logistic_regression": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hist_gradient_boosting": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hgb_without_order_flow": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hgb_book_only": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        }
+      }
+    },
+    {
+      "heldout_ticker": "GOOG",
+      "train_tickers": [
+        "AAPL",
+        "AMZN",
+        "INTC",
+        "MSFT"
+      ],
+      "train_rows": 1941,
+      "train_target_counts": {
+        "down": 64,
+        "flat": 1858,
+        "up": 19
+      },
+      "test_rows": 3,
+      "test_time_start": 52934.297717077,
+      "test_time_end": 56899.026537584,
+      "scores": {
+        "prior_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 1.0,
+          "macro_f1": 0.3333333333333333,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 1.0,
+          "macro_f1": 0.3333333333333333,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 1.0,
+          "macro_f1": 0.3333333333333333,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          }
+        },
+        "hgb_without_order_flow": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 1.0,
+          "macro_f1": 0.3333333333333333,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          }
+        },
+        "hgb_book_only": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 1.0,
+          "macro_f1": 0.3333333333333333,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 0,
+            "flat": 3,
+            "up": 0
+          }
+        }
+      },
+      "non_overlapping_trade_metrics": {
+        "prior_baseline": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "logistic_regression": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hist_gradient_boosting": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hgb_without_order_flow": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hgb_book_only": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        }
+      }
+    },
+    {
+      "heldout_ticker": "INTC",
+      "train_tickers": [
+        "AAPL",
+        "AMZN",
+        "GOOG",
+        "MSFT"
+      ],
+      "train_rows": 1056,
+      "train_target_counts": {
+        "down": 40,
+        "flat": 1004,
+        "up": 12
+      },
+      "test_rows": 449,
+      "test_time_start": 52927.205007426,
+      "test_time_end": 57598.401760822,
+      "scores": {
+        "prior_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9844097995545658,
+          "macro_f1": 0.33071455293677515,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 449,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 5,
+            "flat": 442,
+            "up": 2
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9844097995545658,
+          "macro_f1": 0.33071455293677515,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 449,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 5,
+            "flat": 442,
+            "up": 2
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3288084464555053,
+          "accuracy": 0.9710467706013363,
+          "macro_f1": 0.32843691148775894,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 443,
+            "up": 6
+          },
+          "test_target_counts": {
+            "down": 5,
+            "flat": 442,
+            "up": 2
+          }
+        },
+        "hgb_without_order_flow": {
+          "balanced_accuracy": 0.3250377073906486,
+          "accuracy": 0.9599109131403119,
+          "macro_f1": 0.3265151515151515,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 438,
+            "up": 11
+          },
+          "test_target_counts": {
+            "down": 5,
+            "flat": 442,
+            "up": 2
+          }
+        },
+        "hgb_book_only": {
+          "balanced_accuracy": 0.3295625942684766,
+          "accuracy": 0.9732739420935412,
+          "macro_f1": 0.3288186606471031,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 444,
+            "up": 5
+          },
+          "test_target_counts": {
+            "down": 5,
+            "flat": 442,
+            "up": 2
+          }
+        }
+      },
+      "non_overlapping_trade_metrics": {
+        "prior_baseline": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "logistic_regression": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hist_gradient_boosting": {
+          "non_overlapping_trades": 5,
+          "mean_net_bps_per_trade": -4.247752528230267,
+          "win_rate_pct": 0.0,
+          "net_pnl_usd": -5.6686,
+          "traded_notional_usd": 26686.0,
+          "net_bps_per_round_trip_turnover": -2.1241849658997225
+        },
+        "hgb_without_order_flow": {
+          "non_overlapping_trades": 8,
+          "mean_net_bps_per_trade": -4.341350326474375,
+          "win_rate_pct": 0.0,
+          "net_pnl_usd": -9.269400000000001,
+          "traded_notional_usd": 42694.0,
+          "net_bps_per_round_trip_turnover": -2.1711247482081792
+        },
+        "hgb_book_only": {
+          "non_overlapping_trades": 3,
+          "mean_net_bps_per_trade": -3.2484394506866416,
+          "win_rate_pct": 0.0,
+          "net_pnl_usd": -2.601,
+          "traded_notional_usd": 16010.0,
+          "net_bps_per_round_trip_turnover": -1.6246096189881325
+        }
+      }
+    },
+    {
+      "heldout_ticker": "MSFT",
+      "train_tickers": [
+        "AAPL",
+        "AMZN",
+        "GOOG",
+        "INTC"
+      ],
+      "train_rows": 1148,
+      "train_target_counts": {
+        "down": 27,
+        "flat": 1113,
+        "up": 8
+      },
+      "test_rows": 495,
+      "test_time_start": 53198.035596409,
+      "test_time_end": 57598.04720217,
+      "scores": {
+        "prior_baseline": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9878787878787879,
+          "macro_f1": 0.3313008130081301,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 495,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 3,
+            "flat": 489,
+            "up": 3
+          }
+        },
+        "logistic_regression": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9878787878787879,
+          "macro_f1": 0.3313008130081301,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 495,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 3,
+            "flat": 489,
+            "up": 3
+          }
+        },
+        "hist_gradient_boosting": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9878787878787879,
+          "macro_f1": 0.3313008130081301,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 495,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 3,
+            "flat": 489,
+            "up": 3
+          }
+        },
+        "hgb_without_order_flow": {
+          "balanced_accuracy": 0.332651670074983,
+          "accuracy": 0.9858585858585859,
+          "macro_f1": 0.3309596473380807,
+          "predicted_counts": {
+            "down": 1,
+            "flat": 494,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 3,
+            "flat": 489,
+            "up": 3
+          }
+        },
+        "hgb_book_only": {
+          "balanced_accuracy": 0.3333333333333333,
+          "accuracy": 0.9878787878787879,
+          "macro_f1": 0.3313008130081301,
+          "predicted_counts": {
+            "down": 0,
+            "flat": 495,
+            "up": 0
+          },
+          "test_target_counts": {
+            "down": 3,
+            "flat": 489,
+            "up": 3
+          }
+        }
+      },
+      "non_overlapping_trade_metrics": {
+        "prior_baseline": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "logistic_regression": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hist_gradient_boosting": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        },
+        "hgb_without_order_flow": {
+          "non_overlapping_trades": 1,
+          "mean_net_bps_per_trade": -2.0,
+          "win_rate_pct": 0.0,
+          "net_pnl_usd": -0.6017,
+          "traded_notional_usd": 6017.0,
+          "net_bps_per_round_trip_turnover": -1.0
+        },
+        "hgb_book_only": {
+          "non_overlapping_trades": 0,
+          "mean_net_bps_per_trade": null,
+          "win_rate_pct": null,
+          "net_pnl_usd": 0.0,
+          "traded_notional_usd": 0.0,
+          "net_bps_per_round_trip_turnover": null
+        }
+      }
+    }
+  ],
+  "pooled_scores": {
+    "prior_baseline": {
+      "balanced_accuracy": 0.3333333333333333,
+      "accuracy": 0.9805735430157262,
+      "macro_f1": 0.3300638330997976,
+      "predicted_counts": {
+        "down": 0,
+        "flat": 1081,
+        "up": 0
+      }
+    },
+    "logistic_regression": {
+      "balanced_accuracy": 0.358974358974359,
+      "accuracy": 0.9814986123959297,
+      "macro_f1": 0.3778371161548732,
+      "predicted_counts": {
+        "down": 1,
+        "flat": 1080,
+        "up": 0
+      }
+    },
+    "hist_gradient_boosting": {
+      "balanced_accuracy": 0.3311320754716981,
+      "accuracy": 0.9740980573543015,
+      "macro_f1": 0.3289597000937207,
+      "predicted_counts": {
+        "down": 1,
+        "flat": 1074,
+        "up": 6
+      }
+    },
+    "hgb_without_order_flow": {
+      "balanced_accuracy": 0.32955974842767294,
+      "accuracy": 0.969472710453284,
+      "macro_f1": 0.3281665883826523,
+      "predicted_counts": {
+        "down": 1,
+        "flat": 1069,
+        "up": 11
+      }
+    },
+    "hgb_book_only": {
+      "balanced_accuracy": 0.33176100628930816,
+      "accuracy": 0.9759481961147086,
+      "macro_f1": 0.3292759051186018,
+      "predicted_counts": {
+        "down": 0,
+        "flat": 1076,
+        "up": 5
+      }
+    }
+  },
+  "pooled_non_overlapping_policy_results": {
+    "prior_baseline": {
+      "non_overlapping_trades": 0,
+      "mean_net_bps_per_trade": null,
+      "win_rate_pct": null,
+      "net_pnl_usd": 0.0,
+      "traded_notional_usd": 0.0,
+      "net_bps_per_round_trip_turnover": null
+    },
+    "logistic_regression": {
+      "non_overlapping_trades": 1,
+      "mean_net_bps_per_trade": 0.593652467860323,
+      "win_rate_pct": 100.0,
+      "net_pnl_usd": 3.433299999999999,
+      "traded_notional_usd": 115667.0,
+      "net_bps_per_round_trip_turnover": 0.2968262339301615
+    },
+    "hist_gradient_boosting": {
+      "non_overlapping_trades": 6,
+      "mean_net_bps_per_trade": -4.045529010175568,
+      "win_rate_pct": 0.0,
+      "net_pnl_usd": -23.269399999999997,
+      "traded_notional_usd": 142694.0,
+      "net_bps_per_round_trip_turnover": -1.6307202825626863
+    },
+    "hgb_without_order_flow": {
+      "non_overlapping_trades": 9,
+      "mean_net_bps_per_trade": -4.081200290199444,
+      "win_rate_pct": 0.0,
+      "net_pnl_usd": -9.8711,
+      "traded_notional_usd": 48711.0,
+      "net_bps_per_round_trip_turnover": -2.0264621953973436
+    },
+    "hgb_book_only": {
+      "non_overlapping_trades": 3,
+      "mean_net_bps_per_trade": -3.2484394506866416,
+      "win_rate_pct": 0.0,
+      "net_pnl_usd": -2.601,
+      "traded_notional_usd": 16010.0,
+      "net_bps_per_round_trip_turnover": -1.6246096189881325
+    }
+  },
+  "limitations": [
+    "One historical day cannot establish regime robustness; no date-level uncertainty interval is reported.",
+    "LOBSTER provides five displayed levels; samples lacking full 100-share entry and exit depth are excluded from labels.",
+    "The target uses static displayed depth and illustrative 1 bp/side fees; it omits impact, replenishment, queue position, and hidden liquidity.",
+    "This is a research benchmark, not evidence of profitability or a deployable strategy."
+  ]
+}

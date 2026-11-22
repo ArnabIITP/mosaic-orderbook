@@ -1,0 +1,496 @@
+{
+  "benchmark": "MOSAIC C++ order-book operation microbenchmark",
+  "host": {
+    "platform": "Windows-11-10.0.26300-SP0",
+    "machine": "AMD64",
+    "processor": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "python": "3.13.2"
+  },
+  "compiler": "g++.exe (Rev2, Built by MSYS2 project) 14.2.0",
+  "build_flags": "-std=c++17 -O3 -DNDEBUG -Wall -Wextra -Wpedantic",
+  "measurement": {
+    "method": "one warm-up process, then repeated in-process operation loops; steady_clock samples one operation per repetitions/10,000",
+    "latency_caveat": "Sampled latency includes clock-read overhead and operation-specific allocation/accounting; throughput is a separate whole-loop measurement.",
+    "operation_scopes": {
+      "limit_insert_cancel_cycle": "Limit order insertion followed immediately by cancellation on a persistent book.",
+      "fifo_queue_cancel": "Cancel one order from a pre-populated single-price FIFO queue; queue setup is outside timing.",
+      "market_order_single_level_match": "One-share market order matched against one resting price level, including trade/account updates.",
+      "top5_snapshot": "Aggregate and return both five-level book sides from a persistent 20-level, 400-order book."
+    }
+  },
+  "operations": {
+    "limit_insert_cancel_cycle": {
+      "repetitions_per_run": 200000,
+      "runs": 7,
+      "ops_per_second_median": 3820010.0,
+      "ops_per_second_min": 3376510.0,
+      "ops_per_second_max": 4855340.0,
+      "sampled_latency_ns_median_of_run_percentiles": {
+        "p50": 300,
+        "p95": 500,
+        "p99": 700,
+        "p999": 900
+      },
+      "sample_count_per_run": 10000,
+      "run_elapsed_ms": [
+        53.1026,
+        48.4151,
+        56.8337,
+        59.2327,
+        41.4525,
+        52.3559,
+        41.1918
+      ]
+    },
+    "fifo_queue_cancel": {
+      "repetitions_per_run": 200000,
+      "runs": 7,
+      "ops_per_second_median": 8872600.0,
+      "ops_per_second_min": 6375580.0,
+      "ops_per_second_max": 9897950.0,
+      "sampled_latency_ns_median_of_run_percentiles": {
+        "p50": 100,
+        "p95": 200,
+        "p99": 400,
+        "p999": 1300
+      },
+      "sample_count_per_run": 10000,
+      "run_elapsed_ms": [
+        24.327,
+        20.6922,
+        29.6504,
+        20.2062,
+        21.0851,
+        31.3697,
+        22.5413
+      ]
+    },
+    "market_order_single_level_match": {
+      "repetitions_per_run": 200000,
+      "runs": 7,
+      "ops_per_second_median": 5444490.0,
+      "ops_per_second_min": 4084930.0,
+      "ops_per_second_max": 6621290.0,
+      "sampled_latency_ns_median_of_run_percentiles": {
+        "p50": 100,
+        "p95": 200,
+        "p99": 700,
+        "p999": 10300
+      },
+      "sample_count_per_run": 10000,
+      "run_elapsed_ms": [
+        35.7573,
+        30.2056,
+        46.9525,
+        47.7219,
+        48.9605,
+        36.7344,
+        34.4812
+      ]
+    },
+    "top5_snapshot": {
+      "repetitions_per_run": 200000,
+      "runs": 7,
+      "ops_per_second_median": 1498330.0,
+      "ops_per_second_min": 1225060.0,
+      "ops_per_second_max": 1644500.0,
+      "sampled_latency_ns_median_of_run_percentiles": {
+        "p50": 600,
+        "p95": 1200,
+        "p99": 1600,
+        "p999": 2700
+      },
+      "sample_count_per_run": 10000,
+      "run_elapsed_ms": [
+        134.7133,
+        121.6178,
+        133.9992,
+        163.2579,
+        128.4146,
+        129.6681,
+        133.4822
+      ]
+    }
+  },
+  "raw_runs": [
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 53102600,
+        "ops_per_second": 3766290.0,
+        "sampled_latency_ns": {
+          "p50": 300,
+          "p95": 500,
+          "p99": 700,
+          "p999": 900
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 24327000,
+        "ops_per_second": 8221320.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 300,
+          "p99": 400,
+          "p999": 2100
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 35757300,
+        "ops_per_second": 5593260.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 300,
+          "p99": 700,
+          "p999": 5300
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 134713300,
+        "ops_per_second": 1484630.0,
+        "sampled_latency_ns": {
+          "p50": 600,
+          "p95": 1100,
+          "p99": 2000,
+          "p999": 11600
+        }
+      }
+    ],
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 48415100,
+        "ops_per_second": 4130940.0,
+        "sampled_latency_ns": {
+          "p50": 300,
+          "p95": 400,
+          "p99": 500,
+          "p999": 900
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 20692200,
+        "ops_per_second": 9665480.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 400,
+          "p999": 1100
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 30205600,
+        "ops_per_second": 6621290.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 100,
+          "p99": 400,
+          "p999": 9100
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 121617800,
+        "ops_per_second": 1644500.0,
+        "sampled_latency_ns": {
+          "p50": 600,
+          "p95": 1100,
+          "p99": 1600,
+          "p999": 2400
+        }
+      }
+    ],
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 56833700,
+        "ops_per_second": 3519040.0,
+        "sampled_latency_ns": {
+          "p50": 300,
+          "p95": 600,
+          "p99": 800,
+          "p999": 1100
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 29650400,
+        "ops_per_second": 6745270.0,
+        "sampled_latency_ns": {
+          "p50": 200,
+          "p95": 300,
+          "p99": 500,
+          "p999": 1300
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 46952500,
+        "ops_per_second": 4259620.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 700,
+          "p999": 14200
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 133999200,
+        "ops_per_second": 1492550.0,
+        "sampled_latency_ns": {
+          "p50": 600,
+          "p95": 1200,
+          "p99": 1600,
+          "p999": 4700
+        }
+      }
+    ],
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 59232700,
+        "ops_per_second": 3376510.0,
+        "sampled_latency_ns": {
+          "p50": 300,
+          "p95": 600,
+          "p99": 900,
+          "p999": 3200
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 20206200,
+        "ops_per_second": 9897950.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 400,
+          "p999": 1000
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 47721900,
+        "ops_per_second": 4190950.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 700,
+          "p999": 15700
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 163257900,
+        "ops_per_second": 1225060.0,
+        "sampled_latency_ns": {
+          "p50": 900,
+          "p95": 1300,
+          "p99": 2400,
+          "p999": 4200
+        }
+      }
+    ],
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 41452500,
+        "ops_per_second": 4824800.0,
+        "sampled_latency_ns": {
+          "p50": 200,
+          "p95": 400,
+          "p99": 600,
+          "p999": 900
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 21085100,
+        "ops_per_second": 9485370.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 400,
+          "p999": 1600
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 48960500,
+        "ops_per_second": 4084930.0,
+        "sampled_latency_ns": {
+          "p50": 200,
+          "p95": 300,
+          "p99": 700,
+          "p999": 15100
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 128414600,
+        "ops_per_second": 1557460.0,
+        "sampled_latency_ns": {
+          "p50": 600,
+          "p95": 1200,
+          "p99": 1600,
+          "p999": 2300
+        }
+      }
+    ],
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 52355900,
+        "ops_per_second": 3820010.0,
+        "sampled_latency_ns": {
+          "p50": 300,
+          "p95": 600,
+          "p99": 700,
+          "p999": 1100
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 31369700,
+        "ops_per_second": 6375580.0,
+        "sampled_latency_ns": {
+          "p50": 200,
+          "p95": 300,
+          "p99": 600,
+          "p999": 3400
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 36734400,
+        "ops_per_second": 5444490.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 400,
+          "p999": 10300
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 129668100,
+        "ops_per_second": 1542400.0,
+        "sampled_latency_ns": {
+          "p50": 600,
+          "p95": 1100,
+          "p99": 1300,
+          "p999": 2100
+        }
+      }
+    ],
+    [
+      {
+        "operation": "limit_insert_cancel_cycle",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 41191800,
+        "ops_per_second": 4855340.0,
+        "sampled_latency_ns": {
+          "p50": 200,
+          "p95": 400,
+          "p99": 500,
+          "p999": 700
+        }
+      },
+      {
+        "operation": "fifo_queue_cancel",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 22541300,
+        "ops_per_second": 8872600.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 500,
+          "p999": 1200
+        }
+      },
+      {
+        "operation": "market_order_single_level_match",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 34481200,
+        "ops_per_second": 5800260.0,
+        "sampled_latency_ns": {
+          "p50": 100,
+          "p95": 200,
+          "p99": 400,
+          "p999": 10300
+        }
+      },
+      {
+        "operation": "top5_snapshot",
+        "repetitions": 200000,
+        "sample_count": 10000,
+        "elapsed_ns": 133482200,
+        "ops_per_second": 1498330.0,
+        "sampled_latency_ns": {
+          "p50": 600,
+          "p95": 1200,
+          "p99": 1500,
+          "p999": 2700
+        }
+      }
+    ]
+  ],
+  "compile_stderr": ""
+}
